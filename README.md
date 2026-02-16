@@ -8,7 +8,7 @@
 
 - **Продакшн:** [predprof.kzhivaev.ru](https://predprof.kzhivaev.ru/)
 - **Админ-панель:** [predprof.kzhivaev.ru](https://predprof.kzhivaev.ru/)
-- **Демонстрация:** [Видео Rutube]()
+- **Демонстрация:** [Видео Rutube](https://rutube.ru/video/8a7b8443a659cf2ce78b3ec0fbfddd84/)
 
 ### 🔑 Тестовый доступ (Администратор)
 - **Логин:** `admin@example.com`
