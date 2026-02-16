@@ -1,0 +1,945 @@
+openapi: 3.0.3
+info:
+  title: Olympiad
+  version: 1.0.0
+paths:
+  /schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - ht
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /auth/token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /auth/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+
+  /trainings/{training_id}/:
+    get:
+      operationId: trainings_retrieve
+      description: Получить состояние тренировки с информацией о задачах и прогрессе
+      summary: Получить состояние тренировки
+      parameters:
+      - in: path
+        name: training_id
+        schema:
+          type: integer
+        description: ID тренировки
+        required: true
+      tags:
+      - trainings
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingState'
+              examples:
+                TrainingState:
+                  value:
+                    tasks:
+                    - task_id: 12
+                      question: adadadad
+                      my_answer: fafaf
+                      is_correct: true
+                      start_time: YYY-MM-DDTHH:mm:ss
+                    solved_count: 1
+                  summary: Success Response
+          description: ''
+        '404':
+          description: No response body
+
+  /trainings/start_training/:
+    post:
+      operationId: trainings_start_training_create
+      description: Создать новую тренировочную сессию для текущего пользователя
+      summary: Начать тренировку
+      tags:
+      - trainings
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartTrainingResponse'
+              examples:
+                SuccessResponse:
+                  value:
+                    training_id: 1
+                    message: Тренировка успешно создана
+                  summary: Success Response
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-NotEnoughTasks:
+                  value:
+                    error: Недостаточно задач для тренировки
+                  summary: Error - Not Enough Tasks
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-ServerError:
+                  value:
+                    error: Ошибка при создании тренировки
+                  summary: Error - Server Error
+          description: ''
+
+  /trainings/{training_id}/task/{task_id}/:
+    get:
+      operationId: get_train_task
+      description: Получить задачу в тренировке, по id тренировки и её номеру
+      summary: Получить задачу
+      tags:
+      - trainings
+      parameters:
+      - in: path
+        name: training_id
+        schema:
+          type: integer
+        description: ID тренировки
+        required: true
+      - in: path
+        name: task_id
+        schema:
+          type: integer
+        description: номер задачи в тренировке
+        required: true
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingTaskResponse'
+              examples:
+                TrainingTaskResponse:
+                  value:
+                    task_id: 12
+                    question: adadadad
+                    my_answer: fafaf
+                    is_correct: true
+                    start_time: YYY-MM-DDTHH:mm:ss
+                  summary: Success Response
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-NotEnoughTasks:
+                  value:
+                    error: Недостаточно задач для тренировки
+                  summary: Error - Not Enough Tasks
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-ServerError:
+                  value:
+                    error: Ошибка при создании тренировки
+                  summary: Error - Server Error
+          description: ''
+
+  /session/current:
+    get:
+      operationId: get_current_session
+      description: Получить текущую не завершенную сессию пользователя (pvp, тренировка), для возможности восстановления
+      summary: Получить текущую сессию
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentSessionResponse'
+              examples:
+                CurrentSessionResponse:
+                  value:
+                    type: pvp
+                    room_id: 13
+                  summary: Success Response
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-NotEnoughTasks:
+                  value:
+                    error: Пользователь не авторизован
+                  summary: Error - Not Enough Tasks
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-ServerError:
+                  value:
+                    error: Ошибка при получении данных
+                  summary: Error - Server Error
+          description: ''
+
+
+  /pvp/{room_id}/task/{task_id}/:
+    get:
+      operationId: get_pvp_task
+      description: Получить задачу в раунде, по id тренировки и её номеру
+      summary: Получить задачу
+      tags:
+      - pvp
+      parameters:
+      - in: path
+        name: room_id
+        schema:
+          type: integer
+        description: ID тренировки
+        required: true
+      - in: path
+        name: task_id
+        schema:
+          type: integer
+        description: номер задачи в тренировке
+        required: true
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PVPTaskResponse'
+              examples:
+                PVPTaskResponse:
+                  value:
+                    task_id: 52
+                    question: абоба?
+                    my_answer: абоба
+                    end_time: YYYY-MM-DDTHH:mm:ss # время окончания сдачи решений
+                  summary: Success Response
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-NotEnoughTasks:
+                  value:
+                    error: Пока что нет доступа к данной задаче
+                  summary: Error - Not Enough Tasks
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Error-ServerError:
+                  value:
+                    error: Ошибка при получении задачи
+                  summary: Error - Server Error
+          description: ''
+    
+  /user/:
+    get:
+      operationId: get_profile
+      description: Получить профиль пользователя
+      summary: Получить профиль
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+              examples:
+                UserProfile:
+                  value:
+                    id: 12
+                    name: Василий
+                    stats:
+                      rate: 1000
+                      trains_count: 10
+                      pvp_count: 10
+                      accuracy_train: 10.
+                      accuracy_pvp: 10.1
+                      accuracy_total: 10.1
+                      speed_train: 10
+                      speed_pvp: 10
+                      speed_total: 10
+                  summary: Success Response
+          description: ''
+  /user/{user_id}:
+    get:
+      operationId: get_other_profile
+      description: Получить профиль другого пользователя
+      summary: Получить профиль
+      tags:
+      - users
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        description: ID пользователя
+        required: true
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+              examples:
+                UserProfile:
+                  value:
+                    id: 12
+                    name: Василий
+                    stats:
+                      rate: 1000
+                      trains_count: 10
+                      pvp_count: 10
+                      accuracy_train: 10.
+                      accuracy_pvp: 10.1
+                      accuracy_total: 10.1
+                      speed_train: 10
+                      speed_pvp: 10
+                      speed_total: 10
+                  summary: Success Response
+          description: ''
+  /tasks/:
+    get:
+      operationId: get_tasks
+      description: Получить отфильтрованные задачи из банка
+      summary: Банк задач
+      tags:
+      - tasks
+      parameters:
+      - in: query
+        name: subject_id
+        schema:
+          type: integer
+        description: ID предмета
+        required: false
+      - in: query
+        name: difficulty
+        schema:
+          enum: [easy, middle, high]
+        description: ID уровня сложности
+        required: false
+      - in: query
+        name: page
+        schema:
+          type: integer
+        required: false
+      - in: query
+        name: page_limit
+        schema:
+          type: integer
+        required: false
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseTaskResponse'
+              examples:
+                BaseTaskResponse:
+                  value:
+                    items:
+                      - global_task_id: 12
+                        question: абоба?
+                        is_correct: true
+                    page: 1
+                    items_count: 2
+                  
+          description: ''
+
+  /tasks/{global_task_id}/:
+    get:
+      operationId: get_task_info
+      description: Получить задание по ID
+      summary: Задача
+      tags:
+      - tasks
+      parameters:
+      - in: path
+        name: global_task_id
+        schema:
+          type: integer
+        description: ID задания
+        required: true
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseTask'
+              examples:
+                BaseTask:
+                  value:
+                    global_task_id: 12
+                    question: абоба?
+                    is_correct: true
+                  
+          description: ''
+
+  /points/subjects/:
+    get:
+      operationId: get_subjects
+      description: Все предметы и включенные в них темы 
+      summary: Предметы
+      tags:
+      - points
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+              examples:
+                Subject:
+                  value:
+                    - id: 123
+                      name: sss
+                      themes:
+                        - id: 123
+                          name: sss
+                  
+          description: ''
+
+  /pvp/last_enemies/:
+    get:
+      operationId: get_last_enemies
+      description: Последние соперники
+      summary: Последние соперники
+      tags:
+      - pvp
+      parameters:
+      - in: query
+        name: count
+        schema:
+          type: integer
+        description: количество отображаемых соперников
+        required: true
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleUserProfile'
+              examples:
+                SimpleUserProfile:
+                  value:
+                    id: 123
+                    name: vasya
+                    rate: 1231313
+                  
+          description: ''
+
+  /pvp/search_enemy/:
+    get:
+      operationId: get_enemies
+      description: Поиск соперников
+      summary: Поиск соперников
+      tags:
+      - pvp
+      parameters:
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: поисковый запрос
+        required: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+        required: false
+      - in: query
+        name: page_limit
+        schema:
+          type: integer
+        required: false
+      security:
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchUserResponse'
+              examples:
+                SearchUserResponse:
+                  value:
+                    users:
+                      - id: 123
+                        name: vasya
+                        rate: 1231313
+                    page: 1
+                    count: 33
+                  
+          description: ''
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+    StartTrainingResponse:
+      type: object
+      properties:
+        training_id:
+          type: integer
+        message:
+          type: string
+      required:
+      - message
+      - training_id
+    CurrentSessionResponse:
+      type: object
+      properties:
+        type:
+          enum: [nothing, pvp, training]
+        room_id:
+          type: string
+        close_time:
+          type: string
+      required:
+      - type
+    
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    
+
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+
+    TrainingState:
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingTaskResponse'
+        solved_count:
+          type: integer
+      required:
+      - solved_count
+      - tasks
+    
+
+    BaseTaskResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseTask'
+        page:
+          type: integer
+        items_count:
+          type: integer
+      required:
+      - items
+      - page
+      - items_count
+    
+    BaseTask:
+      type: object
+      properties:
+        task_id:
+          type: integer
+          description: Номер задачи в тренировке
+        question:
+          type: string
+        is_correct:
+          type: boolean
+      required:
+      - task_id
+      - question
+
+
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type:  string
+        themes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubjectTheme'
+
+    SubjectTheme:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    
+    TrainingTaskResponse:
+      type: object
+      properties:
+        task_id:
+          type: integer
+        question: 
+          type: string
+        my_answer:
+          type: string
+        is_correct: 
+          type: boolean
+        start_time: # время первого просмотра данной задачи во время тренировки
+          type: string
+      required:
+      - task
+      - start_time
+
+    PVPTaskResponse:
+      type: object
+      properties:
+        task_id:
+          type: integer
+        question: 
+          type: string
+        my_answer: 
+          type: boolean
+        end_time: # время окончания сдачи решений
+          type: string
+      required:
+        - task
+        - end_time
+  
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        stats:
+          $ref: '#/components/schemas/UserStats'
+
+    SimpleUserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        rate:
+          type: integer
+
+    SearchUserResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleUserProfile'
+          page:
+            type: integer
+          items_count:
+            type: integer
+        
+    UserStats:
+      type: object
+      properties:
+        rate:
+          type: integer
+        trains_count:
+          type: integer
+        pvp_count:
+          type: integer
+        accuracy_train:
+          type: number
+        accuracy_pvp:
+          type: number
+        accuracy_total:
+          type: number
+        speed_train:
+          type: number
+        speed_pvp:
+          type: number
+        speed_total:
+          type: number
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
