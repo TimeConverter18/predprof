@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 
 from redis.asyncio import Redis
@@ -9,7 +10,7 @@ from user_statistics.services.user_statistics_cache import StatisticsCache
 
 @lru_cache
 def get_redis_connection() -> Redis:
-    return Redis(host="127.0.0.1", port=6379, db=1)
+    return Redis(host=os.environ.get('REDIS_CACHE_HOST', '127.0.0.1'), port=6379, db=1)
 
 
 statistics_cache = StatisticsCache(get_redis_connection())

@@ -1,0 +1,54 @@
+services:
+
+  pg-pr:
+    image: postgres:16-alpine
+    container_name: pg-pr
+    environment:
+      POSTGRES_DB: olympiad
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis-ch-pr:
+    image: redis:7-alpine
+    container_name: redis-ch-pr
+
+  redis-ca-pr:
+    image: redis:7-alpine
+    container_name: redis-ca-pr
+
+  django-pr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django-pr
+    environment:
+      DJANGO_SETTINGS_MODULE: olympiad.settings
+      DB_HOST: pg-pr
+      DB_PORT: 5432
+      DB_NAME: olympiad
+      DB_USER: postgres
+      DB_PASSWORD: root
+      REDIS_CHANNEL_HOST: redis-ch-pr
+      REDIS_CACHE_HOST: redis-ca-pr
+    depends_on:
+      pg-pr:
+        condition: service_healthy
+      redis-ch-pr:
+        condition: service_started
+      redis-ca-pr:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_files:/app/staticfiles
+
+volumes:
+  pg_data:
+  static_files:

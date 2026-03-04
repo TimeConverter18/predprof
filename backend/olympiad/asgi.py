@@ -1,3 +1,12 @@
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'olympiad.settings')
+
+django.setup()
+
+
+
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.sessions import SessionMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
