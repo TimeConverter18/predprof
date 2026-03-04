@@ -33,7 +33,7 @@
    ```bash
    mkdir predprof
    cd predprof
-   git clone https://github.com/TimeConverter18/olympiad
+   git clone https://github.com/TimeConverter18/predprof
    ```
 
 2. **Настройте окружение:**
