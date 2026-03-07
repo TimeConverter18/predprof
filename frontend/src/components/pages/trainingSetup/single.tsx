@@ -1,69 +1,357 @@
 import {type FC, Fragment, useState} from "react"
 import styled from "@emotion/styled";
-import {Form, InputNumber, Select, Space} from "antd";
+import {Steps, Tag, Button, Result} from "antd";
+import {CheckOutlined} from '@ant-design/icons';
 import PrimaryButton from "../../public/primaryButton.tsx";
 import {useSubjectThemes} from "../../../hooks/subjectThemes/hook.ts";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
+import {createStyles} from 'antd-style';
+import StyledTitle from "../../components/textComponents/StyledTitle.tsx";
+import PageContainer from "../../components/containers/PageContainer.tsx";
+import CardContainer from "../../components/containers/CardContainer.tsx";
+import {Desktop, Mobile} from "../../responsiveWrappers.tsx";
 
-const ChooseContainer = styled.div`
+const TitleSection = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 4px;
+    padding: 10px 8px 0;
+    text-align: center;
+`;
+
+const StepsWrapper = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 6px;
+    padding: 6px 6px 4px;
+    overflow-x: auto;
+    min-width: 240px;
+`;
+
+const FinalEndContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    gap: 10px;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+`;
+
+const ChooseContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 10px;
-    overflow: auto;
-    margin-top: 20px;
-    padding: 5px;
+    max-width: 960px;
+    margin: 0 auto;
+    gap: 6px;
+    padding: 0 6px 6px;
 `;
+
+const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 820px;
+    gap: 10px;
+`;
+
+const TagsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+`;
+
+const NavigationButtons = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+`;
+
+const FinalCard = styled(CardContainer)`
+    width: 100%;
+    max-width: 1280px;
+    margin: 0;
+`;
+
+const useStyles = createStyles(({token, css}) => ({
+    tagGroup: css`
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+
+        .ant-tag {
+            background: transparent;
+            border: 2px solid ${token.colorBorder};
+            color: ${token.colorText};
+            font-size: 14px;
+            padding: 8px 18px;
+            cursor: pointer;
+            margin: 0;
+            border-radius: 22px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+
+            &:hover {
+                border-color: #bad609;
+                color: #bad609;
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(186, 214, 9, 0.18);
+            }
+        }
+
+        .ant-tag-checkable-checked {
+            background: #bad609 !important;
+            border-color: #bad609 !important;
+            color: #000000 !important;
+            font-weight: 600;
+            box-shadow: 0 5px 12px rgba(186, 214, 9, 0.35);
+            transform: scale(1.03);
+
+            &:hover {
+                background: #c9e010 !important;
+                border-color: #c9e010 !important;
+                color: #000000 !important;
+                transform: scale(1.03) translateY(-1px);
+                box-shadow: 0 6px 16px rgba(186, 214, 9, 0.4);
+            }
+        }
+    `,
+
+    difficultyTagGroup: css`
+        .ant-tag {
+            font-size: 14px;
+            padding: 8px 20px;
+        }
+    `,
+}));
 
 const Page: FC = () => {
     const {subjects} = useSubjectThemes();
+    const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
     const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
+    const [selectedThemeId, setSelectedThemeId] = useState<number | null>(null);
+    const [currentStep, setCurrentStep] = useState<number>(0);
     const screens = useBreakpoint();
+    const {styles} = useStyles();
 
     const currentSubject = subjects.find(s => s.id === selectedSubjectId);
-    const availableThemes = currentSubject ? currentSubject.themes : subjects.flatMap(s => s.themes);
+    const availableThemes = currentSubject ? currentSubject.themes : [];
+
+    const difficultyOptions = [
+        { value: 'easy', label: 'Лёгкая' },
+        { value: 'middle', label: 'Средняя' },
+        { value: 'high', label: 'Сложная' }
+    ];
+
+    const steps = [
+        { title: 'Сложность' },
+        { title: 'Предмет' },
+        { title: 'Тема' },
+        { title: 'Готово' },
+    ];
+
+    const handleNext = () => {
+        if (currentStep === 0 && selectedDifficulty) {
+            setCurrentStep(1);
+        } else if (currentStep === 1 && selectedSubjectId) {
+            setCurrentStep(2);
+        } else if (currentStep === 2 && selectedThemeId) {
+            setCurrentStep(3);
+        }
+    };
+
+    const handlePrev = () => {
+        setCurrentStep(currentStep - 1);
+    };
+
+    const handleReset = () => {
+        setSelectedDifficulty(null);
+        setSelectedSubjectId(null);
+        setSelectedThemeId(null);
+        setCurrentStep(0);
+    };
+
+    const handleSubmit = () => {
+        console.log({
+            difficulty: selectedDifficulty,
+            subject: selectedSubjectId,
+            theme: selectedThemeId
+        });
+    };
+
+    const renderStepContent = () => {
+        switch (currentStep) {
+            case 0:
+                return (
+                    <TagsWrapper>
+                        <Tag.CheckableTagGroup
+                            options={difficultyOptions}
+                            value={selectedDifficulty}
+                            onChange={(val) => setSelectedDifficulty(val)}
+                            className={`${styles.tagGroup} ${styles.difficultyTagGroup}`}
+                            multiple={false}
+                        />
+                    </TagsWrapper>
+                );
+
+            case 1:
+                return (
+                    <TagsWrapper>
+                        <Tag.CheckableTagGroup
+                            options={subjects.map(v => ({value: v.id, label: v.name}))}
+                            value={selectedSubjectId}
+                            onChange={(val) => {
+                                setSelectedSubjectId(val);
+                                setSelectedThemeId(null);
+                            }}
+                            className={styles.tagGroup}
+                            multiple={false}
+                        />
+                    </TagsWrapper>
+                );
+
+            case 2:
+                return (
+                    <TagsWrapper>
+                        {!selectedSubjectId ? (
+                            <Button type="link" onClick={() => setCurrentStep(1)}>
+                                Сначала выберите предмет
+                            </Button>
+                        ) : (
+                            <Tag.CheckableTagGroup
+                                options={availableThemes.map(v => ({value: v.id, label: v.name}))}
+                                value={selectedThemeId}
+                                onChange={(val) => setSelectedThemeId(val)}
+                                className={styles.tagGroup}
+                                multiple={false}
+                            />
+                        )}
+                    </TagsWrapper>
+                );
+
+            case 3:
+                return (
+                    <FinalCard style={{padding: 0}}>
+                        <Result
+                            style={{padding: `15px 30px`}}
+                            status="success"
+                            title="Параметры тренировки выбраны!"
+                            subTitle={
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '20px'}}>
+                                    <div>
+                                        <span style={{color: '#888', marginRight: '10px'}}>Сложность:</span>
+                                        <Tag color={
+                                            selectedDifficulty === 'easy' ? 'success' :
+                                                selectedDifficulty === 'middle' ? 'warning' : 'error'
+                                        } style={{padding: '4px 12px', fontSize: '14px'}}>
+                                            {difficultyOptions.find(d => d.value === selectedDifficulty)?.label}
+                                        </Tag>
+                                    </div>
+                                    <div>
+                                        <span style={{color: '#888', marginRight: '10px'}}>Предмет:</span>
+                                        <Tag style={{padding: '4px 12px', fontSize: '14px'}}>
+                                            {subjects.find(s => s.id === selectedSubjectId)?.name}
+                                        </Tag>
+                                    </div>
+                                    <div>
+                                        <span style={{color: '#888', marginRight: '10px'}}>Тема:</span>
+                                        <Tag style={{padding: '4px 12px', fontSize: '14px'}}>
+                                            {availableThemes.find(t => t.id === selectedThemeId)?.name}
+                                        </Tag>
+                                    </div>
+                                </div>
+                            }
+                            extra={
+                            <FinalEndContainer>
+                                <PrimaryButton key="start" onClick={handleSubmit} style={{marginRight: '10px'}}>
+                                    Начать тренировку! <CheckOutlined />
+                                </PrimaryButton>
+                                <Button key="reset" onClick={handleReset}>
+                                    Выбрать заново
+                                </Button>
+                            </FinalEndContainer>
+                            }
+                        />
+                    </FinalCard>
+                );
+
+            default:
+                return null;
+        }
+    };
+
+    const isNextDisabled = () => {
+        if (currentStep === 0) return !selectedDifficulty;
+        if (currentStep === 1) return !selectedSubjectId;
+        if (currentStep === 2) return !selectedThemeId;
+        return false;
+    };
 
     return (
         <Fragment>
-            <ChooseContainer>
-                <Form
-                    layout={screens.xl?"inline":"horizontal"}
-                    name="single-training"
-                >
-                    <Form.Item>
-                        <Select style={{width: "200px"}} placeholder="Выберите сложность"
-                                options={[
-                                    { value: 'easy', label: 'Лёгкая' },
-                                    { value: 'middle', label: 'Средняя' },
-                                    { value: 'high', label: 'Сложная' }
-                                ]}/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Select style={{width: "200px"}} placeholder="Выберите предмет"
-                                options={subjects.map(v => ({value: v.id, label: v.name}))}
-                                onChange={value => setSelectedSubjectId(value)}/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Select style={{width: "200px"}} placeholder="Выберите тему" options={
-                            availableThemes.map(v => ({value: v.id, label: v.name}))
-                        }/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Space.Compact>
-                            <Space.Addon>Количество задач:</Space.Addon>
-                            <InputNumber style={{width: "60px", minWidth: "60px"}} type="number" defaultValue={5}
-                                         min={1} max={15}/>
-                        </Space.Compact>
-                    </Form.Item>
-                    <Form.Item>
-                        <PrimaryButton htmlType="submit">Начать тренировку!</PrimaryButton>
-                    </Form.Item>
-                </Form>
-            </ChooseContainer>
+            <PageContainer>
+                <TitleSection>
+                    <StyledTitle>
+                        Тренируйся в удобном темпе и закрепляй знания по темам
+                    </StyledTitle>
+                </TitleSection>
+
+                <StepsWrapper>
+                    <Steps
+                        current={currentStep}
+                        size={screens.xs ? "small" : "default"}
+                        orientation="horizontal"
+                        titlePlacement="vertical"
+                        responsive={false}
+                        onChange={setCurrentStep}
+                        items={steps.map((step, index) => ({
+                            title: step.title,
+                            disabled: index > currentStep &&
+                                !(index === 1 && selectedDifficulty) &&
+                                !(index === 2 && selectedSubjectId) &&
+                                !(index === 3 && selectedThemeId),
+                            status: index < currentStep ? 'finish' :
+                                index === currentStep ? 'process' : 'wait'
+                        }))}
+                    />
+                </StepsWrapper>
+
+                <ChooseContainer>
+                    <ContentContainer>
+                        {renderStepContent()}
+                    </ContentContainer>
+
+                    {currentStep < 3 && (
+                        <NavigationButtons>
+                            {currentStep > 0 && (
+                                <Button size="large" onClick={handlePrev}>
+                                    Назад
+                                </Button>
+                            )}
+                            <PrimaryButton
+                                size="large"
+                                onClick={handleNext}
+                                disabled={isNextDisabled()}
+                            >
+                                {currentStep === 2 ? 'Завершить' : 'Далее'}
+                            </PrimaryButton>
+                        </NavigationButtons>
+                    )}
+                </ChooseContainer>
+            </PageContainer>
         </Fragment>
     )
 }
 
 export default Page;
+

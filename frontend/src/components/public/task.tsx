@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import {Button, Input, Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {Button, Input} from "antd";
 import {BaseTask} from "../../api/serverResponses.ts";
 
 interface TaskProps extends BaseTask {
@@ -100,11 +99,6 @@ const Task = ({task_id, question, value, onChange, onCheck, is_correct}: TaskPro
                     onPressEnter={onCheck}
                 />
                 <ActionsGroup>
-                    {task_id !== undefined && task_id !== null && (
-                        <Tooltip title="Подсказка">
-                            <Button shape="circle" icon={<QuestionCircleOutlined/>}/>
-                        </Tooltip>
-                    )}
                     <Button type="dashed" onClick={onCheck}>Проверить</Button>
                 </ActionsGroup>
             </SubmitRow>

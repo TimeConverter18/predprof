@@ -4,6 +4,7 @@ import {Avatar, Space} from "antd";
 import {useAuth} from "../../hooks/auth/hook.ts";
 import PrimaryButton from "../public/primaryButton.tsx";
 import {useNavigate} from "react-router";
+import {userIconPath} from "../../static.ts";
 
 const ProfileContainer = styled.div`
     width: 100%;
@@ -137,7 +138,7 @@ const Page: FC = () => {
         <Fragment>
             <ProfileContainer>
                 <UserHeader>
-                    <Avatar size={120} src={user.picture} style={{ border: '2px solid #E0FF25' }}/>
+                    <Avatar size={120} src={userIconPath} style={{ border: '2px solid #E0FF25' }}/>
                     <UserInfo>
                         <UserName>{user.name}</UserName>
                         <UserRating>Рейтинг: {user.stats.rate}</UserRating>

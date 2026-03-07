@@ -9,12 +9,13 @@ const SliderWrapper = styled.div`
     display: flex;
     align-items: center;
     border-radius: 25px;
-    background-color: #bad609;
+    background-color: #efefef;
     width: 300px;
     height: 35px;
     cursor: pointer;
     overflow: hidden;
     user-select: none;
+    margin: 0;
 `;
 
 const Label = styled.div<{ active: boolean }>`
@@ -34,7 +35,7 @@ const InternalSlider = styled.div<{ isPVP: boolean }>`
     bottom: 0;
     width: 50%;
     border-radius: 16px;
-    background-color: #efefef;
+    background-color: #bad609;
     z-index: 1;
     cursor: default;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -57,7 +58,7 @@ const Slider: FC = () => {
 
     return (
         <SliderWrapper onClick={toggleSlider}>
-            <InternalSlider isPVP={isPVP} onClick={e => e.stopPropagation()}/>
+            <InternalSlider isPVP={isPVP}/>
             <Label active={isPVP}>PVP</Label>
             <Label active={!isPVP}>Тренировка</Label>
         </SliderWrapper>

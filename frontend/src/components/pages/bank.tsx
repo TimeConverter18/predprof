@@ -1,17 +1,22 @@
-import {type FC, Fragment, useState} from "react";
+import {type FC, useState} from "react";
 import {Input, Pagination, Select} from "antd";
 import {SearchOutlined} from "@ant-design/icons"
 import Task from "../public/task.tsx";
 import styled from "@emotion/styled";
 import TasksContainer from "../public/taskContainer.tsx";
-import {BaseTask} from "../../api/serverResponses.ts";
 import {useSubjectThemes} from "../../hooks/subjectThemes/hook.ts";
+import StyledTitle from "../components/textComponents/StyledTitle.tsx";
 
 const difficultyOptions = [
     { label: 'Лёгкая', value: 'easy' },
     { label: 'Средняя', value: 'middle' },
     { label: 'Сложная', value: 'high' }
 ];
+
+const PageShell = styled.div`
+    width: 100%;
+    max-width: 1280px;
+`
 
 const TopRow = styled.div`
     display: flex;
@@ -29,32 +34,39 @@ const SortContainer = styled.div`
     gap: 20px;
 `;
 
+type BaseTask = {
+    task_id: number;
+    question: string;
+    is_correct: boolean | null;
+}
+
 const tasks: BaseTask[] = [
-    {task_id: 3443, question: "Основания равнобедренной трапеции равны 43 и 73. Косинус острого угла трапеции равен 0.5. Найдите боковую сторону.", is_correct: true},
-    {task_id: 3444, question: "Основания равнобедренной трапеции равны 43 и 73. Косинус острого угла трапеции равен 0.5. Найдите боковую сторону.", is_correct: false},
-    {task_id: 3445, question: "Основания равнобедренной трапеции равны 43 и 73. Косинус острого угла трапеции равен 0.5. Найдите боковую сторону."},
-    {task_id: 3446, question: "Задача 4"},
-    {task_id: 3447, question: "Задача 5"},
-    {task_id: 3448, question: "Задача 6"},
-    {task_id: 3449, question: "Задача 7"},
-    {task_id: 3450, question: "Задача 8"},
-    {task_id: 3451, question: "Задача 9"},
-    {task_id: 3452, question: "Задача 10"},
-    {task_id: 3453, question: "Задача 11"},
-    {task_id: 3454, question: "Задача 12"},
-    {task_id: 3455, question: "Задача 13"},
-    {task_id: 3456, question: "Задача 14"},
-    {task_id: 3457, question: "Задача 15"},
-    {task_id: 3458, question: "Задача 16"},
-    {task_id: 3459, question: "Задача 17"},
-    {task_id: 3460, question: "Задача 18"},
-    {task_id: 3461, question: "Задача 19"},
-    {task_id: 3462, question: "Задача 20"},
-    {task_id: 3463, question: "Задача 21"},
-    {task_id: 3464, question: "Задача 22"},
-    {task_id: 3465, question: "Задача 23"},
-    {task_id: 3466, question: "Задача 24"},
-    {task_id: 3467, question: "Задача 25"},
+    { task_id: 1, question: "2 + 2", is_correct: null },
+    { task_id: 2, question: "5 * 3", is_correct: null },
+    { task_id: 3, question: "10 - 4", is_correct: null },
+    { task_id: 4, question: "12 / 4", is_correct: null },
+    { task_id: 5, question: "7 + 8", is_correct: null },
+    { task_id: 6, question: "9 * 6", is_correct: null },
+    { task_id: 7, question: "15 - 7", is_correct: null },
+    { task_id: 8, question: "20 / 5", is_correct: null },
+    { task_id: 9, question: "3 + 4", is_correct: null },
+    { task_id: 10, question: "8 * 2", is_correct: null },
+    { task_id: 11, question: "14 - 5", is_correct: null },
+    { task_id: 12, question: "18 / 3", is_correct: null },
+    { task_id: 13, question: "6 + 7", is_correct: null },
+    { task_id: 14, question: "4 * 5", is_correct: null },
+    { task_id: 15, question: "11 - 3", is_correct: null },
+    { task_id: 16, question: "16 / 4", is_correct: null },
+    { task_id: 17, question: "9 + 2", is_correct: null },
+    { task_id: 18, question: "7 * 3", is_correct: null },
+    { task_id: 19, question: "13 - 6", is_correct: null },
+    { task_id: 20, question: "24 / 6", is_correct: null },
+    { task_id: 21, question: "5 + 9", is_correct: null },
+    { task_id: 22, question: "6 * 4", is_correct: null },
+    { task_id: 23, question: "17 - 8", is_correct: null },
+    { task_id: 24, question: "30 / 5", is_correct: null },
+    { task_id: 25, question: "8 + 3", is_correct: null },
+    { task_id: 26, question: "10 * 2", is_correct: null },
 ]
 
 const Page: FC = () => {
@@ -71,19 +83,23 @@ const Page: FC = () => {
     };
 
     return (
-        <Fragment>
+        <PageShell>
+            <StyledTitle>Банк задач</StyledTitle>
             <TopRow>
                 <SortContainer>
                     <Select
+                        allowClear
                         defaultValue={subjects[0]?.id}
                         style={{ width: 200 }}
                         options={subjects.map((it) => ({ label: it.name, value: it.id }))}
                         placeholder="Выберите предмет"
                     />
                     <Select
+                        allowClear
                         defaultValue={difficultyOptions[0].value}
                         style={{ width: 200 }}
                         options={difficultyOptions}
+                        placeholder="Выберите сложность"
                     />
                 </SortContainer>
                 <Input placeholder="Поиск по номеру" suffix={<SearchOutlined />} style={{minWidth: 200, marginLeft: "auto", maxWidth: 200}}/>
@@ -92,8 +108,8 @@ const Page: FC = () => {
                 {tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((task) => {
                     const taskId = task.task_id.toString();
                     return (
-                        <Task 
-                            key={taskId} 
+                        <Task
+                            key={taskId}
                             {...task}
                             value={answers[taskId] || ""}
                             onChange={(val) => handleAnswerChange(taskId, val)}
@@ -110,7 +126,7 @@ const Page: FC = () => {
                     showSizeChanger={false}
                 />
             </div>
-        </Fragment>
+        </PageShell>
     );
 }
 

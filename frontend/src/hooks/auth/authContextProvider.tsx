@@ -13,7 +13,6 @@ export function AuthProvider({ children }: Props): JSX.Element {
         setUser({
             id: 1,
             name: "Александр Пушкин",
-            picture: "https://www.pngarts.com/files/5/User-Avatar-Download-Transparent-PNG-Image.png",
             stats: {
                 rate: 2540,
                 trains_count: 150,
@@ -26,6 +25,7 @@ export function AuthProvider({ children }: Props): JSX.Element {
                 accuracy_total: 96.3,
             }
         })
+
         setAuth(true);
         // api
         //     .get("/users/me", { withCredentials: true })

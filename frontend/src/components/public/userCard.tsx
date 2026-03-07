@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import {Avatar} from "antd";
 import {SimpleUserProfile} from "../../api/serverResponses.ts";
+import {userIconPath} from "../../static.ts";
 
 const CardWrapper = styled.div`
     display: flex;
@@ -29,11 +30,11 @@ const RatingText = styled.p`
     font-weight: bold;
 `
 
-const UserCard = ({picture, name, rate}: SimpleUserProfile) => {
+const UserCard = ({name, rate}: SimpleUserProfile) => {
     return (
         <CardWrapper>
             <UsernameContainer>
-                <Avatar src={picture} size={30} />
+                <Avatar src={userIconPath} size={30} />
                 <div style={{display: "flex", flexDirection: "row"}}>
                     <p style={{color: "#E0FF25", fontWeight: "bold"}}>@</p>
                     <p style={{ fontWeight: "bold" }}>

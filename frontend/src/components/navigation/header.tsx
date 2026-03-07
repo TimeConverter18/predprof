@@ -12,6 +12,7 @@ import { useLocation, useNavigate, Link } from "react-router";
 import {Desktop, Mobile} from "../responsiveWrappers.tsx";
 import {useAuth} from "../../hooks/auth/hook.ts";
 import PrimaryButton from "../public/primaryButton.tsx";
+import {userIconPath} from "../../static.ts";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -107,7 +108,7 @@ const Header: React.FC = () => {
             key: 'profile',
             label: (
                 <Avatar
-                    src={user?.picture}
+                    src={userIconPath}
                     style={{
                         cursor: 'pointer'
                     }}
@@ -161,7 +162,7 @@ const Header: React.FC = () => {
                         {user ? (
                             <>
                                 <Avatar
-                                    src={user?.picture}
+                                    src={userIconPath}
                                     style={{
                                         cursor: 'pointer'
                                     }}
@@ -182,12 +183,6 @@ const Header: React.FC = () => {
                         <Link to="/main" onClick={() => setOpen(false)}>Главная</Link>
                         <Link to="/bank" onClick={() => setOpen(false)}>Сборник задач</Link>
                         <Link to="/training" onClick={() => setOpen(false)}>Тренировки</Link>
-                        {!user && (
-                            <>
-                                <Link to="/signin" onClick={() => setOpen(false)}>Войти</Link>
-                                <Link to="/signup" onClick={() => setOpen(false)}>Регистрация</Link>
-                            </>
-                        )}
                     </div>
                 </Drawer>
             </Mobile>
