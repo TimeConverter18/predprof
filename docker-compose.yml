@@ -8,6 +8,8 @@ services:
     build:
       context: ./frontend
     container_name: frontend-pr
+    networks:
+      - pr
 
   nginx-pr:
     container_name: nginx-pr
