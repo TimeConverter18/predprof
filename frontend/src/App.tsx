@@ -14,6 +14,7 @@ import PVPPage from "./components/pages/training/pvp"
 import {SubjectThemesProvider} from "./hooks/subjectThemes/subjectThemesContextProvider"
 import SinglePage from "./components/pages/training/single"
 import NFPage from "./components/pages/notFound"
+import AdminPanel from "./components/pages/adminPanel"
 
 const App: FC = () => {
     return (
@@ -27,6 +28,7 @@ const App: FC = () => {
                     <BrowserRouter>
                         <AuthProvider>
                             <Routes>
+                                <Route path="/admin" element={<AdminPanel />}/>
                                 <Route path="/signin" element={<SignInPage />}/>
                                 <Route path="/signup" element={<SignUpPage />}/>
                                 <Route path="/*" element={
