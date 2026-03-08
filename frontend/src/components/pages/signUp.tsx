@@ -1,7 +1,7 @@
-import {FC} from "react";
-import {Button, Form, Input, Typography} from "antd";
+import type {FC} from "react";
+import {Form, Input, Typography} from "antd";
 import styled from "@emotion/styled";
-import PrimaryButton from "../public/primaryButton.tsx";
+import PrimaryButton from "../public/primaryButton";
 import {Link} from "react-router";
 
 const FormWrapper = styled.div`

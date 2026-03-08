@@ -1,11 +1,11 @@
 import {type FC, useState} from "react";
 import {Input, Pagination, Select} from "antd";
 import {SearchOutlined} from "@ant-design/icons"
-import Task from "../public/task.tsx";
+import Task from "../public/task";
 import styled from "@emotion/styled";
-import TasksContainer from "../public/taskContainer.tsx";
-import {useSubjectThemes} from "../../hooks/subjectThemes/hook.ts";
-import StyledTitle from "../components/textComponents/StyledTitle.tsx";
+import TasksContainer from "../public/taskContainer";
+import {useSubjectThemes} from "../../hooks/subjectThemes/hook";
+import StyledTitle from "../components/textComponents/StyledTitle";
 
 const difficultyOptions = [
     { label: 'Лёгкая', value: 'easy' },

@@ -1,10 +1,10 @@
 import {type FC, Fragment} from "react";
 import styled from "@emotion/styled";
 import {Avatar, Space} from "antd";
-import {useAuth} from "../../hooks/auth/hook.ts";
-import PrimaryButton from "../public/primaryButton.tsx";
+import {useAuth} from "../../hooks/auth/hook";
+import PrimaryButton from "../public/primaryButton";
 import {useNavigate} from "react-router";
-import {userIconPath} from "../../static.ts";
+import {userIconPath} from "../../static";
 
 const ProfileContainer = styled.div`
     width: 100%;

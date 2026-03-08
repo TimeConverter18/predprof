@@ -1,13 +1,13 @@
 import {type FC, Fragment, useState} from "react";
 import styled from "@emotion/styled";
-import PrimaryButton from "../../public/primaryButton.tsx";
+import PrimaryButton from "../../public/primaryButton";
 import {Tag, Form, notification, Spin} from "antd";
-import {useSubjectThemes} from "../../../hooks/subjectThemes/hook.ts";
+import {useSubjectThemes} from "../../../hooks/subjectThemes/hook";
 import {createStyles} from 'antd-style';
 import useWebSocket from 'react-use-websocket';
-import StyledTitle from "../../components/textComponents/StyledTitle.tsx";
-import PageContainer from "../../components/containers/PageContainer.tsx";
-import StyledLead from "../../components/textComponents/StyledLead.tsx";
+import StyledTitle from "../../components/textComponents/StyledTitle";
+import PageContainer from "../../components/containers/PageContainer";
+import StyledLead from "../../components/textComponents/StyledLead";
 
 const PageShell = styled.div`
     width: 100%;

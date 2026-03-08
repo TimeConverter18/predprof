@@ -1,13 +1,13 @@
 import {type FC, useEffect, useState} from "react";
 import styled from "@emotion/styled";
-import Task from "../../public/task.tsx";
+import Task from "../../public/task";
 import {Modal, notification, Pagination, Space} from "antd";
-import PrimaryButton from "../../public/primaryButton.tsx";
+import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
 import {ClockCircleOutlined} from "@ant-design/icons";
 import {useWebSocket} from "@siberiacancode/reactuse";
-import domain from "../../../api/domain.ts";
-import NFPage from "../notFound.tsx";
+import domain from "../../../api/domain";
+import NFPage from "../notFound";
 
 export type TaskState = "right" | "wrong" | "base"
 
@@ -186,7 +186,7 @@ const Page: FC = () => {
                 value={answers[current - 1]}
                 onChange={handleAnswerChange}
                 onCheck={handleSendAnswer}
-                is_correct={taskStates[current - 1] === "right" ? true : taskStates[current - 1] === "wrong" ? false : undefined}
+                is_correct={taskStates[current - 1] === "right" ? true : taskStates[current - 1] === "wrong" ? false : null}
             />
             <Pagination
                 current={current}

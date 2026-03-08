@@ -1,6 +1,6 @@
-import {type JSX, PropsWithChildren, useEffect, useState} from "react";
-import {SubjectThemesContextProvider} from "./subjectThemesContext.ts";
-import {isSubjects, Subject} from "../../api/serverResponses.ts";
+import {type JSX, type PropsWithChildren, useEffect, useState} from "react";
+import {SubjectThemesContextProvider} from "./subjectThemesContext";
+import {isSubjects, type Subject} from "../../api/serverResponses";
 
 export function SubjectThemesProvider({ children }: PropsWithChildren): JSX.Element {
     const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -30,8 +30,8 @@ export function SubjectThemesProvider({ children }: PropsWithChildren): JSX.Elem
                 id: 2,
                 name: "Информатика",
                 themes: [
-                    { id: 21, name: "Программирование" },
-                    { id: 22, name: "Алгоритмы" }
+                    {id: 21, name: "Программирование"},
+                    {id: 22, name: "Алгоритмы"}
                 ]
             }
         ];

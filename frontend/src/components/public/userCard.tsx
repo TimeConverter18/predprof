@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import {Avatar} from "antd";
-import {SimpleUserProfile} from "../../api/serverResponses.ts";
-import {userIconPath} from "../../static.ts";
+import type {SimpleUserProfile} from "../../api/serverResponses";
+import {userIconPath} from "../../static";
 
 const CardWrapper = styled.div`
     display: flex;

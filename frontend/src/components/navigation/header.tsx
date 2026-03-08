@@ -9,10 +9,10 @@ import {
     BarsOutlined,
 } from '@ant-design/icons';
 import { useLocation, useNavigate, Link } from "react-router";
-import {Desktop, Mobile} from "../responsiveWrappers.tsx";
-import {useAuth} from "../../hooks/auth/hook.ts";
-import PrimaryButton from "../public/primaryButton.tsx";
-import {userIconPath} from "../../static.ts";
+import {Desktop, Mobile} from "../responsiveWrappers";
+import {useAuth} from "../../hooks/auth/hook";
+import PrimaryButton from "../public/primaryButton";
+import {userIconPath} from "../../static";
 
 const HeaderWrapper = styled.div`
     display: flex;

@@ -1,4 +1,4 @@
-import { SubjectThemesType } from "../hooks/subjectThemes/subjectThemesContext.ts";
+import type { SubjectThemesType } from "../hooks/subjectThemes/subjectThemesContext";
 
 export type Error = {
     error: string;

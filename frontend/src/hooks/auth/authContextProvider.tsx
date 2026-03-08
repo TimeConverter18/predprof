@@ -1,8 +1,6 @@
 import {type JSX, useEffect, useState} from "react";
-import api from "../../api/api";
-import type {AxiosError, AxiosResponse} from "axios";
-import {UserProfile} from "../../api/serverResponses.ts";
-import {AuthContextProvider, type Props} from "./authContext.ts";
+import type {UserProfile} from "../../api/serverResponses";
+import {AuthContextProvider, type Props} from "./authContext";
 
 export function AuthProvider({ children }: Props): JSX.Element {
     const [user, setUser] = useState<UserProfile | null>(null);

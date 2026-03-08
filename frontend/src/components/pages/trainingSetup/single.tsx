@@ -2,14 +2,13 @@ import {type FC, Fragment, useState} from "react"
 import styled from "@emotion/styled";
 import {Steps, Tag, Button, Result} from "antd";
 import {CheckOutlined} from '@ant-design/icons';
-import PrimaryButton from "../../public/primaryButton.tsx";
-import {useSubjectThemes} from "../../../hooks/subjectThemes/hook.ts";
+import PrimaryButton from "../../public/primaryButton";
+import {useSubjectThemes} from "../../../hooks/subjectThemes/hook";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {createStyles} from 'antd-style';
-import StyledTitle from "../../components/textComponents/StyledTitle.tsx";
-import PageContainer from "../../components/containers/PageContainer.tsx";
-import CardContainer from "../../components/containers/CardContainer.tsx";
-import {Desktop, Mobile} from "../../responsiveWrappers.tsx";
+import StyledTitle from "../../components/textComponents/StyledTitle";
+import PageContainer from "../../components/containers/PageContainer";
+import CardContainer from "../../components/containers/CardContainer";
 
 const TitleSection = styled.div`
     width: 100%;
@@ -23,7 +22,7 @@ const StepsWrapper = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto 6px;
-    padding: 6px 6px 4px;
+    padding: 6px 6px 4px
     overflow-x: auto;
     min-width: 240px;
 `;

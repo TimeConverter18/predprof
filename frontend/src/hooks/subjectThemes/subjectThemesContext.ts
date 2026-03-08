@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {Subject} from "../../api/serverResponses.ts";
+import type {Subject} from "../../api/serverResponses";
 
 export type SubjectThemesType = {
     subjects: Subject[],

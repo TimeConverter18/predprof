@@ -1,8 +1,8 @@
 import {type FC, Fragment, useEffect} from "react";
 import styled from "@emotion/styled";
 import {useNavigate, useLocation, Routes, Route} from "react-router";
-import PvpPage from "./pvp.tsx"
-import SinglePage from "./single.tsx"
+import PvpPage from "./pvp"
+import SinglePage from "./single"
 
 const SliderWrapper = styled.div`
     position: relative;

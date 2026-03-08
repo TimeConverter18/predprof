@@ -1,14 +1,14 @@
-import React, {type FC} from "react";
+import {type FC} from "react";
 import styled from "@emotion/styled";
-import PrimaryButton from "../public/primaryButton.tsx";
-import UserCard from "../public/userCard.tsx";
-import {SimpleUserProfile} from "../../api/serverResponses.ts";
+import PrimaryButton from "../public/primaryButton";
+import UserCard from "../public/userCard";
+import type {SimpleUserProfile} from "../../api/serverResponses";
 import {TrophyOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
-import CardContainer from "../components/containers/CardContainer.tsx";
-import StyledTitle from "../components/textComponents/StyledTitle.tsx";
-import StyledLead from "../components/textComponents/StyledLead.tsx";
-import PageContainer from "../components/containers/PageContainer.tsx";
+import CardContainer from "../components/containers/CardContainer";
+import StyledTitle from "../components/textComponents/StyledTitle";
+import StyledLead from "../components/textComponents/StyledLead";
+import PageContainer from "../components/containers/PageContainer";
 
 
 const LeaderboardSection = styled.section`

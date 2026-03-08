@@ -1,14 +1,14 @@
 import {type FC, useEffect, useState} from "react";
 import {Flex, Modal, notification, Progress} from "antd";
 import styled from "@emotion/styled";
-import Task from "../../public/task.tsx";
+import Task from "../../public/task";
 import {useWebSocket} from "@siberiacancode/reactuse";
-import {Desktop, Mobile} from "../../responsiveWrappers.tsx";
-import PrimaryButton from "../../public/primaryButton.tsx";
+import {Desktop, Mobile} from "../../responsiveWrappers";
+import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
-import domain from "../../../api/domain.ts";
-import {TaskState} from "./single.tsx";
-import NFPage from "../notFound.tsx";
+import domain from "../../../api/domain";
+import type {TaskState} from "./single";
+import NFPage from "../notFound";
 
 type StatsProps = {
     playerProgress: number;
@@ -200,7 +200,7 @@ const Page: FC = () => {
                 value={answer}
                 onChange={setAnswer}
                 onCheck={handleSendAnswer}
-                is_correct={status === "right" ? true : status === "wrong" ? false : undefined}
+                is_correct={status === "right" ? true : status === "wrong" ? false : null}
             />
             <Modal
                 title="PvP окончено"

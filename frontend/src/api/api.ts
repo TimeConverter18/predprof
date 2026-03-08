@@ -1,7 +1,6 @@
 import axios, {AxiosError, type AxiosResponse} from "axios";
 import {message} from "antd";
-import domain from "./domain.ts";
-import {isCustomError} from "./serverResponses.ts";
+import domain from "./domain";
 
 const apiURL = "/api"
 
@@ -53,14 +52,9 @@ api.interceptors.response.use(
                 }
                 break; }
             case 499:
-                { const errorData = error?.response?.data
-                if (isCustomError(errorData)) {
-                    message.error(errorData.error, 1);
-                }
-                else {
-                    message.error("Неизвестная ошибка", 1);
-                }
-                break; }
+                { //const errorData = error?.response?.data
+                message.error("Неизвестная ошибка", 1);
+                break}
             default:
                 message.error(`Неопознанная ошибка ${error.status}`, 1);
 

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import {Button, Input} from "antd";
-import {BaseTask} from "../../api/serverResponses.ts";
+import type {BaseTask} from "../../api/serverResponses";
 
 interface TaskProps extends BaseTask {
     value?: string;
@@ -69,7 +69,7 @@ const StatusText = styled.div`
     background-color: ${(props) => props.color};
 `
 
-const Status = ({is_correct}: {is_correct?: boolean}) => {
+const Status = ({is_correct}: {is_correct: boolean | null}) => {
     const statusColor = is_correct === true ? "#00a115" : is_correct === false ? "#bd0000" : "#83868e";
     const statusText = is_correct === true ? "Решено" : is_correct === false ? "Решено неверно" : "Не решено";
 

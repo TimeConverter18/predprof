@@ -1,5 +1,5 @@
 import {createContext, type ReactNode} from "react";
-import {UserProfile} from "../../api/serverResponses.ts";
+import type {UserProfile} from "../../api/serverResponses";
 
 export type Props = {
     children: ReactNode;
