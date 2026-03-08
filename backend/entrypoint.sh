@@ -11,4 +11,12 @@ else:
     print('Суперпользователь уже существует')
 "
 
+# Загружаем данные только если файл существует
+if [ -f /app/dump.json ]; then
+    python manage.py loaddata /app/dump.json
+    echo "Данные загружены из dump.json"
+else
+    echo "dump.json не найден, пропускаем"
+fi
+
 daphne -b 0.0.0.0 -p 8000 --root-path /api olympiad.asgi:application
