@@ -1,0 +1,3660 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-02-17T16:39:06.423Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Subject object (1)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-02-17T16:39:15.130Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "Subject object (2)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-02-17T16:40:45.324Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "1",
+    "object_repr": "Парабола",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-02-17T16:40:53.078Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "2",
+    "object_repr": "Геометрия",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-02-17T16:41:03.683Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "3",
+    "object_repr": "Площадь",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 3,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 3,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 3,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 3,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 2,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 2,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 2,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 2,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add round",
+    "content_type": 6,
+    "codename": "add_round"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change round",
+    "content_type": 6,
+    "codename": "change_round"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete round",
+    "content_type": 6,
+    "codename": "delete_round"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view round",
+    "content_type": 6,
+    "codename": "view_round"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add round player",
+    "content_type": 7,
+    "codename": "add_roundplayer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change round player",
+    "content_type": 7,
+    "codename": "change_roundplayer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete round player",
+    "content_type": 7,
+    "codename": "delete_roundplayer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view round player",
+    "content_type": 7,
+    "codename": "view_roundplayer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add round task",
+    "content_type": 8,
+    "codename": "add_roundtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change round task",
+    "content_type": 8,
+    "codename": "change_roundtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete round task",
+    "content_type": 8,
+    "codename": "delete_roundtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view round task",
+    "content_type": 8,
+    "codename": "view_roundtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 9,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 9,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 9,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 9,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add subject",
+    "content_type": 10,
+    "codename": "add_subject"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change subject",
+    "content_type": 10,
+    "codename": "change_subject"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete subject",
+    "content_type": 10,
+    "codename": "delete_subject"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view subject",
+    "content_type": 10,
+    "codename": "view_subject"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add task source",
+    "content_type": 12,
+    "codename": "add_tasksource"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change task source",
+    "content_type": 12,
+    "codename": "change_tasksource"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete task source",
+    "content_type": 12,
+    "codename": "delete_tasksource"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view task source",
+    "content_type": 12,
+    "codename": "view_tasksource"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add task tag",
+    "content_type": 13,
+    "codename": "add_tasktag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change task tag",
+    "content_type": 13,
+    "codename": "change_tasktag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete task tag",
+    "content_type": 13,
+    "codename": "delete_tasktag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view task tag",
+    "content_type": 13,
+    "codename": "view_tasktag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add subject theme",
+    "content_type": 14,
+    "codename": "add_subjecttheme"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change subject theme",
+    "content_type": 14,
+    "codename": "change_subjecttheme"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete subject theme",
+    "content_type": 14,
+    "codename": "delete_subjecttheme"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view subject theme",
+    "content_type": 14,
+    "codename": "view_subjecttheme"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add task",
+    "content_type": 11,
+    "codename": "add_task"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change task",
+    "content_type": 11,
+    "codename": "change_task"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete task",
+    "content_type": 11,
+    "codename": "delete_task"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view task",
+    "content_type": 11,
+    "codename": "view_task"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add training statistics",
+    "content_type": 16,
+    "codename": "add_trainingstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change training statistics",
+    "content_type": 16,
+    "codename": "change_trainingstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete training statistics",
+    "content_type": 16,
+    "codename": "delete_trainingstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view training statistics",
+    "content_type": 16,
+    "codename": "view_trainingstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add round statistics",
+    "content_type": 15,
+    "codename": "add_roundstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change round statistics",
+    "content_type": 15,
+    "codename": "change_roundstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete round statistics",
+    "content_type": 15,
+    "codename": "delete_roundstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view round statistics",
+    "content_type": 15,
+    "codename": "view_roundstatistics"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add training",
+    "content_type": 17,
+    "codename": "add_training"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change training",
+    "content_type": 17,
+    "codename": "change_training"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete training",
+    "content_type": 17,
+    "codename": "delete_training"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view training",
+    "content_type": 17,
+    "codename": "view_training"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 69,
+  "fields": {
+    "name": "Can add training task",
+    "content_type": 18,
+    "codename": "add_trainingtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 70,
+  "fields": {
+    "name": "Can change training task",
+    "content_type": 18,
+    "codename": "change_trainingtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 71,
+  "fields": {
+    "name": "Can delete training task",
+    "content_type": 18,
+    "codename": "delete_trainingtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 72,
+  "fields": {
+    "name": "Can view training task",
+    "content_type": 18,
+    "codename": "view_trainingtask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 73,
+  "fields": {
+    "name": "Can add user task",
+    "content_type": 19,
+    "codename": "add_usertask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 74,
+  "fields": {
+    "name": "Can change user task",
+    "content_type": 19,
+    "codename": "change_usertask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 75,
+  "fields": {
+    "name": "Can delete user task",
+    "content_type": 19,
+    "codename": "delete_usertask"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 76,
+  "fields": {
+    "name": "Can view user task",
+    "content_type": 19,
+    "codename": "view_usertask"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "pvp",
+    "model": "round"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "pvp",
+    "model": "roundplayer"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "pvp",
+    "model": "roundtask"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "users",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "tasks",
+    "model": "subject"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "tasks",
+    "model": "task"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "tasks",
+    "model": "tasksource"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "tasks",
+    "model": "tasktag"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "tasks",
+    "model": "subjecttheme"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "user_statistics",
+    "model": "roundstatistics"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "user_statistics",
+    "model": "trainingstatistics"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "trainings",
+    "model": "training"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 18,
+  "fields": {
+    "app_label": "trainings",
+    "model": "trainingtask"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 19,
+  "fields": {
+    "app_label": "users",
+    "model": "usertask"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "oqui12wzn9oz1cmmp5zyuamzf62sntyw",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSHQMjxcuvcbyMwAtmogKe3K-O_apAvd3nPOfYmI2zrFreclzkmchRan342QH7nuIN2x3prkVtdlJrkr8qBdXlvKz8vh_h1M2KdvDSmgdwMR6lEPAxrOIXhmawuwUYVdGL0mYHLZWQjgFKtcCMAEpcYk3h_k1jes:1vsO2v:6_QqdyRyCcm0mfjsRn-xstYjXtDhUPleWN48ttmbuWM",
+    "expire_date": "2026-03-03T16:35:33.457Z"
+  }
+},
+{
+  "model": "pvp.round",
+  "pk": 1,
+  "fields": {
+    "status": "technical_error",
+    "winner": null,
+    "started_at": "2026-02-20T05:09:55.326Z",
+    "planed_finish": "2026-02-20T07:09:55.326Z",
+    "finished_at": "2026-02-20T05:12:19.316Z",
+    "created_at": "2026-02-20T05:09:55.327Z"
+  }
+},
+{
+  "model": "pvp.round",
+  "pk": 2,
+  "fields": {
+    "status": "technical_error",
+    "winner": null,
+    "started_at": "2026-02-20T05:12:32.215Z",
+    "planed_finish": "2026-02-20T07:12:32.215Z",
+    "finished_at": "2026-02-20T05:14:07.275Z",
+    "created_at": "2026-02-20T05:12:32.215Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 1,
+  "fields": {
+    "round": 1,
+    "task": 1,
+    "order": 1,
+    "created_at": "2026-02-20T05:09:55.509Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 2,
+  "fields": {
+    "round": 1,
+    "task": 2,
+    "order": 2,
+    "created_at": "2026-02-20T05:09:55.509Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 3,
+  "fields": {
+    "round": 1,
+    "task": 3,
+    "order": 3,
+    "created_at": "2026-02-20T05:09:55.509Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 4,
+  "fields": {
+    "round": 2,
+    "task": 1,
+    "order": 1,
+    "created_at": "2026-02-20T05:12:32.217Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 5,
+  "fields": {
+    "round": 2,
+    "task": 2,
+    "order": 2,
+    "created_at": "2026-02-20T05:12:32.217Z"
+  }
+},
+{
+  "model": "pvp.roundtask",
+  "pk": 6,
+  "fields": {
+    "round": 2,
+    "task": 3,
+    "order": 3,
+    "created_at": "2026-02-20T05:12:32.217Z"
+  }
+},
+{
+  "model": "pvp.roundplayer",
+  "pk": 1,
+  "fields": {
+    "round": 1,
+    "player": 1,
+    "created_at": "2026-02-20T05:09:55.441Z"
+  }
+},
+{
+  "model": "pvp.roundplayer",
+  "pk": 2,
+  "fields": {
+    "round": 1,
+    "player": 3,
+    "created_at": "2026-02-20T05:09:55.441Z"
+  }
+},
+{
+  "model": "pvp.roundplayer",
+  "pk": 3,
+  "fields": {
+    "round": 2,
+    "player": 3,
+    "created_at": "2026-02-20T05:12:32.216Z"
+  }
+},
+{
+  "model": "pvp.roundplayer",
+  "pk": 4,
+  "fields": {
+    "round": 2,
+    "player": 1,
+    "created_at": "2026-02-20T05:12:32.216Z"
+  }
+},
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$ljS1yl8zxIR7nX2V4jslxd$DgtMvTU13AknOGaDsWgYIMCNiMxjEsb75u1bxOX12qc=",
+    "last_login": "2026-02-17T16:35:33.440Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "username": "admin",
+    "email": "admin@mail.ru",
+    "role": "player",
+    "rating": 100,
+    "is_active": true,
+    "is_staff": true,
+    "updated_at": "2026-02-17T16:30:45.005Z",
+    "created_at": "2026-02-17T16:30:45.005Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$mgWU09ZDTYEJunrSn6ZnYv$stxNO89BTcacBcrP/LEqeIYhwlwibuj0SSDci6eIiSs=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Ivan",
+    "last_name": "Petrov",
+    "username": "ivan123",
+    "email": "ivan@example.com",
+    "role": "player",
+    "rating": 100,
+    "is_active": true,
+    "is_staff": false,
+    "updated_at": "2026-02-19T15:34:16.995Z",
+    "created_at": "2026-02-19T15:34:16.995Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$EezbwNHpGdsjkdEiEBy6D9$tQr9fG5Fl+Gw2SpKb87VI0u06x2mMpgARJr8iaZLrss=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "username": "admin2",
+    "email": "admin2@mail.ru",
+    "role": "player",
+    "rating": 100,
+    "is_active": true,
+    "is_staff": true,
+    "updated_at": "2026-02-20T04:51:42.526Z",
+    "created_at": "2026-02-20T04:51:42.526Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tasks.tasksource",
+  "pk": 4,
+  "fields": {
+    "name": "Shell seed",
+    "is_ai": false,
+    "updated_at": "2026-02-19T17:56:26.725Z",
+    "created_at": "2026-02-19T17:56:26.725Z"
+  }
+},
+{
+  "model": "tasks.subjecttheme",
+  "pk": 4,
+  "fields": {
+    "name": "Алгебра",
+    "subject": 9,
+    "updated_at": "2026-02-19T17:56:26.742Z",
+    "created_at": "2026-02-19T17:56:26.742Z"
+  }
+},
+{
+  "model": "tasks.subjecttheme",
+  "pk": 5,
+  "fields": {
+    "name": "Геометрия",
+    "subject": 9,
+    "updated_at": "2026-02-19T17:56:26.792Z",
+    "created_at": "2026-02-19T17:56:26.792Z"
+  }
+},
+{
+  "model": "tasks.subjecttheme",
+  "pk": 6,
+  "fields": {
+    "name": "Механика",
+    "subject": 10,
+    "updated_at": "2026-02-19T17:56:26.834Z",
+    "created_at": "2026-02-19T17:56:26.834Z"
+  }
+},
+{
+  "model": "tasks.subjecttheme",
+  "pk": 7,
+  "fields": {
+    "name": "Электродинамика",
+    "subject": 10,
+    "updated_at": "2026-02-19T17:56:26.867Z",
+    "created_at": "2026-02-19T17:56:26.867Z"
+  }
+},
+{
+  "model": "tasks.subject",
+  "pk": 9,
+  "fields": {
+    "name": "Математика",
+    "updated_at": "2026-02-19T17:56:26.733Z",
+    "created_at": "2026-02-19T17:56:26.734Z"
+  }
+},
+{
+  "model": "tasks.subject",
+  "pk": 10,
+  "fields": {
+    "name": "Физика",
+    "updated_at": "2026-02-19T17:56:26.825Z",
+    "created_at": "2026-02-19T17:56:26.825Z"
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 1,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.767Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 2,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.767Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 3,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.767Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 4,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 5,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 6,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 7,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 8,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 9,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 10,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / easy] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.767Z",
+    "created_at": "2026-02-19T17:56:26.768Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 11,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 12,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 13,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 14,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 15,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 16,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 17,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 18,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 19,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 20,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / middle] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.776Z",
+    "created_at": "2026-02-19T17:56:26.776Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 21,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 22,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 23,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 24,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 25,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 26,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 27,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 28,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 29,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 30,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 4,
+    "question": "[Математика / Алгебра / high] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.784Z",
+    "created_at": "2026-02-19T17:56:26.784Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 31,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 32,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 33,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 34,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 35,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 36,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 37,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 38,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 39,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 40,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / easy] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.801Z",
+    "created_at": "2026-02-19T17:56:26.801Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 41,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 42,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 43,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 44,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 45,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 46,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 47,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 48,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 49,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 50,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / middle] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.809Z",
+    "created_at": "2026-02-19T17:56:26.809Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 51,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 52,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 53,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 54,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 55,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 56,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 57,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 58,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 59,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 60,
+  "fields": {
+    "source": 4,
+    "subject": 9,
+    "theme": 5,
+    "question": "[Математика / Геометрия / high] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.818Z",
+    "created_at": "2026-02-19T17:56:26.818Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 61,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.842Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 62,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.842Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 63,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.842Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 64,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 65,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 66,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 67,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 68,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 69,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 70,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / easy] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.843Z",
+    "created_at": "2026-02-19T17:56:26.843Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 71,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 72,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 73,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 74,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 75,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 76,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 77,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 78,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 79,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 80,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / middle] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.851Z",
+    "created_at": "2026-02-19T17:56:26.851Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 81,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 82,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 83,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 84,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 85,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 86,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 87,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 88,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 89,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 90,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 6,
+    "question": "[Физика / Механика / high] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.859Z",
+    "created_at": "2026-02-19T17:56:26.859Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 91,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 92,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 93,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 94,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 95,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 96,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 97,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 98,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 99,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 100,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / easy] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "easy",
+    "updated_at": "2026-02-19T17:56:26.876Z",
+    "created_at": "2026-02-19T17:56:26.876Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 101,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.884Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 102,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 103,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 104,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 105,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 106,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 107,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 108,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 109,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 110,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / middle] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "middle",
+    "updated_at": "2026-02-19T17:56:26.884Z",
+    "created_at": "2026-02-19T17:56:26.885Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 111,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №1",
+    "solution": "Решение задачи №1",
+    "correct_answer": "10",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 112,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №2",
+    "solution": "Решение задачи №2",
+    "correct_answer": "20",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 113,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №3",
+    "solution": "Решение задачи №3",
+    "correct_answer": "30",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 114,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №4",
+    "solution": "Решение задачи №4",
+    "correct_answer": "40",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 115,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №5",
+    "solution": "Решение задачи №5",
+    "correct_answer": "50",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 116,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №6",
+    "solution": "Решение задачи №6",
+    "correct_answer": "60",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 117,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №7",
+    "solution": "Решение задачи №7",
+    "correct_answer": "70",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 118,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №8",
+    "solution": "Решение задачи №8",
+    "correct_answer": "80",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 119,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №9",
+    "solution": "Решение задачи №9",
+    "correct_answer": "90",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 120,
+  "fields": {
+    "source": 4,
+    "subject": 10,
+    "theme": 7,
+    "question": "[Физика / Электродинамика / high] Вопрос №10",
+    "solution": "Решение задачи №10",
+    "correct_answer": "100",
+    "difficulty": "high",
+    "updated_at": "2026-02-19T17:56:26.893Z",
+    "created_at": "2026-02-19T17:56:26.893Z",
+    "tags": []
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "training_task": 31,
+    "number_of_attempts": 1,
+    "user_answer": "1",
+    "is_correct": false,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.867Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "training_task": 32,
+    "number_of_attempts": 1,
+    "user_answer": "2",
+    "is_correct": false,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.911Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "training_task": 33,
+    "number_of_attempts": 1,
+    "user_answer": "20",
+    "is_correct": true,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.919Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 4,
+  "fields": {
+    "user": 1,
+    "training_task": 34,
+    "number_of_attempts": 1,
+    "user_answer": "20",
+    "is_correct": true,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.928Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "training_task": 35,
+    "number_of_attempts": 1,
+    "user_answer": "32",
+    "is_correct": false,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.936Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 6,
+  "fields": {
+    "user": 1,
+    "training_task": 36,
+    "number_of_attempts": 1,
+    "user_answer": "90",
+    "is_correct": true,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.944Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 7,
+  "fields": {
+    "user": 1,
+    "training_task": 37,
+    "number_of_attempts": 1,
+    "user_answer": "10",
+    "is_correct": true,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.953Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 8,
+  "fields": {
+    "user": 1,
+    "training_task": 38,
+    "number_of_attempts": 1,
+    "user_answer": "df",
+    "is_correct": false,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.961Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 9,
+  "fields": {
+    "user": 1,
+    "training_task": 39,
+    "number_of_attempts": 1,
+    "user_answer": "23",
+    "is_correct": false,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.971Z"
+  }
+},
+{
+  "model": "user_statistics.trainingstatistics",
+  "pk": 10,
+  "fields": {
+    "user": 1,
+    "training_task": 40,
+    "number_of_attempts": 1,
+    "user_answer": "60",
+    "is_correct": true,
+    "time_to_solve": null,
+    "created_at": "2026-02-20T05:48:41.978Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 1,
+  "fields": {
+    "status": "waiting",
+    "player": 1,
+    "started_at": "2026-02-19T18:39:34.484Z",
+    "planed_finish": "2026-02-19T20:39:34.484Z",
+    "finished_at": null,
+    "created_at": "2026-02-19T18:39:34.485Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 2,
+  "fields": {
+    "status": "finished",
+    "player": 1,
+    "started_at": "2026-02-20T04:26:54.231Z",
+    "planed_finish": "2026-02-20T06:26:54.231Z",
+    "finished_at": "2026-02-20T04:50:49.635Z",
+    "created_at": "2026-02-20T04:26:54.231Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 3,
+  "fields": {
+    "status": "waiting",
+    "player": 1,
+    "started_at": "2026-02-20T05:42:54.352Z",
+    "planed_finish": "2026-02-20T07:42:54.352Z",
+    "finished_at": null,
+    "created_at": "2026-02-20T05:42:54.353Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 4,
+  "fields": {
+    "status": "finished",
+    "player": 1,
+    "started_at": "2026-02-20T05:47:53.570Z",
+    "planed_finish": "2026-02-20T07:47:53.570Z",
+    "finished_at": "2026-02-20T05:48:41.986Z",
+    "created_at": "2026-02-20T05:47:53.570Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 1,
+  "fields": {
+    "training": 1,
+    "task": 2,
+    "order": 1,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 2,
+  "fields": {
+    "training": 1,
+    "task": 15,
+    "order": 2,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 3,
+  "fields": {
+    "training": 1,
+    "task": 10,
+    "order": 3,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 4,
+  "fields": {
+    "training": 1,
+    "task": 27,
+    "order": 4,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 5,
+  "fields": {
+    "training": 1,
+    "task": 1,
+    "order": 5,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 6,
+  "fields": {
+    "training": 1,
+    "task": 28,
+    "order": 6,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 7,
+  "fields": {
+    "training": 1,
+    "task": 21,
+    "order": 7,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 8,
+  "fields": {
+    "training": 1,
+    "task": 4,
+    "order": 8,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 9,
+  "fields": {
+    "training": 1,
+    "task": 16,
+    "order": 9,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 10,
+  "fields": {
+    "training": 1,
+    "task": 8,
+    "order": 10,
+    "created_at": "2026-02-19T18:39:34.543Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 11,
+  "fields": {
+    "training": 2,
+    "task": 3,
+    "order": 1,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 12,
+  "fields": {
+    "training": 2,
+    "task": 11,
+    "order": 2,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 13,
+  "fields": {
+    "training": 2,
+    "task": 22,
+    "order": 3,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 14,
+  "fields": {
+    "training": 2,
+    "task": 9,
+    "order": 4,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 15,
+  "fields": {
+    "training": 2,
+    "task": 19,
+    "order": 5,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 16,
+  "fields": {
+    "training": 2,
+    "task": 21,
+    "order": 6,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 17,
+  "fields": {
+    "training": 2,
+    "task": 4,
+    "order": 7,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 18,
+  "fields": {
+    "training": 2,
+    "task": 13,
+    "order": 8,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 19,
+  "fields": {
+    "training": 2,
+    "task": 27,
+    "order": 9,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 20,
+  "fields": {
+    "training": 2,
+    "task": 15,
+    "order": 10,
+    "created_at": "2026-02-20T04:26:54.260Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 21,
+  "fields": {
+    "training": 3,
+    "task": 13,
+    "order": 1,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 22,
+  "fields": {
+    "training": 3,
+    "task": 1,
+    "order": 2,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 23,
+  "fields": {
+    "training": 3,
+    "task": 19,
+    "order": 3,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 24,
+  "fields": {
+    "training": 3,
+    "task": 11,
+    "order": 4,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 25,
+  "fields": {
+    "training": 3,
+    "task": 6,
+    "order": 5,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 26,
+  "fields": {
+    "training": 3,
+    "task": 5,
+    "order": 6,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 27,
+  "fields": {
+    "training": 3,
+    "task": 27,
+    "order": 7,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 28,
+  "fields": {
+    "training": 3,
+    "task": 8,
+    "order": 8,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 29,
+  "fields": {
+    "training": 3,
+    "task": 9,
+    "order": 9,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 30,
+  "fields": {
+    "training": 3,
+    "task": 29,
+    "order": 10,
+    "created_at": "2026-02-20T05:42:54.390Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 31,
+  "fields": {
+    "training": 4,
+    "task": 108,
+    "order": 1,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 32,
+  "fields": {
+    "training": 4,
+    "task": 43,
+    "order": 2,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 33,
+  "fields": {
+    "training": 4,
+    "task": 42,
+    "order": 3,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 34,
+  "fields": {
+    "training": 4,
+    "task": 2,
+    "order": 4,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 35,
+  "fields": {
+    "training": 4,
+    "task": 111,
+    "order": 5,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 36,
+  "fields": {
+    "training": 4,
+    "task": 119,
+    "order": 6,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 37,
+  "fields": {
+    "training": 4,
+    "task": 101,
+    "order": 7,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 38,
+  "fields": {
+    "training": 4,
+    "task": 56,
+    "order": 8,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 39,
+  "fields": {
+    "training": 4,
+    "task": 47,
+    "order": 9,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 40,
+  "fields": {
+    "training": 4,
+    "task": 86,
+    "order": 10,
+    "created_at": "2026-02-20T05:47:53.605Z"
+  }
+}
+]

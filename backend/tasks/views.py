@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -9,6 +9,8 @@ from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, Bas
 
 
 class ReturnTaskAPIView(APIView):
+    permission_classes = [AllowAny]
+
     def get(self, request, subject_id: int):
         task = get_object_or_404(Task, id=subject_id)
         serializer = CurrentTaskSerializer(task, context={'request': request})
@@ -16,6 +18,8 @@ class ReturnTaskAPIView(APIView):
 
 
 class SubjectsListAPIView(APIView):
+    permission_classes = [AllowAny]
+
     def get(self, request):
         subjects = Subject.objects.prefetch_related('tasks').only('id', 'name')
         serializer = SubjectsListSerializer(subjects, many=True)
