@@ -68,23 +68,6 @@ const TabRow = styled.div`
     flex-wrap: wrap;
 `;
 
-const TabButton = styled.button<{ active: boolean }>`
-    padding: 8px 20px;
-    border-radius: 20px;
-    border: 2px solid ${p => p.active ? "#E0FF25" : "#343434"};
-    background: ${p => p.active ? "#E0FF25" : "transparent"};
-    color: ${p => p.active ? "#000" : "#fff"};
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-        border-color: #E0FF25;
-        color: ${p => p.active ? "#000" : "#fff"};
-    }
-`;
-
 const TaskItem = styled.div`
     background: #323A7F61;
     border: 3px solid #343434;
@@ -165,6 +148,7 @@ const UserInfo = styled.div`
     flex-direction: column;
     gap: 2px;
     min-width: 0;
+    flex: 1;
     overflow: hidden;
 `;
 
@@ -567,9 +551,18 @@ const AdminPanel: FC = () => {
                 </HeaderRow>
 
                 <TabRow>
-                    <TabButton active={tab === "tasks"} onClick={() => setTab("tasks")}>Задачи</TabButton>
-                    <TabButton active={tab === "users"} onClick={() => setTab("users")}>Пользователи</TabButton>
-                    <TabButton active={tab === "io"} onClick={() => setTab("io")}>Импорт / Экспорт</TabButton>
+                    <PrimaryButton
+                        style={tab !== "tasks" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
+                        onClick={() => setTab("tasks")}
+                    >Задачи</PrimaryButton>
+                    <PrimaryButton
+                        style={tab !== "users" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
+                        onClick={() => setTab("users")}
+                    >Пользователи</PrimaryButton>
+                    <PrimaryButton
+                        style={tab !== "io" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
+                        onClick={() => setTab("io")}
+                    >Импорт / Экспорт</PrimaryButton>
                 </TabRow>
 
                 {tab === "tasks" && <TasksSection tasks={tasks} setTasks={setTasks}/>}
