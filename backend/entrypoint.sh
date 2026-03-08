@@ -1,4 +1,5 @@
-# entrypoint.sh
+#!/bin/sh
+
 python manage.py migrate
 
 python manage.py shell -c "
@@ -10,12 +11,12 @@ else:
     print('Суперпользователь уже существует')
 "
 
-if [ -f /app/dump.json ]; then
-    python manage.py flush --no-input
-    python manage.py loaddata /app/dump.json
+if [ -f /app/dump.json ] && [ ! -f /app/staticfiles/.data_loaded ]; then
+    python manage.py loaddata /app/dump.json || true
+    touch /app/staticfiles/.data_loaded
     echo "Данные загружены"
 else
-    echo "dump.json не найден, пропускаем"
+    echo "Данные уже загружены или dump.json не найден, пропускаем"
 fi
 
 daphne -b 0.0.0.0 -p 8000 --root-path /api olympiad.asgi:application
