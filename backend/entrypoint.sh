@@ -1,5 +1,4 @@
-#!/bin/sh
-
+# entrypoint.sh
 python manage.py migrate
 
 python manage.py shell -c "
@@ -11,10 +10,10 @@ else:
     print('Суперпользователь уже существует')
 "
 
-# Загружаем данные только если файл существует
 if [ -f /app/dump.json ]; then
+    python manage.py flush --no-input
     python manage.py loaddata /app/dump.json
-    echo "Данные загружены из dump.json"
+    echo "Данные загружены"
 else
     echo "dump.json не найден, пропускаем"
 fi
