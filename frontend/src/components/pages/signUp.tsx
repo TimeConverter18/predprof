@@ -1,8 +1,10 @@
 import type {FC} from "react";
-import {Form, Input, Typography} from "antd";
+import {Form, Input, Typography, message} from "antd";
 import styled from "@emotion/styled";
 import PrimaryButton from "../public/primaryButton";
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
+import api from "../../api/api";
+import {useAuth} from "../../hooks/auth/hook";
 
 const FormWrapper = styled.div`
     display: flex;
@@ -24,11 +26,28 @@ type FieldType = {
 
 const onFinishFailed = () => {}
 
-const onFinish = () => {
-
-}
-
 const Page: FC = () => {
+    const navigate = useNavigate();
+    const { reload } = useAuth();
+
+    const onFinish = async (values: FieldType) => {
+        try {
+            const res = await api.post("/auth/register/", {
+                email: values.mail,
+                username: values.username,
+                password: values.password,
+                password_confirm: values.passwordConfirm,
+            });
+            if (res && (res.status === 201 || res.status === 200)) {
+                message.success("Регистрация прошла успешно!");
+                await reload();
+                navigate("/main");
+            }
+        } catch {
+            // errors handled by interceptor
+        }
+    };
+
     return (
         <FormWrapper>
             <Title level={2}>РЕГИСТРАЦИЯ</Title>

@@ -1,4 +1,4 @@
-import {type FC, useState} from "react";
+import {type FC, useEffect, useState} from "react";
 import {Input, Pagination, Select} from "antd";
 import {SearchOutlined} from "@ant-design/icons"
 import Task from "../public/task";
@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import TasksContainer from "../public/taskContainer";
 import {useSubjectThemes} from "../../hooks/subjectThemes/hook";
 import StyledTitle from "../components/textComponents/StyledTitle";
+import api from "../../api/api";
 
 const difficultyOptions = [
     { label: 'Лёгкая', value: 'easy' },
@@ -40,40 +41,38 @@ type BaseTask = {
     is_correct: boolean | null;
 }
 
-const tasks: BaseTask[] = [
-    { task_id: 1, question: "2 + 2", is_correct: null },
-    { task_id: 2, question: "5 * 3", is_correct: null },
-    { task_id: 3, question: "10 - 4", is_correct: null },
-    { task_id: 4, question: "12 / 4", is_correct: null },
-    { task_id: 5, question: "7 + 8", is_correct: null },
-    { task_id: 6, question: "9 * 6", is_correct: null },
-    { task_id: 7, question: "15 - 7", is_correct: null },
-    { task_id: 8, question: "20 / 5", is_correct: null },
-    { task_id: 9, question: "3 + 4", is_correct: null },
-    { task_id: 10, question: "8 * 2", is_correct: null },
-    { task_id: 11, question: "14 - 5", is_correct: null },
-    { task_id: 12, question: "18 / 3", is_correct: null },
-    { task_id: 13, question: "6 + 7", is_correct: null },
-    { task_id: 14, question: "4 * 5", is_correct: null },
-    { task_id: 15, question: "11 - 3", is_correct: null },
-    { task_id: 16, question: "16 / 4", is_correct: null },
-    { task_id: 17, question: "9 + 2", is_correct: null },
-    { task_id: 18, question: "7 * 3", is_correct: null },
-    { task_id: 19, question: "13 - 6", is_correct: null },
-    { task_id: 20, question: "24 / 6", is_correct: null },
-    { task_id: 21, question: "5 + 9", is_correct: null },
-    { task_id: 22, question: "6 * 4", is_correct: null },
-    { task_id: 23, question: "17 - 8", is_correct: null },
-    { task_id: 24, question: "30 / 5", is_correct: null },
-    { task_id: 25, question: "8 + 3", is_correct: null },
-    { task_id: 26, question: "10 * 2", is_correct: null },
-]
-
 const Page: FC = () => {
     const {subjects} = useSubjectThemes();
     const [answers, setAnswers] = useState<Record<string, string>>({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [tasks, setTasks] = useState<BaseTask[]>([]);
+    const [totalCount, setTotalCount] = useState(0);
+    const [selectedSubject, setSelectedSubject] = useState<number | undefined>(undefined);
+    const [selectedDifficulty, setSelectedDifficulty] = useState<string | undefined>(undefined);
     const pageSize = 20;
+
+    const fetchTasks = (page: number, subjectId?: number, difficulty?: string) => {
+        const params: Record<string, string | number> = { page, page_size: pageSize };
+        if (subjectId) params.subject_id = subjectId;
+        if (difficulty) params.difficulty = difficulty;
+
+        api.get("/tasks/", { params }).then((res) => {
+            if (res && res.status === 200 && res.data) {
+                setTasks(
+                    (res.data.items || []).map((item: { task_id: number; question: string; is_correct?: boolean | null }) => ({
+                        task_id: item.task_id,
+                        question: item.question,
+                        is_correct: item.is_correct ?? null,
+                    }))
+                );
+                setTotalCount(res.data.items_count || 0);
+            }
+        });
+    };
+
+    useEffect(() => {
+        fetchTasks(currentPage, selectedSubject, selectedDifficulty);
+    }, [currentPage, selectedSubject, selectedDifficulty]);
 
     const handleAnswerChange = (id: string, value: string) => {
         setAnswers(prev => ({
@@ -89,14 +88,16 @@ const Page: FC = () => {
                 <SortContainer>
                     <Select
                         allowClear
-                        defaultValue={subjects[0]?.id}
+                        value={selectedSubject}
+                        onChange={(val) => { setSelectedSubject(val); setCurrentPage(1); }}
                         style={{ width: 200 }}
                         options={subjects.map((it) => ({ label: it.name, value: it.id }))}
                         placeholder="Выберите предмет"
                     />
                     <Select
                         allowClear
-                        defaultValue={difficultyOptions[0].value}
+                        value={selectedDifficulty}
+                        onChange={(val) => { setSelectedDifficulty(val); setCurrentPage(1); }}
                         style={{ width: 200 }}
                         options={difficultyOptions}
                         placeholder="Выберите сложность"
@@ -105,7 +106,7 @@ const Page: FC = () => {
                 <Input placeholder="Поиск по номеру" suffix={<SearchOutlined />} style={{minWidth: 200, marginLeft: "auto", maxWidth: 200}}/>
             </TopRow>
             <TasksContainer>
-                {tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((task) => {
+                {tasks.map((task) => {
                     const taskId = task.task_id.toString();
                     return (
                         <Task
@@ -120,7 +121,7 @@ const Page: FC = () => {
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', paddingBottom: '20px' }}>
                 <Pagination
                     current={currentPage}
-                    total={tasks.length}
+                    total={totalCount}
                     pageSize={pageSize}
                     onChange={(page) => setCurrentPage(page)}
                     showSizeChanger={false}

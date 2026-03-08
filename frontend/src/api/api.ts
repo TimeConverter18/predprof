@@ -6,7 +6,8 @@ const apiURL = "/api"
 
 const api = axios.create({
     baseURL: apiURL,
-    timeout: 2000,
+    timeout: 10000,
+    withCredentials: true,
 })
 
 api.interceptors.response.use(
@@ -38,10 +39,10 @@ api.interceptors.response.use(
             case 498:
                 { const originalRequest = error.config;
 
-                const res = await api.post(`${apiURL}/auth/refresh`)
+                const res = await api.post("/auth/token/refresh/")
 
                 if (res.request.status === 401) {
-                    api.post(`${apiURL}/auth/exit`).then(() => {
+                    api.post("/auth/token/refresh/").then(() => {
                         window.location.reload();
                     })
                 } else {

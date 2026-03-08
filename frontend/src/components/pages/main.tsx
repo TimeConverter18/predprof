@@ -1,4 +1,4 @@
-import {type FC} from "react";
+import {type FC, useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import PrimaryButton from "../public/primaryButton";
 import UserCard from "../public/userCard";
@@ -9,6 +9,7 @@ import CardContainer from "../components/containers/CardContainer";
 import StyledTitle from "../components/textComponents/StyledTitle";
 import StyledLead from "../components/textComponents/StyledLead";
 import PageContainer from "../components/containers/PageContainer";
+import api from "../../api/api";
 
 
 const LeaderboardSection = styled.section`
@@ -64,23 +65,17 @@ const RankBadge = styled.div<{ variant: "gold" | "silver" | "bronze" | "normal" 
     }};
 `;
 
-const mockLeaderboardData: SimpleUserProfile[] = [
-    { id: 1, name: "alex_master", rate: 2850},
-    { id: 2, name: "maria_pro", rate: 2720},
-    { id: 3, name: "ivan_genius", rate: 2650},
-    { id: 4, name: "kate_smart", rate: 2580},
-    { id: 5, name: "dmitry_ace", rate: 2490},
-    { id: 6, name: "olga_star", rate: 2430},
-    { id: 7, name: "sergey_top", rate: 2370},
-    { id: 8, name: "anna_best", rate: 2310},
-    { id: 9, name: "tim_fury", rate: 2260},
-    { id: 10, name: "max_fast", rate: 2200},
-    { id: 11, name: "leo_focus", rate: 2180},
-];
-
 const Page: FC = () => {
     const navigate = useNavigate();
-    const leaderboard = mockLeaderboardData.slice(0, 10);
+    const [leaderboard, setLeaderboard] = useState<SimpleUserProfile[]>([]);
+
+    useEffect(() => {
+        api.get("/users/leaderboard/?limit=10").then((res) => {
+            if (res && res.status === 200 && Array.isArray(res.data)) {
+                setLeaderboard(res.data);
+            }
+        });
+    }, []);
 
     const getVariant = (index: number): "gold" | "silver" | "bronze" | "normal" => {
         if (index === 0) return "gold";

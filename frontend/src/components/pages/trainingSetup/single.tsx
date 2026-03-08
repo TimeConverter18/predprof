@@ -1,6 +1,6 @@
 import {type FC, Fragment, useState} from "react"
 import styled from "@emotion/styled";
-import {Steps, Tag, Button, Result} from "antd";
+import {Steps, Tag, Button, Result, message} from "antd";
 import {CheckOutlined} from '@ant-design/icons';
 import PrimaryButton from "../../public/primaryButton";
 import {useSubjectThemes} from "../../../hooks/subjectThemes/hook";
@@ -9,6 +9,8 @@ import {createStyles} from 'antd-style';
 import StyledTitle from "../../components/textComponents/StyledTitle";
 import PageContainer from "../../components/containers/PageContainer";
 import CardContainer from "../../components/containers/CardContainer";
+import api from "../../../api/api";
+import {useNavigate} from "react-router";
 
 const TitleSection = styled.div`
     width: 100%;
@@ -136,6 +138,7 @@ const useStyles = createStyles(({token, css}) => ({
 
 const Page: FC = () => {
     const {subjects} = useSubjectThemes();
+    const navigate = useNavigate();
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
     const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
     const [selectedThemeId, setSelectedThemeId] = useState<number | null>(null);
@@ -180,12 +183,24 @@ const Page: FC = () => {
         setCurrentStep(0);
     };
 
-    const handleSubmit = () => {
-        console.log({
-            difficulty: selectedDifficulty,
-            subject: selectedSubjectId,
-            theme: selectedThemeId
-        });
+    const handleSubmit = async () => {
+        try {
+            const res = await api.post("/trainings/start_training/", null, {
+                params: {
+                    difficulty: selectedDifficulty,
+                    subject_id: selectedSubjectId,
+                    theme_id: selectedThemeId,
+                }
+            });
+            if (res && (res.status === 201 || res.status === 200)) {
+                const trainingId = res.data.training_id;
+                navigate(`/single?id=${trainingId}`);
+            } else {
+                message.error("Не удалось начать тренировку");
+            }
+        } catch {
+            message.error("Ошибка при создании тренировки");
+        }
     };
 
     const renderStepContent = () => {

@@ -6,7 +6,6 @@ import {useWebSocket} from "@siberiacancode/reactuse";
 import {Desktop, Mobile} from "../../responsiveWrappers";
 import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
-import domain from "../../../api/domain";
 import type {TaskState} from "./single";
 import NFPage from "../notFound";
 
@@ -167,7 +166,8 @@ const Page: FC = () => {
         }
     }
 
-    const webSocket = useWebSocket(`wss://${domain}/api/ws/pvp/${id ? id + '/' : ''}`, {
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () =>
             (messageApi.error({

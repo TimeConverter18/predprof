@@ -77,7 +77,15 @@ const Header: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [open, setOpen] = useState<boolean>(false)
-    const { user } = useAuth();
+    const { user, reload } = useAuth();
+
+    const handleLogout = async () => {
+        // Clear cookies by making a request then reload auth state
+        document.cookie = "access=; Max-Age=0; path=/;";
+        document.cookie = "refresh=; Max-Age=0; path=/;";
+        await reload();
+        navigate("/signin");
+    };
 
     const activeKey = location.pathname === "/" || location.pathname.startsWith("/main")
         ? "main"
@@ -136,6 +144,7 @@ const Header: React.FC = () => {
                     />
                     {user ? (
                         <LogoutOutlined
+                            onClick={handleLogout}
                             style={{
                                 color: '#E0FF25',
                                 fontSize: '24px',
@@ -168,7 +177,7 @@ const Header: React.FC = () => {
                                     }}
                                     onClick={() => navigate('/profile')}
                                 />
-                                <LogoutOutlined style={{ color: '#E0FF25', fontSize: '24px' }} />
+                                <LogoutOutlined onClick={handleLogout} style={{ color: '#E0FF25', fontSize: '24px', cursor: 'pointer' }} />
                             </>
                         ) : (
                             <>

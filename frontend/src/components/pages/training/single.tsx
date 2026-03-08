@@ -6,7 +6,6 @@ import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
 import {ClockCircleOutlined} from "@ant-design/icons";
 import {useWebSocket} from "@siberiacancode/reactuse";
-import domain from "../../../api/domain";
 import NFPage from "../notFound";
 
 export type TaskState = "right" | "wrong" | "base"
@@ -114,7 +113,8 @@ const Page: FC = () => {
         }
     }
 
-    const webSocket = useWebSocket(`wss://${domain}/api/ws/training/${id ? id + '/' : ''}`, {
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/training/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () =>
             (messageApi.error({
