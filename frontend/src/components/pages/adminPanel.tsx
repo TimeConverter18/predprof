@@ -1,7 +1,7 @@
 import {type FC, useState} from "react";
 import styled from "@emotion/styled";
 import {
-    Form, Input, Select, Modal, Drawer,
+    Form, Input, Select, Modal, Drawer, Button,
     Tag, Divider, Upload, Pagination, message
 } from "antd";
 import {
@@ -197,6 +197,21 @@ const IORow = styled.div`
     justify-content: center;
 `;
 
+const TabInactiveButton = styled(Button)`
+    && {
+        font-weight: bold;
+        background: transparent;
+        color: #fff;
+        border-color: #343434;
+
+        &:hover, &:focus {
+            color: #E0FF25;
+            border-color: #E0FF25;
+            background: transparent;
+        }
+    }
+`;
+
 const PIE_COLORS = ["#3fb950", "#f85149", "#3d4f6e"];
 
 type TabKey = "tasks" | "users" | "io";
@@ -316,6 +331,7 @@ const TasksSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[])
                 onCancel={() => setOpen(false)}
                 okText="Сохранить"
                 cancelText="Отмена"
+                okButtonProps={{style: {color: "#000", fontWeight: "bold"}}}
             >
                 <Form form={form} layout="vertical" style={{marginTop: 16}}>
                     <Form.Item name="question" label="Текст задачи" rules={[{required: true, message: "Введите текст"}]}>
@@ -551,18 +567,21 @@ const AdminPanel: FC = () => {
                 </HeaderRow>
 
                 <TabRow>
-                    <PrimaryButton
-                        style={tab !== "tasks" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("tasks")}
-                    >Задачи</PrimaryButton>
-                    <PrimaryButton
-                        style={tab !== "users" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("users")}
-                    >Пользователи</PrimaryButton>
-                    <PrimaryButton
-                        style={tab !== "io" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("io")}
-                    >Импорт / Экспорт</PrimaryButton>
+                    {tab === "tasks" ? (
+                        <PrimaryButton onClick={() => setTab("tasks")}>Задачи</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("tasks")}>Задачи</TabInactiveButton>
+                    )}
+                    {tab === "users" ? (
+                        <PrimaryButton onClick={() => setTab("users")}>Пользователи</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("users")}>Пользователи</TabInactiveButton>
+                    )}
+                    {tab === "io" ? (
+                        <PrimaryButton onClick={() => setTab("io")}>Импорт / Экспорт</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("io")}>Импорт / Экспорт</TabInactiveButton>
+                    )}
                 </TabRow>
 
                 {tab === "tasks" && <TasksSection tasks={tasks} setTasks={setTasks}/>}
