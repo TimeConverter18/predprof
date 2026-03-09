@@ -1,5 +1,5 @@
 import {type FC, useEffect, useState} from "react";
-import {Flex, Modal, notification, Progress} from "antd";
+import {Flex, Modal, notification, Progress, Spin} from "antd";
 import styled from "@emotion/styled";
 import Task from "../../public/task";
 import {useWebSocket} from "@siberiacancode/reactuse";
@@ -8,12 +8,20 @@ import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
 import type {TaskState} from "./single";
 import NFPage from "../notFound";
+import api from "../../../api/api";
+
+type PvpTaskData = {
+    question: string;
+    user_is_correct: boolean | null;
+    enemy_is_correct: boolean | null;
+}
 
 type StatsProps = {
     playerProgress: number;
     enemyProgress: number;
     seconds: number;
     round: number;
+    totalTasks: number;
 }
 
 const StatsWrapper = styled.div`
@@ -71,7 +79,7 @@ const TimeRoundContainerDesktop = styled.div`
     gap: 20px;
 `
 
-const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds, round}) => {
+const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds, round, totalTasks}) => {
     const formatTime = (totalSeconds: number) => {
         const mins = Math.floor(totalSeconds / 60);
         const secs = totalSeconds % 60;
@@ -83,13 +91,13 @@ const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds,
             <Flex gap="large" align="center" style={{ width: "100%", justifyContent: "space-between" }}>
                 <Mobile>
                     <TimeRoundContainerMobile>
-                        <TimerText>Раунд {round}</TimerText>
+                        <TimerText>Задача {round} / {totalTasks}</TimerText>
                         <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerMobile>
                 </Mobile>
                 <Desktop>
                     <TimeRoundContainerDesktop>
-                        <TimerText>Раунд {round}</TimerText>
+                        <TimerText>Задача {round} / {totalTasks}</TimerText>
                         <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerDesktop>
                 </Desktop>
@@ -110,26 +118,48 @@ const Page: FC = () => {
 
     const isIdValid = id !== null && !isNaN(Number(id)) && id.trim() !== "";
 
-    const [round, setRound] = useState<number>(1);
-    const [playerProgress, setPlayerProgress] = useState<number>(0);
-    const [enemyProgress, setEnemyProgress] = useState<number>(0);
-    const [question, setQuestion] = useState<string>("Ожидание задачи...");
-    const [taskId, setTaskId] = useState<number | null>(null);
+    const [tasks, setTasks] = useState<PvpTaskData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [current, setCurrent] = useState<number>(0); // текущий индекс задачи (0-based)
+    const [playerCorrect, setPlayerCorrect] = useState<number>(0);
+    const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
     const [answer, setAnswer] = useState<string>("");
-    const [status, setStatus] = useState<TaskState>("base")
+    const [taskStates, setTaskStates] = useState<TaskState[]>([]);
 
+    const totalTasks = tasks.length;
+
+    // Загрузка задач через HTTP API
     useEffect(() => {
-        if (seconds > 0 && isIdValid) {
-            const interval = setInterval(() => {
-                setSeconds(prev => prev > 0 ? prev - 1 : 0);
-            }, 1000);
-            return () => clearInterval(interval);
-        }
-    }, [seconds, isIdValid]);
+        if (!isIdValid) return;
+        setLoading(true);
+        api.get(`/pvp/api/${id}/`).then((res) => {
+            if (res && res.data && res.data.tasks) {
+                const fetchedTasks: PvpTaskData[] = res.data.tasks;
+                setTasks(fetchedTasks);
+                setTaskStates(fetchedTasks.map(t =>
+                    t.user_is_correct === true ? "right" : t.user_is_correct === false ? "wrong" : "base"
+                ));
+                setPlayerCorrect(res.data.user_solved_count || 0);
+                setEnemyCorrect(res.data.enemy_solved_count || 0);
+                // Установить текущую задачу на первую нерешённую
+                const firstUnsolved = fetchedTasks.findIndex(t => t.user_is_correct === null);
+                setCurrent(firstUnsolved >= 0 ? firstUnsolved : 0);
+            }
+        }).finally(() => setLoading(false));
+    }, [id, isIdValid]);
+
+    // Таймер
+    useEffect(() => {
+        if (!isIdValid) return;
+        const interval = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isIdValid]);
 
     const handleExit = () => {
         navigate("/training/pvp");
@@ -137,26 +167,41 @@ const Page: FC = () => {
 
     const handleWebsocketMessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
-        if (data.type === 'task') {
-            setQuestion(data.question);
-            setTaskId(data.task_id);
-            setRound(data.round);
-            setSeconds(data.seconds);
-            setAnswer("");
-            setStatus("base");
-        } else if (data.type === 'progress') {
-            setPlayerProgress(data.player_progress);
-            setEnemyProgress(data.enemy_progress);
-        } else if (data.type === 'result') {
-            if (data.task_index === round - 1) {
-                setStatus(data.is_correct ? "right" : "wrong");
+        if (data.type === 'result') {
+            // Наш результат
+            setTaskStates(prev => {
+                const newStates = [...prev];
+                newStates[data.task_index] = data.is_correct ? "right" : "wrong";
+                return newStates;
+            });
+            if (data.is_correct) {
+                setPlayerCorrect(prev => prev + 1);
             }
         } else if (data.type === 'enemy_result') {
-            //
-        } else if (data.type === 'finish_round') {
-            //
-        } else if (data.type === 'end') {
-            setModalText(data.modal_text || (data.result === 'win' ? "Вы победили!" : "Вы проиграли!"));
+            if (data.is_correct) {
+                setEnemyCorrect(prev => prev + 1);
+            }
+        } else if (data.type === 'stats') {
+            // Статистика от бэка
+            if (data.correct_percentage !== undefined) {
+                setPlayerCorrect(Math.round((data.correct_percentage / 100) * totalTasks));
+            }
+            if (data.enemy_correct_percentage !== undefined) {
+                setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * totalTasks));
+            }
+        } else if (data.type === 'finish_round' || data.type === 'ws_finish_round') {
+            // Раунд завершён
+            let text = "Раунд завершён!";
+            if (data.my_delta !== undefined) {
+                if (data.my_delta > 0) {
+                    text = `Вы победили! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (+${data.my_delta})`;
+                } else if (data.my_delta < 0) {
+                    text = `Вы проиграли. Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (${data.my_delta})`;
+                } else {
+                    text = `Ничья! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating}`;
+                }
+            }
+            setModalText(text);
             setModalOpen(true);
         } else if (data.type === 'error') {
             messageApi.error({
@@ -181,27 +226,71 @@ const Page: FC = () => {
     const handleSendAnswer = () => {
         if (!answer) return;
         webSocket.send(JSON.stringify({
-            task_index: round - 1,
+            type: "answer",
+            task_index: current,
             answer: answer
         }));
+    }
+
+    const goToNextTask = () => {
+        if (current < totalTasks - 1) {
+            setCurrent(prev => prev + 1);
+            setAnswer("");
+        }
+    }
+
+    const goToPrevTask = () => {
+        if (current > 0) {
+            setCurrent(prev => prev - 1);
+            setAnswer("");
+        }
     }
 
     if (!isIdValid) {
         return <NFPage />;
     }
 
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Spin size="large" tip="Загрузка..." />
+            </PageWrapper>
+        );
+    }
+
+    if (totalTasks === 0) {
+        return <NFPage />;
+    }
+
+    const playerPct = totalTasks > 0 ? Math.round((playerCorrect / totalTasks) * 100) : 0;
+    const enemyPct = totalTasks > 0 ? Math.round((enemyCorrect / totalTasks) * 100) : 0;
+
     return (
         <PageWrapper>
             {contextHolder}
-            <StatsContainer playerProgress={playerProgress} enemyProgress={enemyProgress} seconds={seconds} round={round}/>
-            <Task 
-                task_id={taskId ?? 0}
-                question={question}
+            <StatsContainer
+                playerProgress={playerPct}
+                enemyProgress={enemyPct}
+                seconds={seconds}
+                round={current + 1}
+                totalTasks={totalTasks}
+            />
+            <Task
+                task_id={current + 1}
+                question={tasks[current]?.question ?? "Загрузка..."}
                 value={answer}
                 onChange={setAnswer}
                 onCheck={handleSendAnswer}
-                is_correct={status === "right" ? true : status === "wrong" ? false : null}
+                is_correct={taskStates[current] === "right" ? true : taskStates[current] === "wrong" ? false : null}
             />
+            <Flex gap="small" justify="center">
+                <PrimaryButton onClick={goToPrevTask} disabled={current === 0}>
+                    ← Назад
+                </PrimaryButton>
+                <PrimaryButton onClick={goToNextTask} disabled={current >= totalTasks - 1}>
+                    Вперёд →
+                </PrimaryButton>
+            </Flex>
             <Modal
                 title="PvP окончено"
                 open={modalOpen}

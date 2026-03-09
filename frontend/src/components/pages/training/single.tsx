@@ -1,14 +1,20 @@
 import {type FC, useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import Task from "../../public/task";
-import {Modal, notification, Pagination, Space} from "antd";
+import {Modal, notification, Pagination, Space, Spin} from "antd";
 import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
 import {ClockCircleOutlined} from "@ant-design/icons";
 import {useWebSocket} from "@siberiacancode/reactuse";
 import NFPage from "../notFound";
+import api from "../../../api/api";
 
 export type TaskState = "right" | "wrong" | "base"
+
+type TrainingTaskData = {
+    question: string;
+    is_correct: boolean | null;
+}
 
 const PageWrapper = styled.div`
     display: flex;
@@ -70,27 +76,31 @@ const Page: FC = () => {
     const isIdValid = id !== null && !isNaN(Number(id)) && id.trim() !== "";
 
     const [seconds, setSeconds] = useState(0);
-    const [current, setCurrent] = useState(() => {
-        const saved = localStorage.getItem("training_single_current");
-        return saved ? parseInt(saved) : 1;
-    });
-    const totalTasks = 12;
+    const [current, setCurrent] = useState(1);
+    const [tasks, setTasks] = useState<TrainingTaskData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const totalTasks = tasks.length;
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
-    const [answers, setAnswers] = useState<string[]>(() => {
-        const saved = localStorage.getItem("training_single_answers");
-        return saved ? JSON.parse(saved) : Array(totalTasks).fill("");
-    });
-    const [taskStates, setTaskStates] = useState<TaskState[]>(Array(totalTasks).fill("base"));
+    const [answers, setAnswers] = useState<string[]>([]);
+    const [taskStates, setTaskStates] = useState<TaskState[]>([]);
     const [messageApi, contextHolder] = notification.useNotification();
 
+    // Загрузка задач через HTTP API
     useEffect(() => {
-        localStorage.setItem("training_single_answers", JSON.stringify(answers));
-    }, [answers]);
-
-    useEffect(() => {
-        localStorage.setItem("training_single_current", current.toString());
-    }, [current]);
+        if (!isIdValid) return;
+        setLoading(true);
+        api.get(`/trainings/${id}/`).then((res) => {
+            if (res && res.data && res.data.tasks) {
+                const fetchedTasks: TrainingTaskData[] = res.data.tasks;
+                setTasks(fetchedTasks);
+                setAnswers(Array(fetchedTasks.length).fill(""));
+                setTaskStates(fetchedTasks.map(t =>
+                    t.is_correct === true ? "right" : t.is_correct === false ? "wrong" : "base"
+                ));
+            }
+        }).finally(() => setLoading(false));
+    }, [id, isIdValid]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -107,7 +117,7 @@ const Page: FC = () => {
                 newStates[data.task_index] = data.is_correct ? "right" : "wrong";
                 return newStates;
             });
-        } else if (data.type === 'finish_training') {
+        } else if (data.type === 'finish_round' || data.type === 'finish_training') {
             setModalText(data.message || "Тренировка завершена!");
             setModalOpen(true);
         }
@@ -129,12 +139,25 @@ const Page: FC = () => {
         const answer = answers[current - 1];
         if (!answer) return;
         webSocket.send(JSON.stringify({
+            type: "answer",
             task_index: current - 1,
             answer: answer
         }));
     }
 
     if (!isIdValid) {
+        return <NFPage />;
+    }
+
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Spin size="large" tip="Загрузка задач..." />
+            </PageWrapper>
+        );
+    }
+
+    if (totalTasks === 0) {
         return <NFPage />;
     }
 
@@ -146,9 +169,6 @@ const Page: FC = () => {
 
     const handleFinish = () => {
         if (confirm("Вы уверены, что хотите завершить тренировку?")) {
-            localStorage.removeItem("training_single_answers");
-            localStorage.removeItem("training_single_current");
-            localStorage.removeItem("training_single_seconds");
             navigate("/training");
         }
     };
@@ -182,7 +202,7 @@ const Page: FC = () => {
             </HeaderPanel>
             <Task 
                 task_id={current}
-                question={"В кармане у Миши было четыре конфеты — «Грильяж», «Белочка», «Коровка» и «Ласточка», а также ключи от квартиры. Вынимая ключи, Миша случайно выронил из кармана одну конфету. Найдите вероятность того, что потерялась конфета «Грильяж». В кармане у Миши было четыре конфеты — «Грильяж», «Белочка», «Коровка» и «Ласточка», а также ключи от квартиры. Вынимая ключи, Миша случайно выронил из кармана одну конфету. Найдите вероятность того, что потерялась конфета «Грильяж»."}
+                question={tasks[current - 1]?.question ?? "Загрузка..."}
                 value={answers[current - 1]}
                 onChange={handleAnswerChange}
                 onCheck={handleSendAnswer}
@@ -202,8 +222,6 @@ const Page: FC = () => {
                 closable={false}
                 centered
                 footer={<PrimaryButton danger onClick={() => {
-                    localStorage.removeItem("training_single_answers");
-                    localStorage.removeItem("training_single_current");
                     navigate("/training");
                 }}>Выйти</PrimaryButton>}>
                 {modalText}
