@@ -21,9 +21,10 @@ const App: FC = () => {
         <SubjectThemesProvider>
             <ConfigProvider theme={{
                 token: {
-                    "colorPrimary": "#E0FF25",
+                    colorPrimary: "#E0FF25",
                 }, algorithm: theme.darkAlgorithm}
             }>
+
                 <AntApp style={{width: "100%"}}>
                     <BrowserRouter>
                         <AuthProvider>
