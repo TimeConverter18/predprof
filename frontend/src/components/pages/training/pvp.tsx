@@ -167,7 +167,7 @@ const Page: FC = () => {
     }
 
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/api/ws/pvp/${id ? id + '/' : ''}`, {
+    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () =>
             (messageApi.error({
