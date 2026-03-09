@@ -56,3 +56,9 @@ class BaseTaskSerializer(serializers.ModelSerializer):
         ).first()
 
         return user_task.is_correct if user_task else None
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = "__all__"

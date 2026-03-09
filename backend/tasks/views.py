@@ -1,11 +1,17 @@
+import csv
+import io
+import json
+
 from django.core.paginator import Paginator
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.parsers import MultiPartParser
 
-from tasks.models import Subject, Task
-from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer
+from tasks.models import Subject, Task, SubjectTheme, TaskDifficulty
+from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer
 
 
 class ReturnTaskAPIView(APIView):
@@ -27,7 +33,7 @@ class SubjectsListAPIView(APIView):
 
 
 class TasksListAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
         subject_id = request.query_params.get('subject_id', '').strip()
@@ -64,3 +70,109 @@ class TasksListAPIView(APIView):
             'items_count': paginator.count,
             'total_pages': paginator.num_pages,
         })
+
+
+class TaskViewSet(ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [IsAdminUser]
+
+
+class CheckTaskView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            task = Task.objects.get(pk=pk)
+        except Task.DoesNotExist:
+            return Response({"error": "Задача не найдена"}, status=404)
+
+        user_answer = request.data.get("answer")
+
+        if not user_answer:
+            return Response({"error": "Поле answer обязательно"}, status=400)
+
+        is_correct = user_answer.strip().lower() == task.correct_answer.strip().lower()
+
+        return Response({"is_correct": is_correct})
+
+
+
+class ImportTasksView(APIView):
+    permission_classes = [IsAdminUser]
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+        file = request.FILES.get("file")
+
+        if not file:
+            return Response({"error": "Файл не передан"}, status=400)
+
+        filename = file.name.lower()
+
+        try:
+            if filename.endswith(".json"):
+                tasks_data = self._parse_json(file)
+            elif filename.endswith(".csv"):
+                tasks_data = self._parse_csv(file)
+            else:
+                return Response({"error": "Поддерживаются только .json и .csv"}, status=400)
+        except Exception as e:
+            return Response({"error": f"Ошибка парсинга: {str(e)}"}, status=400)
+
+        created, errors = self._create_tasks(tasks_data)
+
+        return Response({
+            "created": created,
+            "errors": errors,
+        }, status=201 if created else 400)
+
+    def _parse_json(self, file):
+        data = json.load(file)
+        return data if isinstance(data, list) else data.get("tasks", [])
+
+    def _parse_csv(self, file):
+        text = io.TextIOWrapper(file, encoding="utf-8")
+        reader = csv.DictReader(text)
+        return list(reader)
+
+    def _create_tasks(self, tasks_data):
+        created = 0
+        errors = []
+
+        for i, row in enumerate(tasks_data):
+            try:
+                subject_name = row.get("subject")
+                if not subject_name:
+                    errors.append({"row": i + 1, "error": "Поле subject обязательно"})
+                    continue
+
+                subject, _ = Subject.objects.get_or_create(name=subject_name.strip())
+
+                theme = None
+                theme_name = row.get("theme")
+                if theme_name:
+                    theme, _ = SubjectTheme.objects.get_or_create(
+                        name=theme_name.strip(),
+                        defaults={"subject": subject}
+                    )
+
+                difficulty = row.get("difficulty", TaskDifficulty.EASY)
+                valid = [c.value for c in TaskDifficulty]
+                if difficulty not in valid:
+                    difficulty = TaskDifficulty.EASY
+
+                Task.objects.create(
+                    subject=subject,
+                    theme=theme,
+                    question=row.get("question", "").strip(),
+                    solution=row.get("solution", "").strip(),
+                    correct_answer=row.get("correct_answer", "").strip(),
+                    difficulty=difficulty,
+                )
+                created += 1
+
+            except Exception as e:
+                errors.append({"row": i + 1, "error": str(e)})
+
+        return created, errors

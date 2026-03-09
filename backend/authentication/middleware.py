@@ -74,7 +74,6 @@ class JWTAuthMiddleware(BaseMiddleware):
         return await super().__call__(scope, receive, send)
 
 
-
 class AutoRefreshJWTMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response

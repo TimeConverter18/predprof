@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.exceptions import TokenError
 from authentication.serializers import LoginSerializer, RegisterSerializer
 from django.conf import settings
 
@@ -95,4 +96,25 @@ class CookieTokenRefreshView(TokenRefreshView):
         if response.status_code == status.HTTP_200_OK:
             set_jwt_cookies(response, response.data['access'], response.data.get('refresh', ''))
             response.data = {'detail': 'Токен обновлён'}
+        return response
+
+
+
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        refresh_token = request.COOKIES.get('refresh')
+
+        if refresh_token:
+            try:
+                # Blacklist refresh токен чтобы им нельзя было воспользоваться повторно
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+            except TokenError:
+                pass
+
+        response = Response({'detail': 'Logged out'})
+        response.delete_cookie('access')
+        response.delete_cookie('refresh')
         return response

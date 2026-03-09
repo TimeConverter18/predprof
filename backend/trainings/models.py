@@ -10,7 +10,7 @@ class Training(models.Model):
     status = models.CharField(
         max_length=20,
         choices=RoundStatus.choices,
-        default=RoundStatus.WAITING,
+        default=RoundStatus.IN_PROGRESS,
     )
     player = models.ForeignKey(User, on_delete=models.CASCADE, related_name='trainings')
     tasks = models.ManyToManyField(
