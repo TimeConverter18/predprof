@@ -170,7 +170,7 @@ const Page: FC = () => {
 
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const socketUrl = shouldConnect && selectedSubjectId
-        ? `${wsProtocol}//${window.location.host}/api/ws/search_enemy/`
+        ? `${wsProtocol}//${window.location.host}/api/api/ws/search_enemy/`
         : null;
 
     const matchmakingWS = useWebSocket(socketUrl, {
