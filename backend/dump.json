@@ -207,7 +207,7 @@
     "rating": 100,
     "is_active": true,
     "is_staff": true,
-    "updated_at": "2026-02-17T16:30:45.005Z",
+    "updated_at": "2026-03-09T06:15:45.399Z",
     "created_at": "2026-02-17T16:30:45.005Z",
     "groups": [],
     "user_permissions": []
@@ -256,13 +256,36 @@
   }
 },
 {
-  "model": "tasks.tasksource",
-  "pk": 4,
+  "model": "users.usertask",
+  "pk": 1,
   "fields": {
-    "name": "Shell seed",
-    "is_ai": false,
-    "updated_at": "2026-02-19T17:56:26.725Z",
-    "created_at": "2026-02-19T17:56:26.725Z"
+    "user": 1,
+    "task": 1,
+    "is_correct": false,
+    "created_at": "2026-03-09T06:15:33.253Z",
+    "updated_at": "2026-03-09T06:15:33.253Z"
+  }
+},
+{
+  "model": "users.usertask",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "task": 1,
+    "is_correct": true,
+    "created_at": "2026-03-09T06:17:28.855Z",
+    "updated_at": "2026-03-09T06:17:28.855Z"
+  }
+},
+{
+  "model": "users.usertask",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "task": 2,
+    "is_correct": false,
+    "created_at": "2026-03-09T06:17:30.061Z",
+    "updated_at": "2026-03-09T06:17:30.061Z"
   }
 },
 {
@@ -327,7 +350,6 @@
   "model": "tasks.task",
   "pk": 1,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №1",
@@ -335,15 +357,13 @@
     "correct_answer": "10",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.767Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.767Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 2,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №2",
@@ -351,15 +371,13 @@
     "correct_answer": "20",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.767Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.767Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 3,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №3",
@@ -367,15 +385,13 @@
     "correct_answer": "30",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.767Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.767Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 4,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №4",
@@ -383,15 +399,13 @@
     "correct_answer": "40",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 5,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №5",
@@ -399,15 +413,13 @@
     "correct_answer": "50",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 6,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №6",
@@ -415,15 +427,13 @@
     "correct_answer": "60",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 7,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №7",
@@ -431,15 +441,13 @@
     "correct_answer": "70",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 8,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №8",
@@ -447,15 +455,13 @@
     "correct_answer": "80",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 9,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №9",
@@ -463,15 +469,13 @@
     "correct_answer": "90",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 10,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / easy] Вопрос №10",
@@ -479,15 +483,13 @@
     "correct_answer": "100",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.767Z",
-    "created_at": "2026-02-19T17:56:26.768Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.768Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 11,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №1",
@@ -495,15 +497,13 @@
     "correct_answer": "10",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 12,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №2",
@@ -511,15 +511,13 @@
     "correct_answer": "20",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 13,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №3",
@@ -527,15 +525,13 @@
     "correct_answer": "30",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 14,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №4",
@@ -543,15 +539,13 @@
     "correct_answer": "40",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 15,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №5",
@@ -559,15 +553,13 @@
     "correct_answer": "50",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 16,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №6",
@@ -575,15 +567,13 @@
     "correct_answer": "60",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 17,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №7",
@@ -591,15 +581,13 @@
     "correct_answer": "70",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 18,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №8",
@@ -607,15 +595,13 @@
     "correct_answer": "80",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 19,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №9",
@@ -623,15 +609,13 @@
     "correct_answer": "90",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 20,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / middle] Вопрос №10",
@@ -639,15 +623,13 @@
     "correct_answer": "100",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.776Z",
-    "created_at": "2026-02-19T17:56:26.776Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.776Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 21,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №1",
@@ -655,15 +637,13 @@
     "correct_answer": "10",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 22,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №2",
@@ -671,15 +651,13 @@
     "correct_answer": "20",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 23,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №3",
@@ -687,15 +665,13 @@
     "correct_answer": "30",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 24,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №4",
@@ -703,15 +679,13 @@
     "correct_answer": "40",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 25,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №5",
@@ -719,15 +693,13 @@
     "correct_answer": "50",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 26,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №6",
@@ -735,15 +707,13 @@
     "correct_answer": "60",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 27,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №7",
@@ -751,15 +721,13 @@
     "correct_answer": "70",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 28,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №8",
@@ -767,15 +735,13 @@
     "correct_answer": "80",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 29,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №9",
@@ -783,15 +749,13 @@
     "correct_answer": "90",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 30,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 4,
     "question": "[Математика / Алгебра / high] Вопрос №10",
@@ -799,15 +763,13 @@
     "correct_answer": "100",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.784Z",
-    "created_at": "2026-02-19T17:56:26.784Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.784Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 31,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №1",
@@ -815,15 +777,13 @@
     "correct_answer": "10",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 32,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №2",
@@ -831,15 +791,13 @@
     "correct_answer": "20",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 33,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №3",
@@ -847,15 +805,13 @@
     "correct_answer": "30",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 34,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №4",
@@ -863,15 +819,13 @@
     "correct_answer": "40",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 35,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №5",
@@ -879,15 +833,13 @@
     "correct_answer": "50",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 36,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №6",
@@ -895,15 +847,13 @@
     "correct_answer": "60",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 37,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №7",
@@ -911,15 +861,13 @@
     "correct_answer": "70",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 38,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №8",
@@ -927,15 +875,13 @@
     "correct_answer": "80",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 39,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №9",
@@ -943,15 +889,13 @@
     "correct_answer": "90",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 40,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / easy] Вопрос №10",
@@ -959,15 +903,13 @@
     "correct_answer": "100",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.801Z",
-    "created_at": "2026-02-19T17:56:26.801Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.801Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 41,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №1",
@@ -975,15 +917,13 @@
     "correct_answer": "10",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 42,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №2",
@@ -991,15 +931,13 @@
     "correct_answer": "20",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 43,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №3",
@@ -1007,15 +945,13 @@
     "correct_answer": "30",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 44,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №4",
@@ -1023,15 +959,13 @@
     "correct_answer": "40",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 45,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №5",
@@ -1039,15 +973,13 @@
     "correct_answer": "50",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 46,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №6",
@@ -1055,15 +987,13 @@
     "correct_answer": "60",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 47,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №7",
@@ -1071,15 +1001,13 @@
     "correct_answer": "70",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 48,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №8",
@@ -1087,15 +1015,13 @@
     "correct_answer": "80",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 49,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №9",
@@ -1103,15 +1029,13 @@
     "correct_answer": "90",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 50,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / middle] Вопрос №10",
@@ -1119,15 +1043,13 @@
     "correct_answer": "100",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.809Z",
-    "created_at": "2026-02-19T17:56:26.809Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.809Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 51,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №1",
@@ -1135,15 +1057,13 @@
     "correct_answer": "10",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 52,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №2",
@@ -1151,15 +1071,13 @@
     "correct_answer": "20",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 53,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №3",
@@ -1167,15 +1085,13 @@
     "correct_answer": "30",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 54,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №4",
@@ -1183,15 +1099,13 @@
     "correct_answer": "40",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 55,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №5",
@@ -1199,15 +1113,13 @@
     "correct_answer": "50",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 56,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №6",
@@ -1215,15 +1127,13 @@
     "correct_answer": "60",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 57,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №7",
@@ -1231,15 +1141,13 @@
     "correct_answer": "70",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 58,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №8",
@@ -1247,15 +1155,13 @@
     "correct_answer": "80",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 59,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №9",
@@ -1263,15 +1169,13 @@
     "correct_answer": "90",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 60,
   "fields": {
-    "source": 4,
     "subject": 9,
     "theme": 5,
     "question": "[Математика / Геометрия / high] Вопрос №10",
@@ -1279,15 +1183,13 @@
     "correct_answer": "100",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.818Z",
-    "created_at": "2026-02-19T17:56:26.818Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.818Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 61,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №1",
@@ -1295,15 +1197,13 @@
     "correct_answer": "10",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.842Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 62,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №2",
@@ -1311,15 +1211,13 @@
     "correct_answer": "20",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.842Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 63,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №3",
@@ -1327,15 +1225,13 @@
     "correct_answer": "30",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.842Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 64,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №4",
@@ -1343,15 +1239,13 @@
     "correct_answer": "40",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 65,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №5",
@@ -1359,15 +1253,13 @@
     "correct_answer": "50",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 66,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №6",
@@ -1375,15 +1267,13 @@
     "correct_answer": "60",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 67,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №7",
@@ -1391,15 +1281,13 @@
     "correct_answer": "70",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 68,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №8",
@@ -1407,15 +1295,13 @@
     "correct_answer": "80",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 69,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №9",
@@ -1423,15 +1309,13 @@
     "correct_answer": "90",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 70,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / easy] Вопрос №10",
@@ -1439,15 +1323,13 @@
     "correct_answer": "100",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.843Z",
-    "created_at": "2026-02-19T17:56:26.843Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.843Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 71,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №1",
@@ -1455,15 +1337,13 @@
     "correct_answer": "10",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 72,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №2",
@@ -1471,15 +1351,13 @@
     "correct_answer": "20",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 73,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №3",
@@ -1487,15 +1365,13 @@
     "correct_answer": "30",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 74,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №4",
@@ -1503,15 +1379,13 @@
     "correct_answer": "40",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 75,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №5",
@@ -1519,15 +1393,13 @@
     "correct_answer": "50",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 76,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №6",
@@ -1535,15 +1407,13 @@
     "correct_answer": "60",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 77,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №7",
@@ -1551,15 +1421,13 @@
     "correct_answer": "70",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 78,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №8",
@@ -1567,15 +1435,13 @@
     "correct_answer": "80",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 79,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №9",
@@ -1583,15 +1449,13 @@
     "correct_answer": "90",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 80,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / middle] Вопрос №10",
@@ -1599,15 +1463,13 @@
     "correct_answer": "100",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.851Z",
-    "created_at": "2026-02-19T17:56:26.851Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.851Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 81,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №1",
@@ -1615,15 +1477,13 @@
     "correct_answer": "10",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 82,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №2",
@@ -1631,15 +1491,13 @@
     "correct_answer": "20",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 83,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №3",
@@ -1647,15 +1505,13 @@
     "correct_answer": "30",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 84,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №4",
@@ -1663,15 +1519,13 @@
     "correct_answer": "40",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 85,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №5",
@@ -1679,15 +1533,13 @@
     "correct_answer": "50",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 86,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №6",
@@ -1695,15 +1547,13 @@
     "correct_answer": "60",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 87,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №7",
@@ -1711,15 +1561,13 @@
     "correct_answer": "70",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 88,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №8",
@@ -1727,15 +1575,13 @@
     "correct_answer": "80",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 89,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №9",
@@ -1743,15 +1589,13 @@
     "correct_answer": "90",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 90,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 6,
     "question": "[Физика / Механика / high] Вопрос №10",
@@ -1759,15 +1603,13 @@
     "correct_answer": "100",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.859Z",
-    "created_at": "2026-02-19T17:56:26.859Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.859Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 91,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №1",
@@ -1775,15 +1617,13 @@
     "correct_answer": "10",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 92,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №2",
@@ -1791,15 +1631,13 @@
     "correct_answer": "20",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 93,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №3",
@@ -1807,15 +1645,13 @@
     "correct_answer": "30",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 94,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №4",
@@ -1823,15 +1659,13 @@
     "correct_answer": "40",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 95,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №5",
@@ -1839,15 +1673,13 @@
     "correct_answer": "50",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 96,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №6",
@@ -1855,15 +1687,13 @@
     "correct_answer": "60",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 97,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №7",
@@ -1871,15 +1701,13 @@
     "correct_answer": "70",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 98,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №8",
@@ -1887,15 +1715,13 @@
     "correct_answer": "80",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 99,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №9",
@@ -1903,15 +1729,13 @@
     "correct_answer": "90",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 100,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / easy] Вопрос №10",
@@ -1919,15 +1743,13 @@
     "correct_answer": "100",
     "difficulty": "easy",
     "updated_at": "2026-02-19T17:56:26.876Z",
-    "created_at": "2026-02-19T17:56:26.876Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.876Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 101,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №1",
@@ -1935,15 +1757,13 @@
     "correct_answer": "10",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.884Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.884Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 102,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №2",
@@ -1951,15 +1771,13 @@
     "correct_answer": "20",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 103,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №3",
@@ -1967,15 +1785,13 @@
     "correct_answer": "30",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 104,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №4",
@@ -1983,15 +1799,13 @@
     "correct_answer": "40",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 105,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №5",
@@ -1999,15 +1813,13 @@
     "correct_answer": "50",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 106,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №6",
@@ -2015,15 +1827,13 @@
     "correct_answer": "60",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 107,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №7",
@@ -2031,15 +1841,13 @@
     "correct_answer": "70",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 108,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №8",
@@ -2047,15 +1855,13 @@
     "correct_answer": "80",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 109,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №9",
@@ -2063,15 +1869,13 @@
     "correct_answer": "90",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 110,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / middle] Вопрос №10",
@@ -2079,15 +1883,13 @@
     "correct_answer": "100",
     "difficulty": "middle",
     "updated_at": "2026-02-19T17:56:26.884Z",
-    "created_at": "2026-02-19T17:56:26.885Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.885Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 111,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №1",
@@ -2095,15 +1897,13 @@
     "correct_answer": "10",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 112,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №2",
@@ -2111,15 +1911,13 @@
     "correct_answer": "20",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 113,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №3",
@@ -2127,15 +1925,13 @@
     "correct_answer": "30",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 114,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №4",
@@ -2143,15 +1939,13 @@
     "correct_answer": "40",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 115,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №5",
@@ -2159,15 +1953,13 @@
     "correct_answer": "50",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 116,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №6",
@@ -2175,15 +1967,13 @@
     "correct_answer": "60",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 117,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №7",
@@ -2191,15 +1981,13 @@
     "correct_answer": "70",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 118,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №8",
@@ -2207,15 +1995,13 @@
     "correct_answer": "80",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 119,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №9",
@@ -2223,15 +2009,13 @@
     "correct_answer": "90",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
   "model": "tasks.task",
   "pk": 120,
   "fields": {
-    "source": 4,
     "subject": 10,
     "theme": 7,
     "question": "[Физика / Электродинамика / high] Вопрос №10",
@@ -2239,8 +2023,7 @@
     "correct_answer": "100",
     "difficulty": "high",
     "updated_at": "2026-02-19T17:56:26.893Z",
-    "created_at": "2026-02-19T17:56:26.893Z",
-    "tags": []
+    "created_at": "2026-02-19T17:56:26.893Z"
   }
 },
 {
@@ -2419,6 +2202,42 @@
     "planed_finish": "2026-02-20T07:47:53.570Z",
     "finished_at": "2026-02-20T05:48:41.986Z",
     "created_at": "2026-02-20T05:47:53.570Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 5,
+  "fields": {
+    "status": "in_progress",
+    "player": 1,
+    "started_at": "2026-03-09T05:45:33.223Z",
+    "planed_finish": "2026-03-09T07:45:33.223Z",
+    "finished_at": null,
+    "created_at": "2026-03-09T05:45:33.224Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 6,
+  "fields": {
+    "status": "in_progress",
+    "player": 1,
+    "started_at": "2026-03-09T05:48:56.704Z",
+    "planed_finish": "2026-03-09T07:48:56.704Z",
+    "finished_at": null,
+    "created_at": "2026-03-09T05:48:56.705Z"
+  }
+},
+{
+  "model": "trainings.training",
+  "pk": 7,
+  "fields": {
+    "status": "in_progress",
+    "player": 1,
+    "started_at": "2026-03-09T05:56:25.317Z",
+    "planed_finish": "2026-03-09T07:56:25.317Z",
+    "finished_at": null,
+    "created_at": "2026-03-09T05:56:25.318Z"
   }
 },
 {
@@ -2819,6 +2638,336 @@
     "task": 86,
     "order": 10,
     "created_at": "2026-02-20T05:47:53.605Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 41,
+  "fields": {
+    "training": 5,
+    "task": 1,
+    "order": 1,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 42,
+  "fields": {
+    "training": 5,
+    "task": 2,
+    "order": 2,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 43,
+  "fields": {
+    "training": 5,
+    "task": 3,
+    "order": 3,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 44,
+  "fields": {
+    "training": 5,
+    "task": 5,
+    "order": 4,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 45,
+  "fields": {
+    "training": 5,
+    "task": 7,
+    "order": 5,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 46,
+  "fields": {
+    "training": 5,
+    "task": 9,
+    "order": 6,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 47,
+  "fields": {
+    "training": 5,
+    "task": 10,
+    "order": 7,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 48,
+  "fields": {
+    "training": 5,
+    "task": 6,
+    "order": 8,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 49,
+  "fields": {
+    "training": 5,
+    "task": 4,
+    "order": 9,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 50,
+  "fields": {
+    "training": 5,
+    "task": 8,
+    "order": 10,
+    "created_at": "2026-03-09T05:45:33.306Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 51,
+  "fields": {
+    "training": 6,
+    "task": 7,
+    "order": 1,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 52,
+  "fields": {
+    "training": 6,
+    "task": 5,
+    "order": 2,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 53,
+  "fields": {
+    "training": 6,
+    "task": 1,
+    "order": 3,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 54,
+  "fields": {
+    "training": 6,
+    "task": 2,
+    "order": 4,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 55,
+  "fields": {
+    "training": 6,
+    "task": 8,
+    "order": 5,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 56,
+  "fields": {
+    "training": 6,
+    "task": 9,
+    "order": 6,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 57,
+  "fields": {
+    "training": 6,
+    "task": 10,
+    "order": 7,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 58,
+  "fields": {
+    "training": 6,
+    "task": 4,
+    "order": 8,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 59,
+  "fields": {
+    "training": 6,
+    "task": 3,
+    "order": 9,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 60,
+  "fields": {
+    "training": 6,
+    "task": 6,
+    "order": 10,
+    "created_at": "2026-03-09T05:48:56.728Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 61,
+  "fields": {
+    "training": 7,
+    "task": 3,
+    "order": 1,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 62,
+  "fields": {
+    "training": 7,
+    "task": 9,
+    "order": 2,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 63,
+  "fields": {
+    "training": 7,
+    "task": 4,
+    "order": 3,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 64,
+  "fields": {
+    "training": 7,
+    "task": 7,
+    "order": 4,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 65,
+  "fields": {
+    "training": 7,
+    "task": 8,
+    "order": 5,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 66,
+  "fields": {
+    "training": 7,
+    "task": 5,
+    "order": 6,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 67,
+  "fields": {
+    "training": 7,
+    "task": 10,
+    "order": 7,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 68,
+  "fields": {
+    "training": 7,
+    "task": 6,
+    "order": 8,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 69,
+  "fields": {
+    "training": 7,
+    "task": 2,
+    "order": 9,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "trainings.trainingtask",
+  "pk": 70,
+  "fields": {
+    "training": 7,
+    "task": 1,
+    "order": 10,
+    "created_at": "2026-03-09T05:56:25.379Z"
+  }
+},
+{
+  "model": "token_blacklist.outstandingtoken",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "jti": "1483609003d94eb791b570d6a6240908",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MzY0MTI3MiwiaWF0IjoxNzczMDM2NDcyLCJqdGkiOiIxNDgzNjA5MDAzZDk0ZWI3OTFiNTcwZDZhNjI0MDkwOCIsInVzZXJfaWQiOiIxIn0.18eWRXaSKlCI7bfsDMQr8CFZwTx6kaGF-qFFZRYGi2o",
+    "created_at": "2026-03-09T06:07:52.085Z",
+    "expires_at": "2026-03-16T06:07:52Z"
+  }
+},
+{
+  "model": "token_blacklist.outstandingtoken",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "jti": "90339079da6e47b7aab3ba82556ec7b5",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3MzY0MTQ4NSwiaWF0IjoxNzczMDM2Njg1LCJqdGkiOiI5MDMzOTA3OWRhNmU0N2I3YWFiM2JhODI1NTZlYzdiNSIsInVzZXJfaWQiOiIxIn0.3ylVkLQHrkCvLKriaPHU2JxNNbEmQk9KytbBFqFhRDk",
+    "created_at": "2026-03-09T06:11:25.036Z",
+    "expires_at": "2026-03-16T06:11:25Z"
+  }
+},
+{
+  "model": "token_blacklist.blacklistedtoken",
+  "pk": 1,
+  "fields": {
+    "token": 1,
+    "blacklisted_at": "2026-03-09T06:07:55.485Z"
   }
 }
 ]
