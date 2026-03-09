@@ -1,38 +1,25 @@
 import os
-import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'olympiad.settings')
 
-django.setup()
-
-
-
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.sessions import SessionMiddlewareStack
-from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
-
-from .routing import applications
-from authentication.middleware import JWTAuthMiddleware, AllowAllOriginsMiddleware
 
 django_asgi_app = get_asgi_application()
 
-# application = ProtocolTypeRouter(
-#     {
-#         "http": django_asgi_app,
-#         "websocket": AllowedHostsOriginValidator(
-#             JWTAuthMiddleware( # noqa
-#                 applications
-#             )
-#         ),
-#     }
-# )
+from channels.routing import ProtocolTypeRouter, URLRouter
+from authentication.middleware import JWTAuthMiddleware, AllowAllOriginsMiddleware
+
+from pvp.routing import websocket_urlpatterns as pvp
+from search_enemy.routing import websocket_urlpatterns as enemy
+from trainings.routing import websocket_urlpatterns as trainings
+
+
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
         "websocket": AllowAllOriginsMiddleware(
-            JWTAuthMiddleware( # noqa
-                applications
+            JWTAuthMiddleware(
+                URLRouter(pvp + enemy + trainings)
             )
         ),
     }

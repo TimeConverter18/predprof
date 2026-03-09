@@ -37,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=UserRole.choices,
         default=UserRole.PLAYER,
     )
-    rating = models.IntegerField(default=100)
+    rating = models.IntegerField(default=1000)
     solved_tasks = models.ManyToManyField(
         Task,
         related_name="solved_tasks",
