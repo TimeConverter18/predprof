@@ -1,7 +1,7 @@
 import {type FC, useState} from "react";
 import styled from "@emotion/styled";
 import {
-    Form, Input, Select, Modal, Drawer,
+    Form, Input, Select, Modal, Drawer, Button,
     Tag, Divider, Upload, Pagination, message
 } from "antd";
 import {
@@ -197,6 +197,21 @@ const IORow = styled.div`
     justify-content: center;
 `;
 
+const TabInactiveButton = styled(Button)`
+    && {
+        font-weight: bold;
+        background: transparent;
+        color: #fff;
+        border-color: #343434;
+
+        &:hover, &:focus {
+            color: #E0FF25;
+            border-color: #E0FF25;
+            background: transparent;
+        }
+    }
+`;
+
 const PIE_COLORS = ["#3fb950", "#f85149", "#3d4f6e"];
 
 type TabKey = "tasks" | "users" | "io";
@@ -229,29 +244,133 @@ const diffColor = (d: string) =>
     d === "Лёгкая" ? "success" as const : d === "Средняя" ? "warning" as const : "error" as const;
 
 const STUB_TASKS: TaskRecord[] = [
-    {id: 1, question: "Найдите значение выражения 2+2*2", correct_answer: "6", subject: "Математика", theme: "Алгебра", difficulty: "Лёгкая"},
-    {id: 2, question: "Что выведет print(type([]))?", correct_answer: "<class 'list'>", subject: "Информатика", theme: "Алгоритмы", difficulty: "Средняя"},
-    {id: 3, question: "Чему равно ускорение свободного падения?", correct_answer: "9.8", subject: "Физика", theme: "Геометрия", difficulty: "Лёгкая"},
-    {id: 4, question: "Решите уравнение x² − 5x + 6 = 0", correct_answer: "2; 3", subject: "Математика", theme: "Алгебра", difficulty: "Средняя"},
-    {id: 5, question: "Какая сложность бинарного поиска?", correct_answer: "O(log n)", subject: "Информатика", theme: "Алгоритмы", difficulty: "Сложная"},
-    {id: 6, question: "Найдите производную функции x³", correct_answer: "3x²", subject: "Математика", theme: "Алгебра", difficulty: "Сложная"},
-    {id: 7, question: "Сколько диагоналей у выпуклого шестиугольника?", correct_answer: "9", subject: "Математика", theme: "Комбинаторика", difficulty: "Средняя"},
-    {id: 8, question: "Вероятность выпадения орла при подбрасывании монеты?", correct_answer: "0.5", subject: "Математика", theme: "Теория вероятностей", difficulty: "Лёгкая"},
+    {
+        id: 1,
+        question: "Найдите значение выражения 2+2*3",
+        correct_answer: "6",
+        subject: "Математика",
+        theme: "Алгебра",
+        difficulty: "Лёгкая"
+    },
+    {
+        id: 2,
+        question: "Что выведет print(type([]))?",
+        correct_answer: "<class 'list'>",
+        subject: "Информатика",
+        theme: "Алгоритмы",
+        difficulty: "Средняя"
+    },
+    {
+        id: 3,
+        question: "Чему равно ускорение свободного падения?",
+        correct_answer: "9.8",
+        subject: "Физика",
+        theme: "Геометрия",
+        difficulty: "Лёгкая"
+    },
+    {
+        id: 4,
+        question: "Решите уравнение x² − 5x + 6 = 0",
+        correct_answer: "2; 3",
+        subject: "Математика",
+        theme: "Алгебра",
+        difficulty: "Средняя"
+    },
+    {
+        id: 5,
+        question: "Какая сложность бинарного поиска?",
+        correct_answer: "O(log n)",
+        subject: "Информатика",
+        theme: "Алгоритмы",
+        difficulty: "Сложная"
+    },
+    {
+        id: 6,
+        question: "Найдите производную функции x³",
+        correct_answer: "3x²",
+        subject: "Математика",
+        theme: "Алгебра",
+        difficulty: "Сложная"
+    },
+    {
+        id: 7,
+        question: "Сколько диагоналей у выпуклого шестиугольника?",
+        correct_answer: "9",
+        subject: "Математика",
+        theme: "Комбинаторика",
+        difficulty: "Средняя"
+    },
+    {
+        id: 8,
+        question: "Вероятность выпадения орла при подбрасывании монеты?",
+        correct_answer: "0.5",
+        subject: "Математика",
+        theme: "Теория вероятностей",
+        difficulty: "Лёгкая"
+    },
 ];
 
 const STUB_USERS: UserRecord[] = [
-    {id: 4, name: "Екатерина Новикова", email: "e.novikova@mail.ru", rating: 2100, correct: 26, wrong: 1, unsolved: 1, history: [1600, 1680, 1750, 1820, 1880, 1940, 2000, 2040, 2075, 2100]},
-    {id: 2, name: "Мария Иванова", email: "m.ivanova@yandex.ru", rating: 1580, correct: 24, wrong: 2, unsolved: 2, history: [1100, 1150, 1200, 1280, 1330, 1390, 1450, 1500, 1545, 1580]},
-    {id: 1, name: "Алексей Смирнов", email: "a.smirnov@mail.ru", rating: 1340, correct: 18, wrong: 4, unsolved: 6, history: [980, 1020, 1050, 1100, 1140, 1190, 1230, 1270, 1310, 1340]},
-    {id: 5, name: "Иван Петров", email: "i.petrov@yandex.ru", rating: 1120, correct: 14, wrong: 6, unsolved: 8, history: [800, 840, 870, 900, 940, 980, 1020, 1060, 1090, 1120]},
-    {id: 3, name: "Дмитрий Козлов", email: "d.kozlov@gmail.com", rating: 890, correct: 10, wrong: 8, unsolved: 10, history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]},
+    {
+        id: 4,
+        name: "Екатерина Новикова",
+        email: "e.novikova@mail.ru",
+        rating: 2100,
+        correct: 26,
+        wrong: 1,
+        unsolved: 1,
+        history: [1600, 1680, 1750, 1820, 1880, 1940, 2000, 2040, 2075, 2100]
+    },
+    {
+        id: 2,
+        name: "Мария Иванова",
+        email: "m.ivanova@yandex.ru",
+        rating: 1580,
+        correct: 24,
+        wrong: 2,
+        unsolved: 2,
+        history: [1100, 1150, 1200, 1280, 1330, 1390, 1450, 1500, 1545, 1580]
+    },
+    {
+        id: 1,
+        name: "Алексей Смирнов",
+        email: "a.smirnov@mail.ru",
+        rating: 1340,
+        correct: 18,
+        wrong: 4,
+        unsolved: 6,
+        history: [980, 1020, 1050, 1100, 1140, 1190, 1230, 1270, 1310, 1340]
+    },
+    {
+        id: 5,
+        name: "Иван Петров",
+        email: "i.petrov@yandex.ru",
+        rating: 1120,
+        correct: 14,
+        wrong: 6,
+        unsolved: 8,
+        history: [800, 840, 870, 900, 940, 980, 1020, 1060, 1090, 1120]
+    },
+    {
+        id: 3,
+        name: "Дмитрий Козлов",
+        email: "d.kozlov@gmail.com",
+        rating: 890,
+        correct: 10,
+        wrong: 8,
+        unsolved: 10,
+        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
+    },
 ];
 
 const TASKS_PER_PAGE = 5;
 const USERS_PER_PAGE = 5;
 
 
-const TasksSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void}> = ({tasks, setTasks}) => {
+const TasksSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void }> = ({
+                                                                                                                     tasks,
+                                                                                                                     setTasks
+                                                                                                                 }) => {
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
     const [page, setPage] = useState(1);
@@ -316,12 +435,15 @@ const TasksSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[])
                 onCancel={() => setOpen(false)}
                 okText="Сохранить"
                 cancelText="Отмена"
+                okButtonProps={{style: {color: "#000", fontWeight: "bold"}}}
             >
                 <Form form={form} layout="vertical" style={{marginTop: 16}}>
-                    <Form.Item name="question" label="Текст задачи" rules={[{required: true, message: "Введите текст"}]}>
+                    <Form.Item name="question" label="Текст задачи"
+                               rules={[{required: true, message: "Введите текст"}]}>
                         <Input.TextArea rows={3} placeholder="Условие задачи"/>
                     </Form.Item>
-                    <Form.Item name="correct_answer" label="Правильный ответ" rules={[{required: true, message: "Введите ответ"}]}>
+                    <Form.Item name="correct_answer" label="Правильный ответ"
+                               rules={[{required: true, message: "Введите ответ"}]}>
                         <Input placeholder="Ответ"/>
                     </Form.Item>
                     <Form.Item name="subject" label="Предмет" rules={[{required: true, message: "Выберите предмет"}]}>
@@ -330,8 +452,10 @@ const TasksSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[])
                     <Form.Item name="theme" label="Тема" rules={[{required: true, message: "Выберите тему"}]}>
                         <Select placeholder="Выберите тему" options={THEMES.map(t => ({value: t, label: t}))}/>
                     </Form.Item>
-                    <Form.Item name="difficulty" label="Сложность" rules={[{required: true, message: "Выберите сложность"}]}>
-                        <Select placeholder="Выберите сложность" options={DIFFICULTIES.map(d => ({value: d, label: d}))}/>
+                    <Form.Item name="difficulty" label="Сложность"
+                               rules={[{required: true, message: "Выберите сложность"}]}>
+                        <Select placeholder="Выберите сложность"
+                                options={DIFFICULTIES.map(d => ({value: d, label: d}))}/>
                     </Form.Item>
                 </Form>
             </Modal>
@@ -340,7 +464,7 @@ const TasksSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[])
 };
 
 
-const UserStatsDrawer: FC<{user: UserRecord | null; onClose: () => void}> = ({user, onClose}) => {
+const UserStatsDrawer: FC<{ user: UserRecord | null; onClose: () => void }> = ({user, onClose}) => {
     const isMobile = useMediaQuery({maxWidth: 767});
     if (!user) return null;
 
@@ -361,12 +485,10 @@ const UserStatsDrawer: FC<{user: UserRecord | null; onClose: () => void}> = ({us
         >
             <MutedText>{user.email}</MutedText>
             <Divider/>
-
             <div style={{textAlign: "center", marginBottom: 20}}>
                 <MutedText style={{display: "block", marginBottom: 4}}>Рейтинг</MutedText>
                 <span style={{fontSize: 36, fontWeight: 900, color: "#E0FF25"}}>{user.rating}</span>
             </div>
-
             <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
                 Статистика задач ({total})
             </MutedText>
@@ -382,9 +504,7 @@ const UserStatsDrawer: FC<{user: UserRecord | null; onClose: () => void}> = ({us
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-
             <Divider/>
-
             <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
                 Рейтинг за последние 10 PvP
             </MutedText>
@@ -394,7 +514,6 @@ const UserStatsDrawer: FC<{user: UserRecord | null; onClose: () => void}> = ({us
                         <CartesianGrid strokeDasharray="3 3" stroke="#343434"/>
                         <XAxis dataKey="label" tick={{fill: "#83868e", fontSize: 10}}/>
                         <YAxis tick={{fill: "#83868e", fontSize: 10}}/>
-                        <Tooltip/>
                         <Line type="monotone" dataKey="rating" stroke="#E0FF25" strokeWidth={2.5}
                               dot={{fill: "#E0FF25", r: 4, strokeWidth: 0}} activeDot={{r: 6}}/>
                     </LineChart>
@@ -447,7 +566,10 @@ const UsersSection: FC = () => {
 };
 
 
-const IOSection: FC<{tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void}> = ({tasks, setTasks}) => {
+const IOSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void }> = ({
+                                                                                                                  tasks,
+                                                                                                                  setTasks
+                                                                                                              }) => {
     const download = (content: string, filename: string, mime: string) => {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob([content], {type: mime}));
@@ -551,18 +673,21 @@ const AdminPanel: FC = () => {
                 </HeaderRow>
 
                 <TabRow>
-                    <PrimaryButton
-                        style={tab !== "tasks" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("tasks")}
-                    >Задачи</PrimaryButton>
-                    <PrimaryButton
-                        style={tab !== "users" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("users")}
-                    >Пользователи</PrimaryButton>
-                    <PrimaryButton
-                        style={tab !== "io" ? {background: "transparent", color: "#fff", borderColor: "#343434"} : undefined}
-                        onClick={() => setTab("io")}
-                    >Импорт / Экспорт</PrimaryButton>
+                    {tab === "tasks" ? (
+                        <PrimaryButton onClick={() => setTab("tasks")}>Задачи</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("tasks")}>Задачи</TabInactiveButton>
+                    )}
+                    {tab === "users" ? (
+                        <PrimaryButton onClick={() => setTab("users")}>Пользователи</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("users")}>Пользователи</TabInactiveButton>
+                    )}
+                    {tab === "io" ? (
+                        <PrimaryButton onClick={() => setTab("io")}>Импорт / Экспорт</PrimaryButton>
+                    ) : (
+                        <TabInactiveButton onClick={() => setTab("io")}>Импорт / Экспорт</TabInactiveButton>
+                    )}
                 </TabRow>
 
                 {tab === "tasks" && <TasksSection tasks={tasks} setTasks={setTasks}/>}
@@ -574,7 +699,3 @@ const AdminPanel: FC = () => {
 };
 
 export default AdminPanel;
-
-
-
-

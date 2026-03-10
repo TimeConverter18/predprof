@@ -1,19 +1,26 @@
-import {type FC, useEffect, useState} from "react";
-import {Flex, Modal, notification, Progress} from "antd";
+import {type FC, useEffect, useState, useRef} from "react";
+import {Flex, Modal, notification, Progress, Spin} from "antd";
 import styled from "@emotion/styled";
 import Task from "../../public/task";
 import {useWebSocket} from "@siberiacancode/reactuse";
 import {Desktop, Mobile} from "../../responsiveWrappers";
 import PrimaryButton from "../../public/primaryButton";
 import {useNavigate, useSearchParams} from "react-router";
-import type {TaskState} from "./single";
 import NFPage from "../notFound";
+import api from "../../../api/api";
+
+type PvpTaskData = {
+    question: string;
+    user_is_correct: boolean | null;
+    enemy_is_correct: boolean | null;
+}
 
 type StatsProps = {
     playerProgress: number;
     enemyProgress: number;
     seconds: number;
-    round: number;
+    currentTask: number;
+    totalTasks: number;
 }
 
 const StatsWrapper = styled.div`
@@ -38,6 +45,13 @@ const PageWrapper = styled.div`
     padding: 10px 0;
     box-sizing: border-box;
     max-width: 1280px;
+`
+
+const WaitingText = styled.div`
+    color: #83868e;
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
 `
 
 const BarContainer = styled.div`
@@ -71,7 +85,7 @@ const TimeRoundContainerDesktop = styled.div`
     gap: 20px;
 `
 
-const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds, round}) => {
+const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds, currentTask, totalTasks}) => {
     const formatTime = (totalSeconds: number) => {
         const mins = Math.floor(totalSeconds / 60);
         const secs = totalSeconds % 60;
@@ -83,13 +97,13 @@ const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds,
             <Flex gap="large" align="center" style={{ width: "100%", justifyContent: "space-between" }}>
                 <Mobile>
                     <TimeRoundContainerMobile>
-                        <TimerText>Раунд {round}</TimerText>
+                        <TimerText>Задача {currentTask} / {totalTasks}</TimerText>
                         <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerMobile>
                 </Mobile>
                 <Desktop>
                     <TimeRoundContainerDesktop>
-                        <TimerText>Раунд {round}</TimerText>
+                        <TimerText>Задача {currentTask} / {totalTasks}</TimerText>
                         <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerDesktop>
                 </Desktop>
@@ -110,26 +124,50 @@ const Page: FC = () => {
 
     const isIdValid = id !== null && !isNaN(Number(id)) && id.trim() !== "";
 
-    const [round, setRound] = useState<number>(1);
-    const [playerProgress, setPlayerProgress] = useState<number>(0);
-    const [enemyProgress, setEnemyProgress] = useState<number>(0);
-    const [question, setQuestion] = useState<string>("Ожидание задачи...");
-    const [taskId, setTaskId] = useState<number | null>(null);
+    const [tasks, setTasks] = useState<PvpTaskData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [current, setCurrent] = useState<number>(0);
+    const [playerCorrect, setPlayerCorrect] = useState<number>(0);
+    const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
+    const [answered, setAnswered] = useState<boolean>(false); // ответили ли на текущую задачу
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
     const [answer, setAnswer] = useState<string>("");
-    const [status, setStatus] = useState<TaskState>("base")
+
+    const totalTasks = tasks.length;
+    const totalTasksRef = useRef(0);
 
     useEffect(() => {
-        if (seconds > 0 && isIdValid) {
-            const interval = setInterval(() => {
-                setSeconds(prev => prev > 0 ? prev - 1 : 0);
-            }, 1000);
-            return () => clearInterval(interval);
-        }
-    }, [seconds, isIdValid]);
+        totalTasksRef.current = totalTasks;
+    }, [totalTasks]);
+
+    // Загрузка задач через HTTP API
+    useEffect(() => {
+        if (!isIdValid) return;
+        setLoading(true);
+        api.get(`/pvp/api/${id}/`).then((res) => {
+            if (res && res.data && res.data.tasks) {
+                const fetchedTasks: PvpTaskData[] = res.data.tasks;
+                setTasks(fetchedTasks);
+                setPlayerCorrect(res.data.user_solved_count || 0);
+                setEnemyCorrect(res.data.enemy_solved_count || 0);
+                // Начинаем с первой нерешённой задачи
+                const firstUnsolved = fetchedTasks.findIndex(t => t.user_is_correct === null);
+                setCurrent(firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length);
+            }
+        }).finally(() => setLoading(false));
+    }, [id, isIdValid]);
+
+    // Таймер
+    useEffect(() => {
+        if (!isIdValid) return;
+        const interval = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [isIdValid]);
 
     const handleExit = () => {
         navigate("/training/pvp");
@@ -137,26 +175,29 @@ const Page: FC = () => {
 
     const handleWebsocketMessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
-        if (data.type === 'task') {
-            setQuestion(data.question);
-            setTaskId(data.task_id);
-            setRound(data.round);
-            setSeconds(data.seconds);
-            setAnswer("");
-            setStatus("base");
-        } else if (data.type === 'progress') {
-            setPlayerProgress(data.player_progress);
-            setEnemyProgress(data.enemy_progress);
-        } else if (data.type === 'result') {
-            if (data.task_index === round - 1) {
-                setStatus(data.is_correct ? "right" : "wrong");
+        if (data.type === 'stats') {
+            // Приходит когда оба ответили на задачу (только второму ответившему)
+            const total = totalTasksRef.current;
+            if (total > 0) {
+                if (data.correct_percentage !== undefined) {
+                    setPlayerCorrect(Math.round((data.correct_percentage / 100) * total));
+                }
+                if (data.enemy_correct_percentage !== undefined) {
+                    setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
+                }
             }
-        } else if (data.type === 'enemy_result') {
-            //
         } else if (data.type === 'finish_round') {
-            //
-        } else if (data.type === 'end') {
-            setModalText(data.modal_text || (data.result === 'win' ? "Вы победили!" : "Вы проиграли!"));
+            let text = "Раунд завершён!";
+            if (data.my_delta !== undefined) {
+                if (data.my_delta > 0) {
+                    text = `Вы победили! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (+${data.my_delta})`;
+                } else if (data.my_delta < 0) {
+                    text = `Вы проиграли. Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (${data.my_delta})`;
+                } else {
+                    text = `Ничья! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating}`;
+                }
+            }
+            setModalText(text);
             setModalOpen(true);
         } else if (data.type === 'error') {
             messageApi.error({
@@ -167,41 +208,95 @@ const Page: FC = () => {
     }
 
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/api/ws/pvp/${id ? id + '/' : ''}`, {
+    const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
-        onDisconnected: () =>
-            (messageApi.error({
-                message: "Соединение разорвано!",
-                description: <PrimaryButton onClick={() => webSocket.open()}>Переподключиться</PrimaryButton>,
-                duration: 5
-            })),
+        onDisconnected: () => {
+            // Если все задачи решены и соединение закрылось — раунд окончен
+            if (current >= totalTasksRef.current && !modalOpen) {
+                setModalText("Раунд завершён!");
+                setModalOpen(true);
+            } else if (!modalOpen) {
+                messageApi.error({
+                    message: "Соединение разорвано!",
+                    description: <PrimaryButton onClick={() => webSocket.open()}>Переподключиться</PrimaryButton>,
+                    duration: 5
+                });
+            }
+        },
         onError: (event) => {console.log(event)}
     })
 
     const handleSendAnswer = () => {
-        if (!answer) return;
+        if (!answer || answered) return;
+
         webSocket.send(JSON.stringify({
-            task_index: round - 1,
+            type: "answer",
+            task_index: current,
             answer: answer
         }));
+
+        // Помечаем что ответили — блокируем ввод
+        setAnswered(true);
+        setAnswer("");
+
+        // Автоматически переходим к следующей задаче через небольшую задержку
+        // Сервер переключает задачи когда оба ответят, но мы не можем ждать stats
+        // (бэк шлёт stats только второму ответившему)
+        // Поэтому сразу показываем следующую задачу
+        setTimeout(() => {
+            setCurrent(prev => prev + 1);
+            setAnswered(false);
+        }, 500);
     }
 
     if (!isIdValid) {
         return <NFPage />;
     }
 
+    if (loading) {
+        return (
+            <PageWrapper>
+                <Spin size="large" tip="Загрузка..." />
+            </PageWrapper>
+        );
+    }
+
+    if (totalTasks === 0) {
+        return <NFPage />;
+    }
+
+    const playerPct = totalTasks > 0 ? Math.round((playerCorrect / totalTasks) * 100) : 0;
+    const enemyPct = totalTasks > 0 ? Math.round((enemyCorrect / totalTasks) * 100) : 0;
+    const allAnswered = current >= totalTasks;
+
     return (
         <PageWrapper>
             {contextHolder}
-            <StatsContainer playerProgress={playerProgress} enemyProgress={enemyProgress} seconds={seconds} round={round}/>
-            <Task 
-                task_id={taskId ?? 0}
-                question={question}
-                value={answer}
-                onChange={setAnswer}
-                onCheck={handleSendAnswer}
-                is_correct={status === "right" ? true : status === "wrong" ? false : null}
+            <StatsContainer
+                playerProgress={playerPct}
+                enemyProgress={enemyPct}
+                seconds={seconds}
+                currentTask={Math.min(current + 1, totalTasks)}
+                totalTasks={totalTasks}
             />
+            {allAnswered ? (
+                <WaitingText>
+                    Вы ответили на все задачи. Ожидание завершения раунда...
+                </WaitingText>
+            ) : answered ? (
+                <WaitingText>
+                    Ответ отправлен. Переход к следующей задаче...
+                </WaitingText>
+            ) : (
+                <Task
+                    task_id={current + 1}
+                    question={tasks[current]?.question ?? "Загрузка..."}
+                    value={answer}
+                    onChange={setAnswer}
+                    onCheck={handleSendAnswer}
+                    is_correct={null}
+                />
+            )}
             <Modal
                 title="PvP окончено"
                 open={modalOpen}

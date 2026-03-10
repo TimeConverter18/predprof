@@ -22,8 +22,16 @@ const App: FC = () => {
             <ConfigProvider theme={{
                 token: {
                     colorPrimary: "#E0FF25",
-                }, algorithm: theme.darkAlgorithm}
-            }>
+                },
+                algorithm: theme.darkAlgorithm,
+                components: {
+                    Button: {
+                        primaryColor: "#000",
+                        colorPrimaryHover: "#d4f000",
+                        colorPrimaryActive: "#a8bf00",
+                    },
+                },
+            }}>
 
                 <AntApp style={{width: "100%"}}>
                     <BrowserRouter>
