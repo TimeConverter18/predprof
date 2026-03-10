@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import SubjectsListAPIView, ReturnTaskAPIView, TasksListAPIView, TaskViewSet, CheckTaskView, ImportTasksView
+from .views import SubjectsListAPIView, ReturnTaskAPIView, TasksListAPIView, TaskViewSet, CheckTaskView, ImportTasksView, TaskExportView
 
 urlpatterns = [
     path('', TasksListAPIView.as_view()),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('import/', ImportTasksView.as_view()),
     path('subjects/', SubjectsListAPIView.as_view()),
     path ('create/', TaskViewSet.as_view({'post': 'create'})),
+    path('export/', TaskExportView.as_view())
 ]

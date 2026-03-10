@@ -3,6 +3,7 @@ import io
 import json
 
 from django.core.paginator import Paginator
+from django.http import JsonResponse, HttpResponse
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -176,3 +177,51 @@ class ImportTasksView(APIView):
                 errors.append({"row": i + 1, "error": str(e)})
 
         return created, errors
+
+
+
+class TaskExportView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        export_format = request.query_params.get('export_format', 'json')
+        theme_id = request.query_params.get('theme_id')
+        subject_id = request.query_params.get('subject_id')
+
+        tasks = Task.objects.select_related('subject', 'theme').all()
+
+        if theme_id:
+            tasks = tasks.filter(theme_id=theme_id)
+        if subject_id:
+            tasks = tasks.filter(subject_id=subject_id)
+
+        data = [
+            {
+                'id': t.id,
+                'question': t.question,
+                'solution': t.solution,
+                'correct_answer': t.correct_answer,
+                'difficulty': t.difficulty,
+                'subject': t.subject.name,
+                'theme': t.theme.name if t.theme else None,
+            }
+            for t in tasks
+        ]
+
+        if format == 'csv':
+            return self._csv_response(data)
+        return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+
+    def _csv_response(self, data):
+        if not data:
+            return HttpResponse('No data', content_type='text/plain')
+
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
+        response.write('\ufeff')
+
+        writer = csv.DictWriter(response, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+
+        return response
