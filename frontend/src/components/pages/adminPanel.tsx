@@ -361,6 +361,16 @@ const STUB_USERS: UserRecord[] = [
         unsolved: 10,
         history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
     },
+    {
+        id: 33,
+        name: "Дмитрий Козлов",
+        email: "d.kozlov@gmail.com",
+        rating: 890,
+        correct: 10,
+        wrong: 8,
+        unsolved: 10,
+        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
+    },
 ];
 
 const TASKS_PER_PAGE = 5;
