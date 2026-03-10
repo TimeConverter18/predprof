@@ -1,0 +1,1082 @@
+[
+    {
+        "id": 1,
+        "question": "[Математика - Алгебра] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 2,
+        "question": "[Математика - Алгебра] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 3,
+        "question": "[Математика - Алгебра] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 4,
+        "question": "[Математика - Алгебра] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 5,
+        "question": "[Математика - Алгебра] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 6,
+        "question": "[Математика - Алгебра] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 7,
+        "question": "[Математика - Алгебра] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 8,
+        "question": "[Математика - Алгебра] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 9,
+        "question": "[Математика - Алгебра] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 10,
+        "question": "[Математика - Алгебра] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 11,
+        "question": "[Математика - Алгебра] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 12,
+        "question": "[Математика - Алгебра] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 13,
+        "question": "[Математика - Алгебра] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 14,
+        "question": "[Математика - Алгебра] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 15,
+        "question": "[Математика - Алгебра] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 16,
+        "question": "[Математика - Алгебра] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 17,
+        "question": "[Математика - Алгебра] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 18,
+        "question": "[Математика - Алгебра] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 19,
+        "question": "[Математика - Алгебра] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 20,
+        "question": "[Математика - Алгебра] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 21,
+        "question": "[Математика - Алгебра] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 22,
+        "question": "[Математика - Алгебра] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 23,
+        "question": "[Математика - Алгебра] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 24,
+        "question": "[Математика - Алгебра] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 25,
+        "question": "[Математика - Алгебра] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 26,
+        "question": "[Математика - Алгебра] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 27,
+        "question": "[Математика - Алгебра] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 28,
+        "question": "[Математика - Алгебра] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 29,
+        "question": "[Математика - Алгебра] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 30,
+        "question": "[Математика - Алгебра] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Алгебра"
+    },
+    {
+        "id": 31,
+        "question": "[Математика - Геометрия] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 32,
+        "question": "[Математика - Геометрия] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 33,
+        "question": "[Математика - Геометрия] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 34,
+        "question": "[Математика - Геометрия] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 35,
+        "question": "[Математика - Геометрия] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 36,
+        "question": "[Математика - Геометрия] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 37,
+        "question": "[Математика - Геометрия] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 38,
+        "question": "[Математика - Геометрия] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 39,
+        "question": "[Математика - Геометрия] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 40,
+        "question": "[Математика - Геометрия] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "easy",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 41,
+        "question": "[Математика - Геометрия] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 42,
+        "question": "[Математика - Геометрия] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 43,
+        "question": "[Математика - Геометрия] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 44,
+        "question": "[Математика - Геометрия] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 45,
+        "question": "[Математика - Геометрия] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 46,
+        "question": "[Математика - Геометрия] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 47,
+        "question": "[Математика - Геометрия] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 48,
+        "question": "[Математика - Геометрия] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 49,
+        "question": "[Математика - Геометрия] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 50,
+        "question": "[Математика - Геометрия] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "middle",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 51,
+        "question": "[Математика - Геометрия] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 52,
+        "question": "[Математика - Геометрия] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 53,
+        "question": "[Математика - Геометрия] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 54,
+        "question": "[Математика - Геометрия] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 55,
+        "question": "[Математика - Геометрия] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 56,
+        "question": "[Математика - Геометрия] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 57,
+        "question": "[Математика - Геометрия] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 58,
+        "question": "[Математика - Геометрия] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 59,
+        "question": "[Математика - Геометрия] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 60,
+        "question": "[Математика - Геометрия] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "high",
+        "subject": "Математика",
+        "theme": "Геометрия"
+    },
+    {
+        "id": 61,
+        "question": "[Физика - Механика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 62,
+        "question": "[Физика - Механика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 63,
+        "question": "[Физика - Механика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 64,
+        "question": "[Физика - Механика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 65,
+        "question": "[Физика - Механика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 66,
+        "question": "[Физика - Механика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 67,
+        "question": "[Физика - Механика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 68,
+        "question": "[Физика - Механика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 69,
+        "question": "[Физика - Механика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 70,
+        "question": "[Физика - Механика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 71,
+        "question": "[Физика - Механика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 72,
+        "question": "[Физика - Механика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 73,
+        "question": "[Физика - Механика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 74,
+        "question": "[Физика - Механика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 75,
+        "question": "[Физика - Механика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 76,
+        "question": "[Физика - Механика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 77,
+        "question": "[Физика - Механика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 78,
+        "question": "[Физика - Механика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 79,
+        "question": "[Физика - Механика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 80,
+        "question": "[Физика - Механика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 81,
+        "question": "[Физика - Механика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 82,
+        "question": "[Физика - Механика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 83,
+        "question": "[Физика - Механика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 84,
+        "question": "[Физика - Механика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 85,
+        "question": "[Физика - Механика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 86,
+        "question": "[Физика - Механика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 87,
+        "question": "[Физика - Механика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 88,
+        "question": "[Физика - Механика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 89,
+        "question": "[Физика - Механика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 90,
+        "question": "[Физика - Механика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Механика"
+    },
+    {
+        "id": 91,
+        "question": "[Физика - Электродинамика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 92,
+        "question": "[Физика - Электродинамика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 93,
+        "question": "[Физика - Электродинамика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 94,
+        "question": "[Физика - Электродинамика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 95,
+        "question": "[Физика - Электродинамика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 96,
+        "question": "[Физика - Электродинамика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 97,
+        "question": "[Физика - Электродинамика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 98,
+        "question": "[Физика - Электродинамика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 99,
+        "question": "[Физика - Электродинамика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 100,
+        "question": "[Физика - Электродинамика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "easy",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 101,
+        "question": "[Физика - Электродинамика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 102,
+        "question": "[Физика - Электродинамика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 103,
+        "question": "[Физика - Электродинамика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 104,
+        "question": "[Физика - Электродинамика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 105,
+        "question": "[Физика - Электродинамика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 106,
+        "question": "[Физика - Электродинамика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 107,
+        "question": "[Физика - Электродинамика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 108,
+        "question": "[Физика - Электродинамика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 109,
+        "question": "[Физика - Электродинамика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 110,
+        "question": "[Физика - Электродинамика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "middle",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 111,
+        "question": "[Физика - Электродинамика] Вопрос №1",
+        "solution": "Решение №1",
+        "correct_answer": "10",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 112,
+        "question": "[Физика - Электродинамика] Вопрос №2",
+        "solution": "Решение №2",
+        "correct_answer": "20",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 113,
+        "question": "[Физика - Электродинамика] Вопрос №3",
+        "solution": "Решение №3",
+        "correct_answer": "30",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 114,
+        "question": "[Физика - Электродинамика] Вопрос №4",
+        "solution": "Решение №4",
+        "correct_answer": "40",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 115,
+        "question": "[Физика - Электродинамика] Вопрос №5",
+        "solution": "Решение №5",
+        "correct_answer": "50",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 116,
+        "question": "[Физика - Электродинамика] Вопрос №6",
+        "solution": "Решение №6",
+        "correct_answer": "60",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 117,
+        "question": "[Физика - Электродинамика] Вопрос №7",
+        "solution": "Решение №7",
+        "correct_answer": "70",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 118,
+        "question": "[Физика - Электродинамика] Вопрос №8",
+        "solution": "Решение №8",
+        "correct_answer": "80",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 119,
+        "question": "[Физика - Электродинамика] Вопрос №9",
+        "solution": "Решение №9",
+        "correct_answer": "90",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    },
+    {
+        "id": 120,
+        "question": "[Физика - Электродинамика] Вопрос №10",
+        "solution": "Решение №10",
+        "correct_answer": "100",
+        "difficulty": "high",
+        "subject": "Физика",
+        "theme": "Электродинамика"
+    }
+]
