@@ -1,21 +1,18 @@
-import {type FC, useState} from "react";
+import {type FC, useCallback, useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import {
     Form, Input, Select, Modal, Drawer, Button,
-    Tag, Divider, Upload, Pagination, message
+    Tag, Divider, Upload, Pagination, message, Spin
 } from "antd";
 import {
     PlusOutlined, UploadOutlined, DownloadOutlined, ArrowLeftOutlined
 } from "@ant-design/icons";
-import {
-    PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
-    LineChart, Line, XAxis, YAxis, CartesianGrid,
-} from "recharts";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router";
 import StyledTitle from "../components/textComponents/StyledTitle";
 import PrimaryButton from "../public/primaryButton";
 import PageContainer from "../components/containers/PageContainer";
+import api from "../../api/api";
 
 const Panel = styled.div`
     width: 100%;
@@ -161,14 +158,6 @@ const UserName = styled.span`
     text-overflow: ellipsis;
 `;
 
-const UserEmail = styled.span`
-    color: rgba(255, 255, 255, 0.45);
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
 const UserRating = styled.span`
     font-weight: 800;
     font-size: 20px;
@@ -212,8 +201,6 @@ const TabInactiveButton = styled(Button)`
     }
 `;
 
-const PIE_COLORS = ["#3fb950", "#f85149", "#3d4f6e"];
-
 type TabKey = "tasks" | "users" | "io";
 
 type TaskRecord = {
@@ -226,210 +213,116 @@ type TaskRecord = {
 };
 
 type UserRecord = {
-    id: number;
-    name: string;
-    email: string;
+    username: string;
     rating: number;
-    correct: number;
-    wrong: number;
-    unsolved: number;
-    history: number[];
 };
 
-const SUBJECTS = ["Математика", "Информатика", "Физика", "Русский язык"];
-const THEMES = ["Алгебра", "Геометрия", "Комбинаторика", "Теория вероятностей", "Алгоритмы", "Структуры данных"];
-const DIFFICULTIES = ["Лёгкая", "Средняя", "Сложная"];
+type SubjectOption = {
+    id: number;
+    name: string;
+    themes: { id: number; name: string }[];
+};
 
-const diffColor = (d: string) =>
-    d === "Лёгкая" ? "success" as const : d === "Средняя" ? "warning" as const : "error" as const;
-
-const STUB_TASKS: TaskRecord[] = [
-    {
-        id: 1,
-        question: "Найдите значение выражения 2+2*3",
-        correct_answer: "6",
-        subject: "Математика",
-        theme: "Алгебра",
-        difficulty: "Лёгкая"
-    },
-    {
-        id: 2,
-        question: "Что выведет print(type([]))?",
-        correct_answer: "<class 'list'>",
-        subject: "Информатика",
-        theme: "Алгоритмы",
-        difficulty: "Средняя"
-    },
-    {
-        id: 3,
-        question: "Чему равно ускорение свободного падения?",
-        correct_answer: "9.8",
-        subject: "Физика",
-        theme: "Геометрия",
-        difficulty: "Лёгкая"
-    },
-    {
-        id: 4,
-        question: "Решите уравнение x² − 5x + 6 = 0",
-        correct_answer: "2; 3",
-        subject: "Математика",
-        theme: "Алгебра",
-        difficulty: "Средняя"
-    },
-    {
-        id: 5,
-        question: "Какая сложность бинарного поиска?",
-        correct_answer: "O(log n)",
-        subject: "Информатика",
-        theme: "Алгоритмы",
-        difficulty: "Сложная"
-    },
-    {
-        id: 6,
-        question: "Найдите производную функции x³",
-        correct_answer: "3x²",
-        subject: "Математика",
-        theme: "Алгебра",
-        difficulty: "Сложная"
-    },
-    {
-        id: 7,
-        question: "Сколько диагоналей у выпуклого шестиугольника?",
-        correct_answer: "9",
-        subject: "Математика",
-        theme: "Комбинаторика",
-        difficulty: "Средняя"
-    },
-    {
-        id: 8,
-        question: "Вероятность выпадения орла при подбрасывании монеты?",
-        correct_answer: "0.5",
-        subject: "Математика",
-        theme: "Теория вероятностей",
-        difficulty: "Лёгкая"
-    },
+const DIFFICULTIES = [
+    {value: "easy", label: "Лёгкая"},
+    {value: "middle", label: "Средняя"},
+    {value: "high", label: "Сложная"},
 ];
 
-const STUB_USERS: UserRecord[] = [
-    {
-        id: 4,
-        name: "Екатерина Новикова",
-        email: "e.novikova@mail.ru",
-        rating: 2100,
-        correct: 26,
-        wrong: 1,
-        unsolved: 1,
-        history: [1600, 1680, 1750, 1820, 1880, 1940, 2000, 2040, 2075, 2100]
-    },
-    {
-        id: 2,
-        name: "Мария Иванова",
-        email: "m.ivanova@yandex.ru",
-        rating: 1580,
-        correct: 24,
-        wrong: 2,
-        unsolved: 2,
-        history: [1100, 1150, 1200, 1280, 1330, 1390, 1450, 1500, 1545, 1580]
-    },
-    {
-        id: 1,
-        name: "Алексей Смирнов",
-        email: "a.smirnov@mail.ru",
-        rating: 1340,
-        correct: 18,
-        wrong: 4,
-        unsolved: 6,
-        history: [980, 1020, 1050, 1100, 1140, 1190, 1230, 1270, 1310, 1340]
-    },
-    {
-        id: 5,
-        name: "Иван Петров",
-        email: "i.petrov@yandex.ru",
-        rating: 1120,
-        correct: 14,
-        wrong: 6,
-        unsolved: 8,
-        history: [800, 840, 870, 900, 940, 980, 1020, 1060, 1090, 1120]
-    },
-    {
-        id: 3,
-        name: "Дмитрий Козлов",
-        email: "d.kozlov@gmail.com",
-        rating: 890,
-        correct: 10,
-        wrong: 8,
-        unsolved: 10,
-        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
-    },
-    {
-        id: 33,
-        name: "Дмитрий Козлов",
-        email: "d.kozlov@gmail.com",
-        rating: 890,
-        correct: 10,
-        wrong: 8,
-        unsolved: 10,
-        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
-    },
-];
+const DIFFICULTY_LABELS: Record<string, string> = {
+    "easy": "Лёгкая",
+    "middle": "Средняя",
+    "high": "Сложная",
+};
+
+const diffColor = (d: string) => {
+    const key = d.toLowerCase();
+    return key === "easy" || key === "лёгкая" ? "success" as const
+        : key === "middle" || key === "средняя" ? "warning" as const
+            : "error" as const;
+};
+
+const diffLabel = (d: string) => DIFFICULTY_LABELS[d] || d;
 
 const TASKS_PER_PAGE = 5;
-const USERS_PER_PAGE = 5;
 
 
-const TasksSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void }> = ({
-                                                                                                                     tasks,
-                                                                                                                     setTasks
-                                                                                                                 }) => {
+/* ─── Tasks Section (backend-connected) ─── */
+const TasksSection: FC<{
+    tasks: TaskRecord[];
+    totalCount: number;
+    page: number;
+    setPage: (p: number) => void;
+    onReload: () => void;
+    subjects: SubjectOption[];
+}> = ({tasks, totalCount, page, setPage, onReload, subjects}) => {
     const [open, setOpen] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [form] = Form.useForm();
-    const [page, setPage] = useState(1);
+    const [selectedSubjectId, setSelectedSubjectId] = useState<number | undefined>(undefined);
 
-    const sorted = [...tasks].sort((a, b) => a.id - b.id);
-    const paginated = sorted.slice((page - 1) * TASKS_PER_PAGE, page * TASKS_PER_PAGE);
+    const selectedSubject = subjects.find(s => s.id === selectedSubjectId);
+    const themeOptions = selectedSubject?.themes.map(t => ({value: t.name, label: t.name})) ?? [];
 
     const openAdd = () => {
         form.resetFields();
+        setSelectedSubjectId(undefined);
         setOpen(true);
     };
 
     const handleSave = () => {
-        form.validateFields().then((vals) => {
-            setTasks(prev => [...prev, {...vals, id: Math.max(0, ...prev.map(t => t.id)) + 1}]);
-            setOpen(false);
-            message.success("Задача добавлена");
+        form.validateFields().then(async (vals) => {
+            setSaving(true);
+            try {
+                const res = await api.post("/tasks/create/", {
+                    question: vals.question,
+                    correct_answer: vals.correct_answer,
+                    solution: vals.solution || "",
+                    subject: vals.subject_id,
+                    theme: vals.theme_id || null,
+                    difficulty: vals.difficulty,
+                });
+                if (res && (res.status === 201 || res.status === 200)) {
+                    message.success("Задача добавлена");
+                    setOpen(false);
+                    onReload();
+                }
+            } finally {
+                setSaving(false);
+            }
         });
     };
 
     return (
         <Card>
             <TopBar>
-                <CardTitle>База задач</CardTitle>
+                <CardTitle>База задач ({totalCount})</CardTitle>
                 <PrimaryButton icon={<PlusOutlined/>} onClick={openAdd}>Добавить</PrimaryButton>
             </TopBar>
 
             <ItemList>
-                {paginated.map(t => (
+                {tasks.map(t => (
                     <TaskItem key={t.id}>
                         <TaskItemHeader>
                             <TaskItemId>№{t.id}</TaskItemId>
                             <TaskItemMeta>
                                 <Tag color="blue">{t.subject}</Tag>
-                                <Tag>{t.theme}</Tag>
-                                <Tag color={diffColor(t.difficulty)}>{t.difficulty}</Tag>
+                                {t.theme && <Tag>{t.theme}</Tag>}
+                                <Tag color={diffColor(t.difficulty)}>{diffLabel(t.difficulty)}</Tag>
                             </TaskItemMeta>
                         </TaskItemHeader>
                         <TaskItemQuestion>{t.question}</TaskItemQuestion>
                         <TaskItemAnswer>Ответ: {t.correct_answer}</TaskItemAnswer>
                     </TaskItem>
                 ))}
+                {tasks.length === 0 && <MutedText>Нет задач</MutedText>}
             </ItemList>
 
-            {tasks.length > TASKS_PER_PAGE && (
+            {totalCount > TASKS_PER_PAGE && (
                 <PaginationWrapper>
                     <Pagination
                         current={page}
-                        total={tasks.length}
+                        total={totalCount}
                         pageSize={TASKS_PER_PAGE}
                         onChange={setPage}
                         showSizeChanger={false}
@@ -445,6 +338,7 @@ const TasksSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]
                 onCancel={() => setOpen(false)}
                 okText="Сохранить"
                 cancelText="Отмена"
+                confirmLoading={saving}
                 okButtonProps={{style: {color: "#000", fontWeight: "bold"}}}
             >
                 <Form form={form} layout="vertical" style={{marginTop: 16}}>
@@ -456,16 +350,30 @@ const TasksSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]
                                rules={[{required: true, message: "Введите ответ"}]}>
                         <Input placeholder="Ответ"/>
                     </Form.Item>
-                    <Form.Item name="subject" label="Предмет" rules={[{required: true, message: "Выберите предмет"}]}>
-                        <Select placeholder="Выберите предмет" options={SUBJECTS.map(s => ({value: s, label: s}))}/>
+                    <Form.Item name="solution" label="Решение">
+                        <Input.TextArea rows={2} placeholder="Решение (необязательно)"/>
                     </Form.Item>
-                    <Form.Item name="theme" label="Тема" rules={[{required: true, message: "Выберите тему"}]}>
-                        <Select placeholder="Выберите тему" options={THEMES.map(t => ({value: t, label: t}))}/>
+                    <Form.Item name="subject_id" label="Предмет" rules={[{required: true, message: "Выберите предмет"}]}>
+                        <Select
+                            placeholder="Выберите предмет"
+                            options={subjects.map(s => ({value: s.id, label: s.name}))}
+                            onChange={(val) => {
+                                setSelectedSubjectId(val);
+                                form.setFieldValue("theme_id", undefined);
+                            }}
+                        />
+                    </Form.Item>
+                    <Form.Item name="theme_id" label="Тема">
+                        <Select
+                            placeholder="Выберите тему"
+                            options={themeOptions}
+                            allowClear
+                            disabled={!selectedSubjectId}
+                        />
                     </Form.Item>
                     <Form.Item name="difficulty" label="Сложность"
                                rules={[{required: true, message: "Выберите сложность"}]}>
-                        <Select placeholder="Выберите сложность"
-                                options={DIFFICULTIES.map(d => ({value: d, label: d}))}/>
+                        <Select placeholder="Выберите сложность" options={DIFFICULTIES}/>
                     </Form.Item>
                 </Form>
             </Modal>
@@ -474,101 +382,73 @@ const TasksSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]
 };
 
 
+/* ─── User Stats Drawer (backend-connected) ─── */
 const UserStatsDrawer: FC<{ user: UserRecord | null; onClose: () => void }> = ({user, onClose}) => {
     const isMobile = useMediaQuery({maxWidth: 767});
-    if (!user) return null;
 
-    const total = user.correct + user.wrong + user.unsolved;
-    const pie = [
-        {name: "Верно", value: user.correct},
-        {name: "Неверно", value: user.wrong},
-        {name: "Не решено", value: user.unsolved},
-    ];
-    const history = user.history.map((r, i) => ({label: `#${i + 1}`, rating: r}));
+    if (!user) return null;
 
     return (
         <Drawer
-            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{user.name}</span>}
+            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{user.username}</span>}
             open
             onClose={onClose}
             width={isMobile ? "100%" : 520}
         >
-            <MutedText>{user.email}</MutedText>
             <Divider/>
             <div style={{textAlign: "center", marginBottom: 20}}>
                 <MutedText style={{display: "block", marginBottom: 4}}>Рейтинг</MutedText>
                 <span style={{fontSize: 36, fontWeight: 900, color: "#E0FF25"}}>{user.rating}</span>
-            </div>
-            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
-                Статистика задач ({total})
-            </MutedText>
-            <div style={{marginTop: 8}}>
-                <ResponsiveContainer width="100%" height={220}>
-                    <PieChart>
-                        <Pie data={pie} cx="50%" cy="50%" innerRadius={55} outerRadius={85}
-                             paddingAngle={4} dataKey="value">
-                            {pie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]}/>)}
-                        </Pie>
-                        <Tooltip/>
-                        <Legend/>
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-            <Divider/>
-            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
-                Рейтинг за последние 10 PvP
-            </MutedText>
-            <div style={{marginTop: 8}}>
-                <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={history} margin={{top: 5, right: 10, left: -20, bottom: 5}}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#343434"/>
-                        <XAxis dataKey="label" tick={{fill: "#83868e", fontSize: 10}}/>
-                        <YAxis tick={{fill: "#83868e", fontSize: 10}}/>
-                        <Line type="monotone" dataKey="rating" stroke="#E0FF25" strokeWidth={2.5}
-                              dot={{fill: "#E0FF25", r: 4, strokeWidth: 0}} activeDot={{r: 6}}/>
-                    </LineChart>
-                </ResponsiveContainer>
             </div>
         </Drawer>
     );
 };
 
 
+/* ─── Users Section (backend-connected, NO pagination) ─── */
 const UsersSection: FC = () => {
     const [selected, setSelected] = useState<UserRecord | null>(null);
-    const [page, setPage] = useState(1);
+    const [users, setUsers] = useState<UserRecord[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const sorted = [...STUB_USERS].sort((a, b) => b.rating - a.rating);
-    const paginated = sorted.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
+    useEffect(() => {
+        setLoading(true);
+        api.get("/users_statistics/leader_board/").then((res) => {
+            if (res && res.status === 200 && Array.isArray(res.data)) {
+                setUsers(res.data.map((u: { username: string; rating: number }) => ({
+                    username: u.username,
+                    rating: u.rating,
+                })));
+            }
+        }).finally(() => setLoading(false));
+    }, []);
+
+    if (loading) {
+        return (
+            <Card>
+                <CardTitle>Пользователи</CardTitle>
+                <div style={{display: "flex", justifyContent: "center", padding: 40}}>
+                    <Spin size="large"/>
+                </div>
+            </Card>
+        );
+    }
 
     return (
         <Card>
-            <CardTitle>Пользователи</CardTitle>
+            <CardTitle>Пользователи ({users.length})</CardTitle>
 
             <ItemList>
-                {paginated.map(u => (
-                    <UserItem key={u.id} onClick={() => setSelected(u)}>
+                {users.map((u, i) => (
+                    <UserItem key={`${u.username}-${i}`} onClick={() => setSelected(u)}>
                         <UserInfo>
-                            <UserName>{u.name}</UserName>
-                            <UserEmail>{u.email}</UserEmail>
+                            <UserName>{u.username}</UserName>
                         </UserInfo>
                         <UserRating>{u.rating}</UserRating>
                     </UserItem>
                 ))}
+                {users.length === 0 && <MutedText>Нет пользователей</MutedText>}
             </ItemList>
-
-            {STUB_USERS.length > USERS_PER_PAGE && (
-                <PaginationWrapper>
-                    <Pagination
-                        current={page}
-                        total={STUB_USERS.length}
-                        pageSize={USERS_PER_PAGE}
-                        onChange={setPage}
-                        showSizeChanger={false}
-                        size="small"
-                    />
-                </PaginationWrapper>
-            )}
 
             <UserStatsDrawer user={selected} onClose={() => setSelected(null)}/>
         </Card>
@@ -576,68 +456,48 @@ const UsersSection: FC = () => {
 };
 
 
-const IOSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) => TaskRecord[]) => void }> = ({
-                                                                                                                  tasks,
-                                                                                                                  setTasks
-                                                                                                              }) => {
-    const download = (content: string, filename: string, mime: string) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([content], {type: mime}));
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(a.href);
-    };
+/* ─── IO Section (backend-connected) ─── */
+const IOSection: FC<{ onReload: () => void }> = ({onReload}) => {
+    const [taskCount, setTaskCount] = useState<number>(0);
+    const [uploading, setUploading] = useState(false);
+
+    useEffect(() => {
+        api.get("/tasks/", {params: {page: 1, page_size: 1}}).then((res) => {
+            if (res && res.status === 200 && res.data) {
+                setTaskCount(res.data.items_count || 0);
+            }
+        });
+    }, []);
 
     const exportCSV = () => {
-        const header = "id,question,correct_answer,subject,theme,difficulty";
-        const rows = tasks.map(t => `${t.id},"${t.question}","${t.correct_answer}","${t.subject}","${t.theme}","${t.difficulty}"`);
-        download([header, ...rows].join("\n"), "tasks.csv", "text/csv");
-        message.success("CSV экспортирован");
+        window.open("/api/tasks/export/?export_format=csv", "_blank");
+        message.success("CSV экспорт начат");
     };
 
     const exportJSON = () => {
-        download(JSON.stringify(tasks, null, 2), "tasks.json", "application/json");
-        message.success("JSON экспортирован");
+        window.open("/api/tasks/export/?export_format=json", "_blank");
+        message.success("JSON экспорт начат");
     };
 
     const handleUpload = (file: File) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            try {
-                const text = ev.target?.result as string;
-                let parsed: TaskRecord[];
-
-                if (file.name.endsWith(".json")) {
-                    const data = JSON.parse(text);
-                    if (!Array.isArray(data)) {
-                        message.error("JSON должен содержать массив");
-                        return;
-                    }
-                    parsed = data as TaskRecord[];
-                } else {
-                    parsed = text.trim().split("\n").slice(1).map((line, i) => {
-                        const p = line.split(",");
-                        return {
-                            id: Date.now() + i,
-                            question: p[1]?.replace(/"/g, "") || "",
-                            correct_answer: p[2]?.replace(/"/g, "") || "",
-                            subject: p[3]?.replace(/"/g, "") || "",
-                            theme: p[4]?.replace(/"/g, "") || "",
-                            difficulty: p[5]?.replace(/"/g, "") || "Лёгкая",
-                        };
-                    });
+        const formData = new FormData();
+        formData.append("file", file);
+        setUploading(true);
+        api.post("/tasks/import/", formData, {
+            headers: {"Content-Type": "multipart/form-data"},
+        }).then((res) => {
+            if (res && res.data) {
+                const created = res.data.created || 0;
+                const errors = res.data.errors || [];
+                if (created > 0) {
+                    message.success(`Импортировано ${created} задач`);
+                    onReload();
                 }
-
-                setTasks(prev => {
-                    const maxId = prev.reduce((acc, t) => Math.max(acc, t.id), 0);
-                    return [...prev, ...parsed.map((t, i) => ({...t, id: maxId + i + 1}))];
-                });
-                message.success(`Импортировано ${parsed.length} задач`);
-            } catch {
-                message.error("Не удалось прочитать файл");
+                if (errors.length > 0) {
+                    message.warning(`Ошибки: ${errors.length}`);
+                }
             }
-        };
-        reader.readAsText(file);
+        }).finally(() => setUploading(false));
         return false;
     };
 
@@ -646,7 +506,7 @@ const IOSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) =
             <CardTitle>Импорт / Экспорт задач</CardTitle>
 
             <IOButtonGroup>
-                <MutedText>Экспорт ({tasks.length} задач)</MutedText>
+                <MutedText>Экспорт ({taskCount} задач)</MutedText>
                 <IORow>
                     <PrimaryButton icon={<DownloadOutlined/>} onClick={exportCSV}>CSV</PrimaryButton>
                     <PrimaryButton icon={<DownloadOutlined/>} onClick={exportJSON}>JSON</PrimaryButton>
@@ -656,7 +516,7 @@ const IOSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) =
 
                 <MutedText>Импорт (.csv / .json)</MutedText>
                 <Upload accept=".csv,.json" beforeUpload={handleUpload} showUploadList={false}>
-                    <PrimaryButton icon={<UploadOutlined/>}>Выбрать файл</PrimaryButton>
+                    <PrimaryButton icon={<UploadOutlined/>} loading={uploading}>Выбрать файл</PrimaryButton>
                 </Upload>
             </IOButtonGroup>
         </Card>
@@ -664,10 +524,53 @@ const IOSection: FC<{ tasks: TaskRecord[]; setTasks: (fn: (prev: TaskRecord[]) =
 };
 
 
+/* ─── Main Admin Panel ─── */
 const AdminPanel: FC = () => {
     const [tab, setTab] = useState<TabKey>("tasks");
-    const [tasks, setTasks] = useState<TaskRecord[]>(STUB_TASKS);
+    const [tasks, setTasks] = useState<TaskRecord[]>([]);
+    const [tasksTotalCount, setTasksTotalCount] = useState(0);
+    const [tasksPage, setTasksPage] = useState(1);
+    const [tasksLoading, setTasksLoading] = useState(false);
+    const [subjects, setSubjects] = useState<SubjectOption[]>([]);
     const navigate = useNavigate();
+
+    const fetchTasks = useCallback((page: number) => {
+        setTasksLoading(true);
+        api.get("/tasks/export/", {params: {export_format: "json"}}).then((res) => {
+            if (res && res.status === 200 && Array.isArray(res.data)) {
+                const all: TaskRecord[] = res.data.map((t: {
+                    id: number; question: string; correct_answer: string;
+                    subject: string; theme: string | null; difficulty: string;
+                }) => ({
+                    id: t.id,
+                    question: t.question,
+                    correct_answer: t.correct_answer,
+                    subject: t.subject,
+                    theme: t.theme || "",
+                    difficulty: t.difficulty,
+                }));
+                setTasksTotalCount(all.length);
+                const start = (page - 1) * TASKS_PER_PAGE;
+                setTasks(all.slice(start, start + TASKS_PER_PAGE));
+            }
+        }).finally(() => setTasksLoading(false));
+    }, []);
+
+    useEffect(() => {
+        fetchTasks(tasksPage);
+    }, [tasksPage, fetchTasks]);
+
+    useEffect(() => {
+        api.get("/tasks/subjects/").then((res) => {
+            if (res && res.status === 200 && Array.isArray(res.data)) {
+                setSubjects(res.data);
+            }
+        });
+    }, []);
+
+    const handleTasksReload = () => {
+        fetchTasks(tasksPage);
+    };
 
     return (
         <PageContainer>
@@ -700,12 +603,29 @@ const AdminPanel: FC = () => {
                     )}
                 </TabRow>
 
-                {tab === "tasks" && <TasksSection tasks={tasks} setTasks={setTasks}/>}
+                {tab === "tasks" && (
+                    tasksLoading ? (
+                        <Card><div style={{display: "flex", justifyContent: "center", padding: 40}}><Spin size="large"/></div></Card>
+                    ) : (
+                        <TasksSection
+                            tasks={tasks}
+                            totalCount={tasksTotalCount}
+                            page={tasksPage}
+                            setPage={setTasksPage}
+                            onReload={handleTasksReload}
+                            subjects={subjects}
+                        />
+                    )
+                )}
                 {tab === "users" && <UsersSection/>}
-                {tab === "io" && <IOSection tasks={tasks} setTasks={setTasks}/>}
+                {tab === "io" && <IOSection onReload={handleTasksReload}/>}
             </Panel>
         </PageContainer>
     );
 };
 
 export default AdminPanel;
+
+
+
+

@@ -130,7 +130,7 @@ const Page: FC = () => {
     const [playerCorrect, setPlayerCorrect] = useState<number>(0);
     const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
-    const [answered, setAnswered] = useState<boolean>(false); // ответили ли на текущую задачу
+    const [answered, setAnswered] = useState<boolean>(false);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
@@ -138,10 +138,15 @@ const Page: FC = () => {
 
     const totalTasks = tasks.length;
     const totalTasksRef = useRef(0);
+    const modalOpenRef = useRef(false);
 
     useEffect(() => {
         totalTasksRef.current = totalTasks;
     }, [totalTasks]);
+
+    useEffect(() => {
+        modalOpenRef.current = modalOpen;
+    }, [modalOpen]);
 
     // Загрузка задач через HTTP API
     useEffect(() => {
@@ -169,6 +174,58 @@ const Page: FC = () => {
         return () => clearInterval(interval);
     }, [isIdValid]);
 
+    // Polling после того как все задачи решены — бэкенд может не отправить finish_round через WS
+    useEffect(() => {
+        if (!isIdValid) return;
+        const allAnswered = current >= totalTasks && totalTasks > 0;
+        if (!allAnswered || modalOpen) return;
+
+        const pollInterval = setInterval(() => {
+            if (modalOpenRef.current) {
+                clearInterval(pollInterval);
+                return;
+            }
+            api.get(`/pvp/api/${id}/`).then((res) => {
+                if (res && res.status === 409) {
+                    // Technical finish or round ended
+                    if (!modalOpenRef.current) {
+                        setModalText("Раунд завершён!");
+                        setModalOpen(true);
+                    }
+                    clearInterval(pollInterval);
+                } else if (res && res.data && res.data.tasks) {
+                    const fetchedTasks: PvpTaskData[] = res.data.tasks;
+                    setPlayerCorrect(res.data.user_solved_count || 0);
+                    setEnemyCorrect(res.data.enemy_solved_count || 0);
+                    // Check if all enemy tasks are also answered
+                    const enemyAllDone = fetchedTasks.every(t => t.enemy_is_correct !== null);
+                    if (enemyAllDone && !modalOpenRef.current) {
+                        const userSolved = res.data.user_solved_count || 0;
+                        const enemySolved = res.data.enemy_solved_count || 0;
+                        if (userSolved > enemySolved) {
+                            setModalText("Вы победили!");
+                        } else if (userSolved < enemySolved) {
+                            setModalText("Вы проиграли.");
+                        } else {
+                            setModalText("Ничья!");
+                        }
+                        setModalOpen(true);
+                        clearInterval(pollInterval);
+                    }
+                }
+            }).catch(() => {
+                // API error — round may have been cleaned up
+                if (!modalOpenRef.current) {
+                    setModalText("Раунд завершён!");
+                    setModalOpen(true);
+                }
+                clearInterval(pollInterval);
+            });
+        }, 2000);
+
+        return () => clearInterval(pollInterval);
+    }, [current, totalTasks, isIdValid, modalOpen, id]);
+
     const handleExit = () => {
         navigate("/training/pvp");
     };
@@ -176,7 +233,6 @@ const Page: FC = () => {
     const handleWebsocketMessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
         if (data.type === 'stats') {
-            // Приходит когда оба ответили на задачу (только второму ответившему)
             const total = totalTasksRef.current;
             if (total > 0) {
                 if (data.correct_percentage !== undefined) {
@@ -185,6 +241,11 @@ const Page: FC = () => {
                 if (data.enemy_correct_percentage !== undefined) {
                     setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
                 }
+            }
+            // Переходим к следующей задаче когда получили stats (оба ответили)
+            if (answered) {
+                setCurrent(prev => prev + 1);
+                setAnswered(false);
             }
         } else if (data.type === 'finish_round') {
             let text = "Раунд завершён!";
@@ -211,11 +272,10 @@ const Page: FC = () => {
     const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () => {
-            // Если все задачи решены и соединение закрылось — раунд окончен
-            if (current >= totalTasksRef.current && !modalOpen) {
+            if (current >= totalTasksRef.current && !modalOpenRef.current) {
                 setModalText("Раунд завершён!");
                 setModalOpen(true);
-            } else if (!modalOpen) {
+            } else if (!modalOpenRef.current) {
                 messageApi.error({
                     message: "Соединение разорвано!",
                     description: <PrimaryButton onClick={() => webSocket.open()}>Переподключиться</PrimaryButton>,
@@ -235,18 +295,20 @@ const Page: FC = () => {
             answer: answer
         }));
 
-        // Помечаем что ответили — блокируем ввод
         setAnswered(true);
         setAnswer("");
 
-        // Автоматически переходим к следующей задаче через небольшую задержку
-        // Сервер переключает задачи когда оба ответят, но мы не можем ждать stats
-        // (бэк шлёт stats только второму ответившему)
-        // Поэтому сразу показываем следующую задачу
+        // Автопереход через 3 секунды как fallback, если stats не пришёл
         setTimeout(() => {
-            setCurrent(prev => prev + 1);
-            setAnswered(false);
-        }, 500);
+            setAnswered(prev => {
+                if (prev) {
+                    // stats не пришёл, переходим сами
+                    setCurrent(c => c + 1);
+                    return false;
+                }
+                return prev;
+            });
+        }, 3000);
     }
 
     if (!isIdValid) {
