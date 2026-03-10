@@ -7,6 +7,10 @@ import {
 import {
     PlusOutlined, UploadOutlined, DownloadOutlined, ArrowLeftOutlined
 } from "@ant-design/icons";
+import {
+    PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
+    LineChart, Line, XAxis, YAxis, CartesianGrid,
+} from "recharts";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router";
 import StyledTitle from "../components/textComponents/StyledTitle";
@@ -158,6 +162,14 @@ const UserName = styled.span`
     text-overflow: ellipsis;
 `;
 
+const UserEmail = styled.span`
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
 const UserRating = styled.span`
     font-weight: 800;
     font-size: 20px;
@@ -201,6 +213,8 @@ const TabInactiveButton = styled(Button)`
     }
 `;
 
+const PIE_COLORS = ["#3fb950", "#f85149", "#3d4f6e"];
+
 type TabKey = "tasks" | "users" | "io";
 
 type TaskRecord = {
@@ -213,8 +227,14 @@ type TaskRecord = {
 };
 
 type UserRecord = {
-    username: string;
+    id: number;
+    name: string;
+    email: string;
     rating: number;
+    correct: number;
+    wrong: number;
+    unsolved: number;
+    history: number[];
 };
 
 type SubjectOption = {
@@ -244,10 +264,72 @@ const diffColor = (d: string) => {
 
 const diffLabel = (d: string) => DIFFICULTY_LABELS[d] || d;
 
+const STUB_USERS: UserRecord[] = [
+    {
+        id: 4,
+        name: "Екатерина Новикова",
+        email: "e.novikova@mail.ru",
+        rating: 2100,
+        correct: 26,
+        wrong: 1,
+        unsolved: 1,
+        history: [1600, 1680, 1750, 1820, 1880, 1940, 2000, 2040, 2075, 2100]
+    },
+    {
+        id: 2,
+        name: "Мария Иванова",
+        email: "m.ivanova@yandex.ru",
+        rating: 1580,
+        correct: 24,
+        wrong: 2,
+        unsolved: 2,
+        history: [1100, 1150, 1200, 1280, 1330, 1390, 1450, 1500, 1545, 1580]
+    },
+    {
+        id: 1,
+        name: "Алексей Смирнов",
+        email: "a.smirnov@mail.ru",
+        rating: 1340,
+        correct: 18,
+        wrong: 4,
+        unsolved: 6,
+        history: [980, 1020, 1050, 1100, 1140, 1190, 1230, 1270, 1310, 1340]
+    },
+    {
+        id: 5,
+        name: "Иван Петров",
+        email: "i.petrov@yandex.ru",
+        rating: 1120,
+        correct: 14,
+        wrong: 6,
+        unsolved: 8,
+        history: [800, 840, 870, 900, 940, 980, 1020, 1060, 1090, 1120]
+    },
+    {
+        id: 3,
+        name: "Дмитрий Козлов",
+        email: "d.kozlov@gmail.com",
+        rating: 890,
+        correct: 10,
+        wrong: 8,
+        unsolved: 10,
+        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
+    },
+    {
+        id: 33,
+        name: "Дмитрий Козлов",
+        email: "d.kozlov@gmail.com",
+        rating: 890,
+        correct: 10,
+        wrong: 8,
+        unsolved: 10,
+        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
+    },
+];
+
 const TASKS_PER_PAGE = 5;
 
 
-/* ─── Tasks Section (backend-connected) ─── */
 const TasksSection: FC<{
     tasks: TaskRecord[];
     totalCount: number;
@@ -382,72 +464,85 @@ const TasksSection: FC<{
 };
 
 
-/* ─── User Stats Drawer (backend-connected) ─── */
 const UserStatsDrawer: FC<{ user: UserRecord | null; onClose: () => void }> = ({user, onClose}) => {
     const isMobile = useMediaQuery({maxWidth: 767});
-
     if (!user) return null;
+
+    const total = user.correct + user.wrong + user.unsolved;
+    const pie = [
+        {name: "Верно", value: user.correct},
+        {name: "Неверно", value: user.wrong},
+        {name: "Не решено", value: user.unsolved},
+    ];
+    const history = user.history.map((r, i) => ({label: `#${i + 1}`, rating: r}));
 
     return (
         <Drawer
-            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{user.username}</span>}
+            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{user.name}</span>}
             open
             onClose={onClose}
             width={isMobile ? "100%" : 520}
         >
+            <MutedText>{user.email}</MutedText>
             <Divider/>
             <div style={{textAlign: "center", marginBottom: 20}}>
                 <MutedText style={{display: "block", marginBottom: 4}}>Рейтинг</MutedText>
                 <span style={{fontSize: 36, fontWeight: 900, color: "#E0FF25"}}>{user.rating}</span>
+            </div>
+            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
+                Статистика задач ({total})
+            </MutedText>
+            <div style={{marginTop: 8}}>
+                <ResponsiveContainer width="100%" height={220}>
+                    <PieChart>
+                        <Pie data={pie} cx="50%" cy="50%" innerRadius={55} outerRadius={85}
+                             paddingAngle={4} dataKey="value">
+                            {pie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]}/>)}
+                        </Pie>
+                        <Tooltip/>
+                        <Legend/>
+                    </PieChart>
+                </ResponsiveContainer>
+            </div>
+            <Divider/>
+            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
+                Рейтинг за последние 10 PvP
+            </MutedText>
+            <div style={{marginTop: 8}}>
+                <ResponsiveContainer width="100%" height={200}>
+                    <LineChart data={history} margin={{top: 5, right: 10, left: -20, bottom: 5}}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#343434"/>
+                        <XAxis dataKey="label" tick={{fill: "#83868e", fontSize: 10}}/>
+                        <YAxis tick={{fill: "#83868e", fontSize: 10}}/>
+                        <Line type="monotone" dataKey="rating" stroke="#E0FF25" strokeWidth={2.5}
+                              dot={{fill: "#E0FF25", r: 4, strokeWidth: 0}} activeDot={{r: 6}}/>
+                    </LineChart>
+                </ResponsiveContainer>
             </div>
         </Drawer>
     );
 };
 
 
-/* ─── Users Section (backend-connected, NO pagination) ─── */
 const UsersSection: FC = () => {
     const [selected, setSelected] = useState<UserRecord | null>(null);
-    const [users, setUsers] = useState<UserRecord[]>([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(true);
-        api.get("/users_statistics/leader_board/").then((res) => {
-            if (res && res.status === 200 && Array.isArray(res.data)) {
-                setUsers(res.data.map((u: { username: string; rating: number }) => ({
-                    username: u.username,
-                    rating: u.rating,
-                })));
-            }
-        }).finally(() => setLoading(false));
-    }, []);
-
-    if (loading) {
-        return (
-            <Card>
-                <CardTitle>Пользователи</CardTitle>
-                <div style={{display: "flex", justifyContent: "center", padding: 40}}>
-                    <Spin size="large"/>
-                </div>
-            </Card>
-        );
-    }
+    const sorted = [...STUB_USERS].sort((a, b) => b.rating - a.rating);
 
     return (
         <Card>
-            <CardTitle>Пользователи ({users.length})</CardTitle>
+            <CardTitle>Пользователи</CardTitle>
 
             <ItemList>
-                {users.map((u, i) => (
-                    <UserItem key={`${u.username}-${i}`} onClick={() => setSelected(u)}>
+                {sorted.map(u => (
+                    <UserItem key={u.id} onClick={() => setSelected(u)}>
                         <UserInfo>
-                            <UserName>{u.username}</UserName>
+                            <UserName>{u.name}</UserName>
+                            <UserEmail>{u.email}</UserEmail>
                         </UserInfo>
                         <UserRating>{u.rating}</UserRating>
                     </UserItem>
                 ))}
-                {users.length === 0 && <MutedText>Нет пользователей</MutedText>}
             </ItemList>
 
             <UserStatsDrawer user={selected} onClose={() => setSelected(null)}/>
@@ -456,7 +551,6 @@ const UsersSection: FC = () => {
 };
 
 
-/* ─── IO Section (backend-connected) ─── */
 const IOSection: FC<{ onReload: () => void }> = ({onReload}) => {
     const [taskCount, setTaskCount] = useState<number>(0);
     const [uploading, setUploading] = useState(false);
@@ -524,7 +618,6 @@ const IOSection: FC<{ onReload: () => void }> = ({onReload}) => {
 };
 
 
-/* ─── Main Admin Panel ─── */
 const AdminPanel: FC = () => {
     const [tab, setTab] = useState<TabKey>("tasks");
     const [tasks, setTasks] = useState<TaskRecord[]>([]);
@@ -625,7 +718,4 @@ const AdminPanel: FC = () => {
 };
 
 export default AdminPanel;
-
-
-
 
