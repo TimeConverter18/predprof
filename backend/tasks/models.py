@@ -46,7 +46,6 @@ class Task(models.Model):
         related_name='tasks',
     )
     question = models.TextField()
-    solution = models.TextField()
     correct_answer = models.TextField()
     difficulty = models.CharField(
         max_length=20,

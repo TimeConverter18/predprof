@@ -8,7 +8,7 @@ class UserStatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'stats']
+        fields = ['id', 'username', 'stats', 'is_superuser']
 
     def get_stats(self, user):
         train_stats = user.training_statistics.aggregate(
@@ -23,9 +23,9 @@ class UserStatsSerializer(serializers.ModelSerializer):
             avg_speed=Avg('time_to_solve'),
         )
 
-        train_total = train_stats['total'] or 0
+        train_total = train_stats['total'] / 10 or 0
         train_correct = train_stats['correct'] or 0
-        pvp_total = pvp_stats['total'] or 0
+        pvp_total = pvp_stats['total'] / 10 or 0
         pvp_correct = pvp_stats['correct'] or 0
         total = train_total + pvp_total
 
