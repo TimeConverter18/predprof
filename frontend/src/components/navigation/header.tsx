@@ -13,6 +13,7 @@ import {Desktop, Mobile} from "../responsiveWrappers";
 import {useAuth} from "../../hooks/auth/hook";
 import PrimaryButton from "../public/primaryButton";
 import {userIconPath} from "../../static";
+import api from "../../api/api";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -80,9 +81,11 @@ const Header: React.FC = () => {
     const { user, reload } = useAuth();
 
     const handleLogout = async () => {
-        // Clear cookies by making a request then reload auth state
-        document.cookie = "access=; Max-Age=0; path=/;";
-        document.cookie = "refresh=; Max-Age=0; path=/;";
+        try {
+            await api.post("/auth/logout/");
+        } catch {
+            // ignore errors — cookies will be deleted server-side
+        }
         await reload();
         navigate("/signin");
     };

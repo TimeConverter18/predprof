@@ -49,6 +49,7 @@ const Page: FC = () => {
     const [totalCount, setTotalCount] = useState(0);
     const [selectedSubject, setSelectedSubject] = useState<number | undefined>(undefined);
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | undefined>(undefined);
+    const [searchId, setSearchId] = useState<string>("");
     const pageSize = 20;
 
     const fetchTasks = (page: number, subjectId?: number, difficulty?: string) => {
@@ -71,7 +72,9 @@ const Page: FC = () => {
     };
 
     useEffect(() => {
-        fetchTasks(currentPage, selectedSubject, selectedDifficulty);
+        if (!searchId.trim()) {
+            fetchTasks(currentPage, selectedSubject, selectedDifficulty);
+        }
     }, [currentPage, selectedSubject, selectedDifficulty]);
 
     const handleAnswerChange = (id: string, value: string) => {
@@ -79,6 +82,41 @@ const Page: FC = () => {
             ...prev,
             [id]: value
         }));
+    };
+
+    const handleCheck = (taskId: number) => {
+        const answer = answers[taskId.toString()];
+        if (!answer || !answer.trim()) return;
+        api.post(`/tasks/${taskId}/check/`, { answer }).then((res) => {
+            if (res && res.data) {
+                setTasks(prev => prev.map(t =>
+                    t.task_id === taskId ? { ...t, is_correct: res.data.is_correct } : t
+                ));
+            }
+        });
+    };
+
+    const handleSearch = (value: string) => {
+        const trimmed = value.trim();
+        if (!trimmed) {
+            fetchTasks(currentPage, selectedSubject, selectedDifficulty);
+            return;
+        }
+        const id = Number(trimmed);
+        if (isNaN(id)) return;
+        api.get(`/tasks/${id}/`).then((res) => {
+            if (res && res.status === 200 && res.data) {
+                setTasks([{
+                    task_id: res.data.task_id ?? res.data.id ?? id,
+                    question: res.data.question,
+                    is_correct: res.data.is_correct ?? null,
+                }]);
+                setTotalCount(1);
+            } else {
+                setTasks([]);
+                setTotalCount(0);
+            }
+        });
     };
 
     return (
@@ -103,7 +141,19 @@ const Page: FC = () => {
                         placeholder="Выберите сложность"
                     />
                 </SortContainer>
-                <Input placeholder="Поиск по номеру" suffix={<SearchOutlined />} style={{minWidth: 200, marginLeft: "auto", maxWidth: 200}}/>
+                <Input
+                    placeholder="Поиск по номеру"
+                    suffix={<SearchOutlined />}
+                    style={{minWidth: 200, marginLeft: "auto", maxWidth: 200}}
+                    value={searchId}
+                    onChange={(e) => {
+                        setSearchId(e.target.value);
+                        if (!e.target.value.trim()) {
+                            fetchTasks(currentPage, selectedSubject, selectedDifficulty);
+                        }
+                    }}
+                    onPressEnter={() => handleSearch(searchId)}
+                />
             </TopRow>
             <TasksContainer>
                 {tasks.map((task) => {
@@ -114,6 +164,7 @@ const Page: FC = () => {
                             {...task}
                             value={answers[taskId] || ""}
                             onChange={(val) => handleAnswerChange(taskId, val)}
+                            onCheck={() => handleCheck(task.task_id)}
                         />
                     );
                 })}

@@ -70,9 +70,13 @@ const Page: FC = () => {
     const [leaderboard, setLeaderboard] = useState<SimpleUserProfile[]>([]);
 
     useEffect(() => {
-        api.get("/users/leaderboard/?limit=10").then((res) => {
+        api.get("/users_statistics/leader_board/").then((res) => {
             if (res && res.status === 200 && Array.isArray(res.data)) {
-                setLeaderboard(res.data);
+                setLeaderboard(res.data.map((u: { username: string; rating: number }, i: number) => ({
+                    id: i,
+                    name: u.username,
+                    rate: u.rating,
+                })));
             }
         });
     }, []);
