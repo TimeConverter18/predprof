@@ -105,6 +105,7 @@ export type UserProfile = {
     id: number;
     name: string;
     stats: UserStats;
+    admin: boolean;
 }
 
 export const isUserProfile = (data: unknown): data is UserProfile => {

@@ -17,6 +17,8 @@ import StyledTitle from "../components/textComponents/StyledTitle";
 import PrimaryButton from "../public/primaryButton";
 import PageContainer from "../components/containers/PageContainer";
 import api from "../../api/api";
+import {useAuth} from "../../hooks/auth/hook.ts";
+import AccessDenied from "./accessDenied.tsx";
 
 const Panel = styled.div`
     width: 100%;
@@ -432,9 +434,6 @@ const TasksSection: FC<{
                                rules={[{required: true, message: "Введите ответ"}]}>
                         <Input placeholder="Ответ"/>
                     </Form.Item>
-                    <Form.Item name="solution" label="Решение">
-                        <Input.TextArea rows={2} placeholder="Решение (необязательно)"/>
-                    </Form.Item>
                     <Form.Item name="subject_id" label="Предмет" rules={[{required: true, message: "Выберите предмет"}]}>
                         <Select
                             placeholder="Выберите предмет"
@@ -626,6 +625,7 @@ const AdminPanel: FC = () => {
     const [tasksLoading, setTasksLoading] = useState(false);
     const [subjects, setSubjects] = useState<SubjectOption[]>([]);
     const navigate = useNavigate();
+    const {user} = useAuth();
 
     const fetchTasks = useCallback((page: number) => {
         setTasksLoading(true);
@@ -664,6 +664,10 @@ const AdminPanel: FC = () => {
     const handleTasksReload = () => {
         fetchTasks(tasksPage);
     };
+
+    if (!user?.admin) {
+        return <AccessDenied/>
+    }
 
     return (
         <PageContainer>

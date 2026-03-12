@@ -13,7 +13,7 @@ fi
 python manage.py shell -c "
 from users.models import User
 if not User.objects.filter(email='admin@mail.ru').exists():
-    User.objects.create_superuser(email='admin@mail.ru', username='admin', password='123456')
+    User.objects.create_superuser(email='admin@mail.ru', username='admin', password='12345678')
     print('Суперпользователь создан')
 else:
     print('Суперпользователь уже существует')

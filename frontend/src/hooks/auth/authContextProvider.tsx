@@ -23,7 +23,8 @@ function fetchMe(): Promise<{ user: UserProfile | null; auth: boolean | null }> 
                             accuracy_train: res.data.stats?.accuracy_train ?? 0,
                             accuracy_pvp: res.data.stats?.accuracy_pvp ?? 0,
                             accuracy_total: res.data.stats?.accuracy_total ?? 0,
-                        }
+                        },
+                        admin: res.data.is_superuser ?? false
                     } as UserProfile,
                     auth: true as boolean | null,
                 };
