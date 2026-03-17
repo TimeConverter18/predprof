@@ -84,7 +84,7 @@ const Header: React.FC = () => {
         try {
             await api.post("/auth/logout/");
         } catch {
-            // ignore errors — cookies will be deleted server-side
+            //
         }
         await reload();
         navigate("/signin");

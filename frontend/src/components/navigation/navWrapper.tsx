@@ -2,7 +2,6 @@ import {type FC, type PropsWithChildren} from "react";
 import styled from "@emotion/styled";
 import Header from "./header";
 import Footer from "./footer";
-// import {Mobile} from "./responsiveWrappers";
 
 const Wrapper = styled.div`
     display: flex;

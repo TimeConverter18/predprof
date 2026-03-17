@@ -86,7 +86,6 @@ const Page: FC = () => {
     const [taskStates, setTaskStates] = useState<TaskState[]>([]);
     const [messageApi, contextHolder] = notification.useNotification();
 
-    // Загрузка задач через HTTP API
     useEffect(() => {
         if (!isIdValid) return;
         setLoading(true);

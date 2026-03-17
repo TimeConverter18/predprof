@@ -53,7 +53,7 @@ api.interceptors.response.use(
                 }
                 break; }
             case 499:
-                { //const errorData = error?.response?.data
+                {
                 message.error("Неизвестная ошибка", 1);
                 break}
             default:
