@@ -194,27 +194,6 @@
 },
 {
   "model": "users.user",
-  "pk": 1,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$ljS1yl8zxIR7nX2V4jslxd$DgtMvTU13AknOGaDsWgYIMCNiMxjEsb75u1bxOX12qc=",
-    "last_login": "2026-02-17T16:35:33.440Z",
-    "is_superuser": true,
-    "first_name": "",
-    "last_name": "",
-    "username": "admin",
-    "email": "admin@mail.ru",
-    "role": "player",
-    "rating": 100,
-    "is_active": true,
-    "is_staff": true,
-    "updated_at": "2026-02-17T16:30:45.005Z",
-    "created_at": "2026-02-17T16:30:45.005Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.user",
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$1200000$mgWU09ZDTYEJunrSn6ZnYv$stxNO89BTcacBcrP/LEqeIYhwlwibuj0SSDci6eIiSs=",
