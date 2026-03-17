@@ -127,6 +127,7 @@ const Page: FC = () => {
     const [tasks, setTasks] = useState<PvpTaskData[]>([]);
     const [loading, setLoading] = useState(true);
     const [current, setCurrent] = useState<number>(0);
+    // playerCorrect — локальный счётчик правильных ответов игрока
     const [playerCorrect, setPlayerCorrect] = useState<number>(0);
     const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
@@ -135,9 +136,13 @@ const Page: FC = () => {
     const [modalText, setModalText] = useState<string>("");
     const [answer, setAnswer] = useState<string>("");
 
+    // Локально храним какие задачи уже отправлены (чтобы не дублировать)
+    const sentAnswers = useRef<Set<number>>(new Set());
+
     const totalTasks = tasks.length;
     const totalTasksRef = useRef(0);
     const modalOpenRef = useRef(false);
+    const currentRef = useRef(0);
 
     useEffect(() => {
         totalTasksRef.current = totalTasks;
@@ -146,6 +151,10 @@ const Page: FC = () => {
     useEffect(() => {
         modalOpenRef.current = modalOpen;
     }, [modalOpen]);
+
+    useEffect(() => {
+        currentRef.current = current;
+    }, [current]);
 
     // Загрузка задач через HTTP API
     useEffect(() => {
@@ -159,7 +168,12 @@ const Page: FC = () => {
                 setEnemyCorrect(res.data.enemy_solved_count || 0);
                 // Начинаем с первой нерешённой задачи
                 const firstUnsolved = fetchedTasks.findIndex(t => t.user_is_correct === null);
-                setCurrent(firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length);
+                const startIdx = firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length;
+                setCurrent(startIdx);
+                // Помечаем уже решённые как отправленные
+                fetchedTasks.forEach((t, i) => {
+                    if (t.user_is_correct !== null) sentAnswers.current.add(i);
+                });
             }
         }).finally(() => setLoading(false));
     }, [id, isIdValid]);
@@ -173,7 +187,6 @@ const Page: FC = () => {
         return () => clearInterval(interval);
     }, [isIdValid]);
 
-
     const handleExit = () => {
         navigate("/training/pvp");
     };
@@ -183,9 +196,11 @@ const Page: FC = () => {
         if (data.type === 'stats') {
             const total = totalTasksRef.current;
             if (total > 0) {
+                // correct_percentage — прогресс самого игрока (из бэкенда)
                 if (data.correct_percentage !== undefined) {
                     setPlayerCorrect(Math.round((data.correct_percentage / 100) * total));
                 }
+                // enemy_correct_percentage — прогресс противника
                 if (data.enemy_correct_percentage !== undefined) {
                     setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
                 }
@@ -215,7 +230,7 @@ const Page: FC = () => {
     const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () => {
-            if (current >= totalTasksRef.current && !modalOpenRef.current) {
+            if (currentRef.current >= totalTasksRef.current && !modalOpenRef.current) {
                 setModalText("Раунд завершён!");
                 setModalOpen(true);
             } else if (!modalOpenRef.current) {
@@ -230,12 +245,17 @@ const Page: FC = () => {
     })
 
     const handleSendAnswer = () => {
-        if (!answer) return;
+        if (!answer.trim()) return;
+        if (current >= totalTasks) return;
+        // Защита от повторной отправки ответа на ту же задачу
+        if (sentAnswers.current.has(current)) return;
+
+        sentAnswers.current.add(current);
 
         webSocket.send(JSON.stringify({
             type: "answer",
             task_index: current,
-            answer: answer
+            answer: answer.trim()
         }));
 
         setAnswer("");
@@ -298,4 +318,5 @@ const Page: FC = () => {
         </PageWrapper>
     );
 }
+
 export default Page;
