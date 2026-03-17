@@ -266,68 +266,6 @@ const diffColor = (d: string) => {
 
 const diffLabel = (d: string) => DIFFICULTY_LABELS[d] || d;
 
-const STUB_USERS: UserRecord[] = [
-    {
-        id: 4,
-        name: "Екатерина Новикова",
-        email: "e.novikova@mail.ru",
-        rating: 2100,
-        correct: 26,
-        wrong: 1,
-        unsolved: 1,
-        history: [1600, 1680, 1750, 1820, 1880, 1940, 2000, 2040, 2075, 2100]
-    },
-    {
-        id: 2,
-        name: "Мария Иванова",
-        email: "m.ivanova@yandex.ru",
-        rating: 1580,
-        correct: 24,
-        wrong: 2,
-        unsolved: 2,
-        history: [1100, 1150, 1200, 1280, 1330, 1390, 1450, 1500, 1545, 1580]
-    },
-    {
-        id: 1,
-        name: "Алексей Смирнов",
-        email: "a.smirnov@mail.ru",
-        rating: 1340,
-        correct: 18,
-        wrong: 4,
-        unsolved: 6,
-        history: [980, 1020, 1050, 1100, 1140, 1190, 1230, 1270, 1310, 1340]
-    },
-    {
-        id: 5,
-        name: "Иван Петров",
-        email: "i.petrov@yandex.ru",
-        rating: 1120,
-        correct: 14,
-        wrong: 6,
-        unsolved: 8,
-        history: [800, 840, 870, 900, 940, 980, 1020, 1060, 1090, 1120]
-    },
-    {
-        id: 3,
-        name: "Дмитрий Козлов",
-        email: "d.kozlov@gmail.com",
-        rating: 890,
-        correct: 10,
-        wrong: 8,
-        unsolved: 10,
-        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
-    },
-    {
-        id: 33,
-        name: "Дмитрий Козлов",
-        email: "d.kozlov@gmail.com",
-        rating: 890,
-        correct: 10,
-        wrong: 8,
-        unsolved: 10,
-        history: [700, 720, 750, 780, 800, 820, 840, 860, 875, 890]
-    },
-];
 
 const TASKS_PER_PAGE = 5;
 
@@ -346,7 +284,7 @@ const TasksSection: FC<{
     const [selectedSubjectId, setSelectedSubjectId] = useState<number | undefined>(undefined);
 
     const selectedSubject = subjects.find(s => s.id === selectedSubjectId);
-    const themeOptions = selectedSubject?.themes.map(t => ({value: t.name, label: t.name})) ?? [];
+    const themeOptions = selectedSubject?.themes.map(t => ({value: t.id, label: t.name})) ?? [];
 
     const openAdd = () => {
         form.resetFields();
@@ -361,7 +299,6 @@ const TasksSection: FC<{
                 const res = await api.post("/tasks/create/", {
                     question: vals.question,
                     correct_answer: vals.correct_answer,
-                    solution: vals.solution || "",
                     subject: vals.subject_id,
                     theme: vals.theme_id || null,
                     difficulty: vals.difficulty,
@@ -525,24 +462,40 @@ const UserStatsDrawer: FC<{ user: UserRecord | null; onClose: () => void }> = ({
 
 const UsersSection: FC = () => {
     const [selected, setSelected] = useState<UserRecord | null>(null);
+    const [users, setUsers] = useState<UserRecord[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const sorted = [...STUB_USERS].sort((a, b) => b.rating - a.rating);
+    useEffect(() => {
+        setLoading(true);
+        api.get("/users/admin_list/").then((res) => {
+            if (res && res.status === 200 && Array.isArray(res.data)) {
+                setUsers(res.data);
+            }
+        }).finally(() => setLoading(false));
+    }, []);
+
+    const sorted = [...users].sort((a, b) => b.rating - a.rating);
 
     return (
         <Card>
             <CardTitle>Пользователи</CardTitle>
 
-            <ItemList>
-                {sorted.map(u => (
-                    <UserItem key={u.id} onClick={() => setSelected(u)}>
-                        <UserInfo>
-                            <UserName>{u.name}</UserName>
-                            <UserEmail>{u.email}</UserEmail>
-                        </UserInfo>
-                        <UserRating>{u.rating}</UserRating>
-                    </UserItem>
-                ))}
-            </ItemList>
+            {loading ? (
+                <div style={{display: "flex", justifyContent: "center", padding: 40}}><Spin size="large"/></div>
+            ) : (
+                <ItemList>
+                    {sorted.map(u => (
+                        <UserItem key={u.id} onClick={() => setSelected(u)}>
+                            <UserInfo>
+                                <UserName>{u.name}</UserName>
+                                <UserEmail>{u.email}</UserEmail>
+                            </UserInfo>
+                            <UserRating>{u.rating}</UserRating>
+                        </UserItem>
+                    ))}
+                    {sorted.length === 0 && <MutedText>Нет пользователей</MutedText>}
+                </ItemList>
+            )}
 
             <UserStatsDrawer user={selected} onClose={() => setSelected(null)}/>
         </Card>
@@ -629,17 +582,17 @@ const AdminPanel: FC = () => {
 
     const fetchTasks = useCallback((page: number) => {
         setTasksLoading(true);
-        api.get("/tasks/export/", {params: {export_format: "json"}}).then((res) => {
+        api.get("/tasks/admin_tasks/").then((res) => {
             if (res && res.status === 200 && Array.isArray(res.data)) {
                 const all: TaskRecord[] = res.data.map((t: {
                     id: number; question: string; correct_answer: string;
-                    subject: string; theme: string | null; difficulty: string;
+                    subject_name: string; theme_name: string | null; difficulty: string;
                 }) => ({
                     id: t.id,
                     question: t.question,
                     correct_answer: t.correct_answer,
-                    subject: t.subject,
-                    theme: t.theme || "",
+                    subject: t.subject_name,
+                    theme: t.theme_name || "",
                     difficulty: t.difficulty,
                 }));
                 setTasksTotalCount(all.length);

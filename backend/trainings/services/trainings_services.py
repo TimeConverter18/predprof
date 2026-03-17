@@ -63,7 +63,10 @@ class TrainingService:
     async def finish_training(self, training_id: int, user_id: int) -> None:
         training_tasks = await self._get_training_tasks(training_id)
 
-        # Сохраняем статистику в БД
+        total_time = await statistics_cache.get_total_time(training_id, user_id)
+        task_count = len(training_tasks)
+        time_per_task = round(total_time / task_count, 2) if total_time and task_count else None
+
         for training_task in training_tasks:
             stats = await statistics_cache.get(training_id, user_id, training_task.id)
             await TrainingStatistics.objects.acreate(
@@ -72,6 +75,7 @@ class TrainingService:
                 number_of_attempts=stats['attempts'],
                 user_answer=stats['last_answer'],
                 is_correct=stats['is_correct'],
+                time_to_solve=time_per_task,
             )
 
         await self._update_training_status(training_id)

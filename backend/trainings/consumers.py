@@ -148,7 +148,7 @@ class TrainingConsumer(AsyncWebsocketConsumer):
         await training_service.finish_training(self.training_id, self.user.id)
 
         await self.send(text_data=json.dumps({
-            'type': 'finish_round',
+            'type': 'finish_training',
             'message': 'Тренировка завершена!'
         }))
 

@@ -183,7 +183,6 @@ class ImportTasksView(APIView):
                     subject=subject,
                     theme=theme,
                     question=row.get("question", "").strip(),
-                    solution=row.get("solution", "").strip(),
                     correct_answer=row.get("correct_answer", "").strip(),
                     difficulty=difficulty,
                 )
@@ -215,7 +214,6 @@ class TaskExportView(APIView):
             {
                 'id': t.id,
                 'question': t.question,
-                'solution': t.solution,
                 'correct_answer': t.correct_answer,
                 'difficulty': t.difficulty,
                 'subject': t.subject.name,
@@ -224,7 +222,7 @@ class TaskExportView(APIView):
             for t in tasks
         ]
 
-        if format == 'csv':
+        if export_format == 'csv':
             return self._csv_response(data)
         return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
 
