@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from pvp.exceptions import EnemyNotFound, RoundNotFound, RoundTaskNotFound
 from users.models import User
-from pvp.models import Round, RoundTask, RoundStatus
+from pvp.models import Round, RoundTask
 from core.services.redis_services import statistics_cache, matchmaking_service
 from search_enemy.consumers import round_service
 
@@ -35,15 +35,12 @@ class PvpConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_discard(
                 f"user_{self.user.id}", self.channel_name
             )
-            if not getattr(self, 'round_finished', False):
-                round_obj = await Round.objects.filter(pk=self.round_id).afirst()
-                if round_obj and round_obj.status not in (RoundStatus.FINISHED, RoundStatus.TECHNICAL_ERROR):
-                    await statistics_cache.technical_finish_add(self.round_id)
-                    await round_service.technical_finish_round(
-                        self.round_id,
-                        self.user.id,
-                        self.enemy.id if self.enemy else None,
-                    )
+            await statistics_cache.technical_finish_add(self.round_id)
+            await round_service.technical_finish_round(
+                self.round_id,
+                self.user.id,
+                self.enemy.id if self.enemy else None,
+            )
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -166,22 +163,9 @@ class PvpConsumer(AsyncWebsocketConsumer):
             },
         )
 
-        self.round_finished = True
-
         await statistics_cache.delete_all_about_round(
             self.round_id, self.user.id, self.enemy.id
         )
-
-    async def ws_finish_round(self, event):
-        await self.send(text_data=json.dumps({
-            "type": "finish_round",
-            "my_delta": event["my_delta"],
-            "my_old_rating": event["my_old_rating"],
-            "my_new_rating": event["my_new_rating"],
-            "enemy_delta": event["enemy_delta"],
-            "enemy_old_rating": event["enemy_old_rating"],
-            "enemy_new_rating": event["enemy_new_rating"],
-        }))
 
     async def save_total_time(self, user_id: int) -> None:
         round_obj = await Round.objects.aget(id=self.round_id)
@@ -224,7 +208,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
             return False
         try:
             self.round = await Round.objects.aget(pk=self.round_id)
-        except Round.DoesNotExist:
+        except RoundNotFound:
             await self.close(code=4004)
             return False
         if not await self.is_player_in_round():
@@ -238,7 +222,8 @@ class PvpConsumer(AsyncWebsocketConsumer):
         return True
 
     async def add_to_groups(self):
-        await self.channel_layer.group_add(f"user_{self.user.id}", self.channel_name)
+        for user in (self.user, self.enemy):
+            await self.channel_layer.group_add(f"user_{user.id}", self.channel_name)
 
     async def send_error(self, message: str):
         await self.send(text_data=json.dumps({"type": "error", "errors": message}))
