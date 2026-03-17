@@ -25,7 +25,7 @@ api.interceptors.response.use(
                 message.error("400 Некорректные данные", 1);
                 break;
             case 401:
-                if (error.request.responseURL === `${domain}${apiURL}/users/me`) {
+                if (error.request.responseURL === `${domain}${apiURL}/users/me/`) {
                     return Promise.reject(error);
                 }
                 message.error("401 Ошибка авторизации", 1);

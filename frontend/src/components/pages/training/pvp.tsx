@@ -298,5 +298,4 @@ const Page: FC = () => {
         </PageWrapper>
     );
 }
-
 export default Page;

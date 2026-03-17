@@ -14,15 +14,15 @@ export const isError = (data: unknown): data is Error => {
 
 export type StartTrainingResponse = {
     training_id: number;
-    message: string;
+    started_at: string;
+    planed_finish: string;
 }
 
 export const isStartTrainingResponse = (data: unknown): data is StartTrainingResponse => {
     return (
         typeof data === "object" &&
         data !== null &&
-        typeof (data as StartTrainingResponse).training_id === "number" &&
-        typeof (data as StartTrainingResponse).message === "string"
+        typeof (data as StartTrainingResponse).training_id === "number"
     );
 }
 
@@ -204,18 +204,16 @@ export const isSubjects = (data: unknown): data is Subject[] => {
 }
 
 export type TrainingTaskResponse = {
-    task_id: number;
     question: string;
-    start_time: string;
+    is_correct: boolean | null;
 }
 
 export const isTrainingTaskResponse = (data: unknown): data is TrainingTaskResponse => {
     if (typeof data !== "object" || data === null) return false;
     const candidate = data as TrainingTaskResponse;
     return (
-        typeof candidate.task_id === "number" &&
         typeof candidate.question === "string" &&
-        typeof candidate.start_time === "string"
+        (candidate.is_correct === null || typeof candidate.is_correct === "boolean")
     );
 }
 

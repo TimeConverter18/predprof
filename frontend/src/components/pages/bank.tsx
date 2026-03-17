@@ -107,7 +107,7 @@ const Page: FC = () => {
         api.get(`/tasks/${id}/`).then((res) => {
             if (res && res.status === 200 && res.data) {
                 setTasks([{
-                    task_id: res.data.task_id ?? res.data.id ?? id,
+                    task_id: res.data.id ?? id,
                     question: res.data.question,
                     is_correct: res.data.is_correct ?? null,
                 }]);

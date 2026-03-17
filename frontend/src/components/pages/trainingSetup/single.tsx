@@ -24,7 +24,7 @@ const StepsWrapper = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto 6px;
-    padding: 6px 6px 4px
+    padding: 6px 6px 4px;
     overflow-x: auto;
     min-width: 240px;
 `;
@@ -167,7 +167,7 @@ const Page: FC = () => {
             setCurrentStep(1);
         } else if (currentStep === 1 && selectedSubjectId) {
             setCurrentStep(2);
-        } else if (currentStep === 2 && selectedThemeId) {
+        } else if (currentStep === 2) {
             setCurrentStep(3);
         }
     };
@@ -277,12 +277,14 @@ const Page: FC = () => {
                                             {subjects.find(s => s.id === selectedSubjectId)?.name}
                                         </Tag>
                                     </div>
+                                    {selectedThemeId && (
                                     <div>
                                         <span style={{color: '#888', marginRight: '10px'}}>Тема:</span>
                                         <Tag style={{padding: '4px 12px', fontSize: '14px'}}>
                                             {availableThemes.find(t => t.id === selectedThemeId)?.name}
                                         </Tag>
                                     </div>
+                                    )}
                                 </div>
                             }
                             extra={
@@ -307,7 +309,6 @@ const Page: FC = () => {
     const isNextDisabled = () => {
         if (currentStep === 0) return !selectedDifficulty;
         if (currentStep === 1) return !selectedSubjectId;
-        if (currentStep === 2) return !selectedThemeId;
         return false;
     };
 
@@ -333,7 +334,7 @@ const Page: FC = () => {
                             disabled: index > currentStep &&
                                 !(index === 1 && selectedDifficulty) &&
                                 !(index === 2 && selectedSubjectId) &&
-                                !(index === 3 && selectedThemeId),
+                                !(index === 3 && selectedSubjectId),
                             status: index < currentStep ? 'finish' :
                                 index === currentStep ? 'process' : 'wait'
                         }))}
