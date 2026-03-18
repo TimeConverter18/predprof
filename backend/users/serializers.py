@@ -3,6 +3,12 @@ from rest_framework import serializers
 from users.models import User
 
 
+class UsersListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'rating']
+
+
 class UserStatsSerializer(serializers.ModelSerializer):
     stats = serializers.SerializerMethodField()
 
@@ -24,9 +30,9 @@ class UserStatsSerializer(serializers.ModelSerializer):
         )
 
         train_total = train_stats['total'] / 10 or 0
-        train_correct = train_stats['correct'] or 0
+        train_correct = train_stats['correct'] / 10or 0
         pvp_total = pvp_stats['total'] / 10 or 0
-        pvp_correct = pvp_stats['correct'] or 0
+        pvp_correct = pvp_stats['correct'] / 10 or 0
         total = train_total + pvp_total
 
         return {
