@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
-    LineChart, Line, XAxis, YAxis, CartesianGrid,
 } from "recharts";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router";
@@ -228,15 +227,29 @@ type TaskRecord = {
     difficulty: string;
 };
 
-type UserRecord = {
+type UserListItem = {
     id: number;
     name: string;
     email: string;
     rating: number;
-    correct: number;
-    wrong: number;
-    unsolved: number;
-    history: number[];
+};
+
+type UserDetails = {
+    id: number;
+    name: string;
+    email: string;
+    rating: number;
+    stats: {
+        rate: number;
+        trains_count: number;
+        pvp_count: number;
+        accuracy_train: number;
+        accuracy_pvp: number;
+        accuracy_total: number;
+        speed_train: number;
+        speed_pvp: number;
+        speed_total: number;
+    };
 };
 
 type SubjectOption = {
@@ -400,76 +413,110 @@ const TasksSection: FC<{
 };
 
 
-const UserStatsDrawer: FC<{ user: UserRecord | null; onClose: () => void }> = ({user, onClose}) => {
+const UserStatsDrawer: FC<{ userId: number | null; email: string; onClose: () => void }> = ({userId, email, onClose}) => {
     const isMobile = useMediaQuery({maxWidth: 767});
-    if (!user) return null;
+    const [details, setDetails] = useState<UserDetails | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const total = user.correct + user.wrong + user.unsolved;
-    const pie = [
-        {name: "Верно", value: user.correct},
-        {name: "Неверно", value: user.wrong},
-        {name: "Не решено", value: user.unsolved},
-    ];
-    const history = user.history.map((r, i) => ({label: `#${i + 1}`, rating: r}));
+    useEffect(() => {
+        if (userId === null) return;
+        setDetails(null);
+        setLoading(true);
+        api.get(`/users/${userId}/`).then((res) => {
+            if (res && res.status === 200 && res.data) {
+                setDetails({
+                    id: res.data.id,
+                    name: res.data.username,
+                    email,
+                    rating: res.data.stats?.rate ?? 0,
+                    stats: res.data.stats,
+                });
+            }
+        }).finally(() => setLoading(false));
+    }, [userId, email]);
+
+    if (userId === null) return null;
+
+    const total = details ? details.stats.trains_count + details.stats.pvp_count : 0;
+    const pie = details ? [
+        {name: "Тренировки", value: details.stats.trains_count},
+        {name: "PvP", value: details.stats.pvp_count},
+    ] : [];
 
     return (
         <Drawer
-            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{user.name}</span>}
+            title={<span style={{color: "#E0FF25", fontWeight: 700}}>{details?.name ?? "..."}</span>}
             open
             onClose={onClose}
             width={isMobile ? "100%" : 520}
         >
-            <MutedText>{user.email}</MutedText>
-            <Divider/>
-            <div style={{textAlign: "center", marginBottom: 20}}>
-                <MutedText style={{display: "block", marginBottom: 4}}>Рейтинг</MutedText>
-                <span style={{fontSize: 36, fontWeight: 900, color: "#E0FF25"}}>{user.rating}</span>
-            </div>
-            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
-                Статистика задач ({total})
-            </MutedText>
-            <div style={{marginTop: 8}}>
-                <ResponsiveContainer width="100%" height={220}>
-                    <PieChart>
-                        <Pie data={pie} cx="50%" cy="50%" innerRadius={55} outerRadius={85}
-                             paddingAngle={4} dataKey="value">
-                            {pie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]}/>)}
-                        </Pie>
-                        <Tooltip/>
-                        <Legend/>
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-            <Divider/>
-            <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
-                Рейтинг за последние 10 PvP
-            </MutedText>
-            <div style={{marginTop: 8}}>
-                <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={history} margin={{top: 5, right: 10, left: -20, bottom: 5}}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#343434"/>
-                        <XAxis dataKey="label" tick={{fill: "#83868e", fontSize: 10}}/>
-                        <YAxis tick={{fill: "#83868e", fontSize: 10}}/>
-                        <Line type="monotone" dataKey="rating" stroke="#E0FF25" strokeWidth={2.5}
-                              dot={{fill: "#E0FF25", r: 4, strokeWidth: 0}} activeDot={{r: 6}}/>
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+            {loading ? (
+                <div style={{display: "flex", justifyContent: "center", padding: 40}}><Spin size="large"/></div>
+            ) : details ? (
+                <>
+                    <MutedText>{details.email}</MutedText>
+                    <Divider/>
+                    <div style={{textAlign: "center", marginBottom: 20}}>
+                        <MutedText style={{display: "block", marginBottom: 4}}>Рейтинг</MutedText>
+                        <span style={{fontSize: 36, fontWeight: 900, color: "#E0FF25"}}>{details.rating}</span>
+                    </div>
+                    <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
+                        Сессии ({total})
+                    </MutedText>
+                    <div style={{marginTop: 8}}>
+                        <ResponsiveContainer width="100%" height={220}>
+                            <PieChart>
+                                <Pie data={pie} cx="50%" cy="50%" innerRadius={55} outerRadius={85}
+                                     paddingAngle={4} dataKey="value">
+                                    {pie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]}/>)}
+                                </Pie>
+                                <Tooltip/>
+                                <Legend/>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
+                    <Divider/>
+                    <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
+                        Точность
+                    </MutedText>
+                    <div style={{marginTop: 8, display: "flex", flexDirection: "column", gap: 6}}>
+                        <span style={{color: "#fff"}}>Тренировки: <b style={{color: "#E0FF25"}}>{details.stats.accuracy_train}%</b></span>
+                        <span style={{color: "#fff"}}>PvP: <b style={{color: "#E0FF25"}}>{details.stats.accuracy_pvp}%</b></span>
+                        <span style={{color: "#fff"}}>Общая: <b style={{color: "#E0FF25"}}>{details.stats.accuracy_total}%</b></span>
+                    </div>
+                    <Divider/>
+                    <MutedText style={{fontSize: 12, textTransform: "uppercase", letterSpacing: 1}}>
+                        Средняя скорость ответа (сек)
+                    </MutedText>
+                    <div style={{marginTop: 8, display: "flex", flexDirection: "column", gap: 6}}>
+                        <span style={{color: "#fff"}}>Тренировки: <b style={{color: "#E0FF25"}}>{details.stats.speed_train}</b></span>
+                        <span style={{color: "#fff"}}>PvP: <b style={{color: "#E0FF25"}}>{details.stats.speed_pvp}</b></span>
+                        <span style={{color: "#fff"}}>Общая: <b style={{color: "#E0FF25"}}>{details.stats.speed_total}</b></span>
+                    </div>
+                </>
+            ) : null}
         </Drawer>
     );
 };
 
 
 const UsersSection: FC = () => {
-    const [selected, setSelected] = useState<UserRecord | null>(null);
-    const [users, setUsers] = useState<UserRecord[]>([]);
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [selectedEmail, setSelectedEmail] = useState<string>("");
+    const [users, setUsers] = useState<UserListItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        api.get("/users/admin_list/").then((res) => {
-            if (res && res.status === 200 && Array.isArray(res.data)) {
-                setUsers(res.data);
+        api.get("/users/users_for_admin/").then((res) => {
+            if (res && res.status === 200) {
+                const data = Array.isArray(res.data) ? res.data : res.data?.results ?? [];
+                setUsers(data.map((u: {id: number; username: string; email: string; rating: number}) => ({
+                    id: u.id,
+                    name: u.username,
+                    email: u.email,
+                    rating: u.rating,
+                })));
             }
         }).finally(() => setLoading(false));
     }, []);
@@ -485,7 +532,7 @@ const UsersSection: FC = () => {
             ) : (
                 <ItemList>
                     {sorted.map(u => (
-                        <UserItem key={u.id} onClick={() => setSelected(u)}>
+                        <UserItem key={u.id} onClick={() => { setSelectedId(u.id); setSelectedEmail(u.email); }}>
                             <UserInfo>
                                 <UserName>{u.name}</UserName>
                                 <UserEmail>{u.email}</UserEmail>
@@ -497,23 +544,15 @@ const UsersSection: FC = () => {
                 </ItemList>
             )}
 
-            <UserStatsDrawer user={selected} onClose={() => setSelected(null)}/>
+            <UserStatsDrawer userId={selectedId} email={selectedEmail} onClose={() => setSelectedId(null)}/>
         </Card>
     );
 };
 
 
 const IOSection: FC<{ onReload: () => void }> = ({onReload}) => {
-    const [taskCount, setTaskCount] = useState<number>(0);
     const [uploading, setUploading] = useState(false);
 
-    useEffect(() => {
-        api.get("/tasks/", {params: {page: 1, page_size: 1}}).then((res) => {
-            if (res && res.status === 200 && res.data) {
-                setTaskCount(res.data.items_count || 0);
-            }
-        });
-    }, []);
 
     const exportCSV = () => {
         window.open("/api/tasks/export/?export_format=csv", "_blank");
@@ -552,7 +591,6 @@ const IOSection: FC<{ onReload: () => void }> = ({onReload}) => {
             <CardTitle>Импорт / Экспорт задач</CardTitle>
 
             <IOButtonGroup>
-                <MutedText>Экспорт ({taskCount} задач)</MutedText>
                 <IORow>
                     <PrimaryButton icon={<DownloadOutlined/>} onClick={exportCSV}>CSV</PrimaryButton>
                     <PrimaryButton icon={<DownloadOutlined/>} onClick={exportJSON}>JSON</PrimaryButton>

@@ -5,5 +5,5 @@ urlpatterns = [
     path('', render_profile_page, name="users"),
     path('me/', UserStatsApiView.as_view(), name='user-me'),
     path('<int:pk>/', UserStatsApiView.as_view(), name='user-stats'),
-    path('users_for_users/', UsersForUsersApiView.as_view(), name='users-for-users'),
+    path('users_for_admin/', UsersForUsersApiView.as_view(), name='users-for-users'),
 ]

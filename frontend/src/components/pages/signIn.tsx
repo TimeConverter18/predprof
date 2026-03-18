@@ -5,6 +5,7 @@ import PrimaryButton from "../public/primaryButton";
 import {Link, useNavigate} from "react-router";
 import api from "../../api/api";
 import {useAuth} from "../../hooks/auth/hook";
+import {useSubjectThemes} from "../../hooks/subjectThemes/hook";
 
 const FormWrapper = styled.div`
     display: flex;
@@ -27,6 +28,7 @@ const onFinishFailed = () => {}
 const Page: FC = () => {
     const navigate = useNavigate();
     const { reload } = useAuth();
+    const { reload: reloadSubjects } = useSubjectThemes();
 
     const onFinish = async (values: FieldType) => {
         try {
@@ -37,6 +39,7 @@ const Page: FC = () => {
             if (res && res.status === 200) {
                 message.success("Успешный вход!");
                 await reload();
+                reloadSubjects();
                 navigate("/main");
             }
         } catch {
