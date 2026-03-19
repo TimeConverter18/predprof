@@ -117,6 +117,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
         correct_answer, round_task_id = await self.get_answer_to_task(
             task_index, self.round_id
         )
+
         is_correct = answer == correct_answer
         await statistics_cache.register_attempt(
             self.round_id,
@@ -178,6 +179,17 @@ class PvpConsumer(AsyncWebsocketConsumer):
         await statistics_cache.delete_all_about_round(
             self.round_id, self.user.id, self.enemy.id
         )
+
+    async def ws_finish_round(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "finish_round",
+            "my_delta": event["my_delta"],
+            "my_old_rating": event["my_old_rating"],
+            "my_new_rating": event["my_new_rating"],
+            "enemy_delta": event["enemy_delta"],
+            "enemy_old_rating": event["enemy_old_rating"],
+            "enemy_new_rating": event["enemy_new_rating"],
+        }))
 
     async def save_total_time(self, user_id: int) -> None:
         round_obj = await Round.objects.aget(id=self.round_id)
