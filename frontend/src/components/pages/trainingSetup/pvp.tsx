@@ -8,6 +8,7 @@ import useWebSocket from 'react-use-websocket';
 import StyledTitle from "../../components/textComponents/StyledTitle";
 import PageContainer from "../../components/containers/PageContainer";
 import StyledLead from "../../components/textComponents/StyledLead";
+import {useNavigate} from "react-router";
 
 const PageShell = styled.div`
     width: 100%;
@@ -151,6 +152,7 @@ const Page: FC = () => {
     const [messageApi, contextHolder] = notification.useNotification();
     const [uiState, setUiState] = useState<UIState>("IDLE");
     const [shouldConnect, setShouldConnect] = useState(false);
+    const navigate = useNavigate();
 
     const {styles} = useStyles();
 
@@ -160,11 +162,15 @@ const Page: FC = () => {
         const data = JSON.parse(event.data);
         if (data.type === 'room_id') {
             setUiState("FOUND");
+            setTimeout(() => {
+                navigate(`/pvp?id=${data.room_id}`);
+            }, 1500);
         }
     };
 
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const socketUrl = shouldConnect && selectedSubjectId
-        ? `wss://olympiad.oksnet.keenetic.pro:8000/ws/pvp/matchmaking?subject=${selectedSubjectId}`
+        ? `${wsProtocol}//${window.location.host}/api/ws/search_enemy/`
         : null;
 
     const matchmakingWS = useWebSocket(socketUrl, {
@@ -173,7 +179,8 @@ const Page: FC = () => {
             setUiState("SEARCH");
             matchmakingWS.sendMessage(JSON.stringify({
                 "type": "is_search",
-                "is_search": true
+                "is_search": true,
+                "subject": selectedSubjectId
             }));
         },
         onClose: () => {

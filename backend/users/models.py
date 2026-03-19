@@ -27,8 +27,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=50, blank=True)
-    last_name = models.CharField(max_length=50, blank=True)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
 
@@ -37,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=UserRole.choices,
         default=UserRole.PLAYER,
     )
-    rating = models.IntegerField(default=100)
+    rating = models.IntegerField(default=1000)
     solved_tasks = models.ManyToManyField(
         Task,
         related_name="solved_tasks",

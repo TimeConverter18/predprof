@@ -6,7 +6,8 @@ const apiURL = "/api"
 
 const api = axios.create({
     baseURL: apiURL,
-    timeout: 2000,
+    timeout: 10000,
+    withCredentials: true,
 })
 
 api.interceptors.response.use(
@@ -24,7 +25,7 @@ api.interceptors.response.use(
                 message.error("400 Некорректные данные", 1);
                 break;
             case 401:
-                if (error.request.responseURL === `${domain}${apiURL}/users/me`) {
+                if (error.request.responseURL === `${domain}${apiURL}/users/me/`) {
                     return Promise.reject(error);
                 }
                 message.error("401 Ошибка авторизации", 1);
@@ -38,10 +39,10 @@ api.interceptors.response.use(
             case 498:
                 { const originalRequest = error.config;
 
-                const res = await api.post(`${apiURL}/auth/refresh`)
+                const res = await api.post("/auth/token/refresh/")
 
                 if (res.request.status === 401) {
-                    api.post(`${apiURL}/auth/exit`).then(() => {
+                    api.post("/auth/token/refresh/").then(() => {
                         window.location.reload();
                     })
                 } else {
@@ -52,7 +53,7 @@ api.interceptors.response.use(
                 }
                 break; }
             case 499:
-                { //const errorData = error?.response?.data
+                {
                 message.error("Неизвестная ошибка", 1);
                 break}
             default:

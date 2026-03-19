@@ -18,10 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 FORCE_SCRIPT_NAME = '/api'
 
-
 STATIC_URL = '/api/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 
 DELTA = 32
 
@@ -35,7 +33,6 @@ SECRET_KEY = "django-insecure-e&*a+!#jcejdo!@xzi+-oqvqujz=md(o#ky07k5j+p5=mhn7+d
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -62,6 +59,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_extensions',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -98,11 +96,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "olympiad.wsgi.application"
 ASGI_APPLICATION = "olympiad.asgi.application"
 
-
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -163,10 +159,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -182,7 +174,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -193,7 +184,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

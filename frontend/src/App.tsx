@@ -14,19 +14,30 @@ import PVPPage from "./components/pages/training/pvp"
 import {SubjectThemesProvider} from "./hooks/subjectThemes/subjectThemesContextProvider"
 import SinglePage from "./components/pages/training/single"
 import NFPage from "./components/pages/notFound"
+import AdminPanel from "./components/pages/adminPanel"
 
 const App: FC = () => {
     return (
         <SubjectThemesProvider>
             <ConfigProvider theme={{
                 token: {
-                    "colorPrimary": "#E0FF25",
-                }, algorithm: theme.darkAlgorithm}
-            }>
+                    colorPrimary: "#E0FF25",
+                },
+                algorithm: theme.darkAlgorithm,
+                components: {
+                    Button: {
+                        primaryColor: "#000",
+                        colorPrimaryHover: "#d4f000",
+                        colorPrimaryActive: "#a8bf00",
+                    },
+                },
+            }}>
+
                 <AntApp style={{width: "100%"}}>
                     <BrowserRouter>
                         <AuthProvider>
                             <Routes>
+                                <Route path="/admin" element={<AdminPanel />}/>
                                 <Route path="/signin" element={<SignInPage />}/>
                                 <Route path="/signup" element={<SignUpPage />}/>
                                 <Route path="/*" element={

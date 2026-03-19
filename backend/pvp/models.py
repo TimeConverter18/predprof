@@ -16,7 +16,7 @@ class Round(models.Model):
     status = models.CharField(
         max_length=20,
         choices=RoundStatus.choices,
-        default=RoundStatus.WAITING,
+        default=RoundStatus.IN_PROGRESS,
     )
     players = models.ManyToManyField(User, related_name='rounds', through='RoundPlayer')
     tasks = models.ManyToManyField(

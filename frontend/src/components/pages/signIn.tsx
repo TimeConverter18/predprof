@@ -1,8 +1,11 @@
 import type {FC} from "react";
-import {Form, Input, Typography} from "antd";
+import {Form, Input, Typography, message} from "antd";
 import styled from "@emotion/styled";
 import PrimaryButton from "../public/primaryButton";
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
+import api from "../../api/api";
+import {useAuth} from "../../hooks/auth/hook";
+import {useSubjectThemes} from "../../hooks/subjectThemes/hook";
 
 const FormWrapper = styled.div`
     display: flex;
@@ -22,11 +25,28 @@ type FieldType = {
 
 const onFinishFailed = () => {}
 
-const onFinish = () => {
-
-}
-
 const Page: FC = () => {
+    const navigate = useNavigate();
+    const { reload } = useAuth();
+    const { reload: reloadSubjects } = useSubjectThemes();
+
+    const onFinish = async (values: FieldType) => {
+        try {
+            const res = await api.post("/auth/login/", {
+                email: values.mail,
+                password: values.password,
+            });
+            if (res && res.status === 200) {
+                message.success("Успешный вход!");
+                await reload();
+                reloadSubjects();
+                navigate("/main");
+            }
+        } catch {
+            // errors handled by interceptor
+        }
+    };
+
     return (
         <FormWrapper>
             <Title level={2}>ВХОД</Title>

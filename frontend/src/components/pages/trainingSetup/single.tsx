@@ -1,6 +1,6 @@
 import {type FC, Fragment, useState} from "react"
 import styled from "@emotion/styled";
-import {Steps, Tag, Button, Result} from "antd";
+import {Steps, Tag, Button, Result, message} from "antd";
 import {CheckOutlined} from '@ant-design/icons';
 import PrimaryButton from "../../public/primaryButton";
 import {useSubjectThemes} from "../../../hooks/subjectThemes/hook";
@@ -9,6 +9,8 @@ import {createStyles} from 'antd-style';
 import StyledTitle from "../../components/textComponents/StyledTitle";
 import PageContainer from "../../components/containers/PageContainer";
 import CardContainer from "../../components/containers/CardContainer";
+import api from "../../../api/api";
+import {useNavigate} from "react-router";
 
 const TitleSection = styled.div`
     width: 100%;
@@ -22,7 +24,7 @@ const StepsWrapper = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto 6px;
-    padding: 6px 6px 4px
+    padding: 6px 6px 4px;
     overflow-x: auto;
     min-width: 240px;
 `;
@@ -136,6 +138,7 @@ const useStyles = createStyles(({token, css}) => ({
 
 const Page: FC = () => {
     const {subjects} = useSubjectThemes();
+    const navigate = useNavigate();
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
     const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(null);
     const [selectedThemeId, setSelectedThemeId] = useState<number | null>(null);
@@ -164,7 +167,7 @@ const Page: FC = () => {
             setCurrentStep(1);
         } else if (currentStep === 1 && selectedSubjectId) {
             setCurrentStep(2);
-        } else if (currentStep === 2 && selectedThemeId) {
+        } else if (currentStep === 2) {
             setCurrentStep(3);
         }
     };
@@ -180,12 +183,24 @@ const Page: FC = () => {
         setCurrentStep(0);
     };
 
-    const handleSubmit = () => {
-        console.log({
-            difficulty: selectedDifficulty,
-            subject: selectedSubjectId,
-            theme: selectedThemeId
-        });
+    const handleSubmit = async () => {
+        try {
+            const res = await api.post("/trainings/start_training/", null, {
+                params: {
+                    difficulty: selectedDifficulty,
+                    subject_id: selectedSubjectId,
+                    theme_id: selectedThemeId,
+                }
+            });
+            if (res && (res.status === 201 || res.status === 200)) {
+                const trainingId = res.data.training_id;
+                navigate(`/single?id=${trainingId}`);
+            } else {
+                message.error("Не удалось начать тренировку");
+            }
+        } catch {
+            message.error("Ошибка при создании тренировки");
+        }
     };
 
     const renderStepContent = () => {
@@ -262,12 +277,14 @@ const Page: FC = () => {
                                             {subjects.find(s => s.id === selectedSubjectId)?.name}
                                         </Tag>
                                     </div>
+                                    {selectedThemeId && (
                                     <div>
                                         <span style={{color: '#888', marginRight: '10px'}}>Тема:</span>
                                         <Tag style={{padding: '4px 12px', fontSize: '14px'}}>
                                             {availableThemes.find(t => t.id === selectedThemeId)?.name}
                                         </Tag>
                                     </div>
+                                    )}
                                 </div>
                             }
                             extra={
@@ -292,7 +309,6 @@ const Page: FC = () => {
     const isNextDisabled = () => {
         if (currentStep === 0) return !selectedDifficulty;
         if (currentStep === 1) return !selectedSubjectId;
-        if (currentStep === 2) return !selectedThemeId;
         return false;
     };
 
@@ -318,7 +334,7 @@ const Page: FC = () => {
                             disabled: index > currentStep &&
                                 !(index === 1 && selectedDifficulty) &&
                                 !(index === 2 && selectedSubjectId) &&
-                                !(index === 3 && selectedThemeId),
+                                !(index === 3 && selectedSubjectId),
                             status: index < currentStep ? 'finish' :
                                 index === currentStep ? 'process' : 'wait'
                         }))}

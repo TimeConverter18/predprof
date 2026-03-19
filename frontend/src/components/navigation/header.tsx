@@ -13,6 +13,7 @@ import {Desktop, Mobile} from "../responsiveWrappers";
 import {useAuth} from "../../hooks/auth/hook";
 import PrimaryButton from "../public/primaryButton";
 import {userIconPath} from "../../static";
+import api from "../../api/api";
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -77,7 +78,17 @@ const Header: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [open, setOpen] = useState<boolean>(false)
-    const { user } = useAuth();
+    const { user, reload } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            await api.post("/auth/logout/");
+        } catch {
+            //
+        }
+        await reload();
+        navigate("/signin");
+    };
 
     const activeKey = location.pathname === "/" || location.pathname.startsWith("/main")
         ? "main"
@@ -136,6 +147,7 @@ const Header: React.FC = () => {
                     />
                     {user ? (
                         <LogoutOutlined
+                            onClick={handleLogout}
                             style={{
                                 color: '#E0FF25',
                                 fontSize: '24px',
@@ -168,7 +180,7 @@ const Header: React.FC = () => {
                                     }}
                                     onClick={() => navigate('/profile')}
                                 />
-                                <LogoutOutlined style={{ color: '#E0FF25', fontSize: '24px' }} />
+                                <LogoutOutlined onClick={handleLogout} style={{ color: '#E0FF25', fontSize: '24px', cursor: 'pointer' }} />
                             </>
                         ) : (
                             <>

@@ -1,4 +1,4 @@
-import {type FC, Fragment} from "react";
+import {type FC, Fragment, useEffect} from "react";
 import styled from "@emotion/styled";
 import {Avatar, Space} from "antd";
 import {useAuth} from "../../hooks/auth/hook";
@@ -116,8 +116,12 @@ const StatSuffix = styled.span`
 `;
 
 const Page: FC = () => {
-    const { user } = useAuth();
+    const { user, reload } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        reload()
+    }, [reload]);
 
     if (!user) {
         return (

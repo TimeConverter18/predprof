@@ -19,7 +19,7 @@ const Footer: FC = () => {
         <FooterContainer>
             <p>© 2026 <b style={{color: "#E0FF25"}}>Предпроф</b></p>
             <p style={{fontWeight: "bold"}}>|</p>
-            <a style={{fontWeight: "bolder", color: "#E0FF25", textDecoration: "underline"}} href="">Админка</a>
+            <a style={{fontWeight: "bolder", color: "#E0FF25", textDecoration: "underline"}} href="/admin">Админка</a>
         </FooterContainer>
     )
 }

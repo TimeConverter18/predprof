@@ -80,6 +80,7 @@ services:
       - "8000:8000"
     volumes:
       - static_files:/app/staticfiles
+      - ./backend/dump.json:/app/dump.json
     networks:
       - pr
 

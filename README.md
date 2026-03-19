@@ -7,12 +7,11 @@
 ## 🔗 Ссылки
 
 - **Продакшн:** [predprof.kzhivaev.ru](https://predprof.kzhivaev.ru/)
-- **Админ-панель:** [predprof.kzhivaev.ru](https://predprof.kzhivaev.ru/)
-- **Демонстрация:** [Видео Rutube](https://rutube.ru/video/8a7b8443a659cf2ce78b3ec0fbfddd84/)
+- **Админ-панель:** [predprof.kzhivaev.ru](https://predprof.kzhivaev.ru/admin/)
 
 ### 🔑 Тестовый доступ (Администратор)
-- **Логин:** `admin@example.com`
-- **Пароль:** `admin`
+- **Логин:** `admin@mail.ru`
+- **Пароль:** `12345678`
 
 ---
 
