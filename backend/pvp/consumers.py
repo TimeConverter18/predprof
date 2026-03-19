@@ -93,18 +93,25 @@ class PvpConsumer(AsyncWebsocketConsumer):
         user_correct_pct = round(user_correct / total_tasks * 100) if total_tasks else 0
         enemy_correct_pct = round(enemy_correct / total_tasks * 100) if total_tasks else 0
 
-
         for user_id in (self.user.id, self.enemy.id):
             await self.channel_layer.group_send(
                 f"user_{user_id}",
-        {
+                {
                 "type": "stats",
                 "completion_percentage": completion_pct,
                 "correct_percentage": user_correct_pct,
                 "enemy_correct_percentage": enemy_correct_pct,
                 "current_task": user_answered,
-                },
-            )
+            })
+
+    async def stats(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "stats",
+            "completion_percentage": event["completion_percentage"],
+            "correct_percentage": event["correct_percentage"],
+            "enemy_correct_percentage": event["enemy_correct_percentage"],
+            "current_task": event["current_task"],
+        }))
 
     async def register_answer(self, task_index: int, answer: str) -> None:
         correct_answer, round_task_id = await self.get_answer_to_task(
