@@ -36,9 +36,10 @@ function fetchMe(): Promise<{ user: UserProfile | null; auth: boolean | null }> 
             }
         })
         .catch((res: AxiosError) => {
+            const httpStatus = res.response?.status;
             return {
                 user: null,
-                auth: res.status === 401 ? false : (false as boolean | null),
+                auth: httpStatus === 401 ? false : (false as boolean | null),
             };
         });
 }
