@@ -147,9 +147,11 @@ const Page: FC = () => {
         totalTasksRef.current = totalTasks;
     }, [totalTasks]);
 
-    useEffect(() => {
-        modalOpenRef.current = modalOpen;
-    }, [modalOpen]);
+    const openModal = (text: string) => {
+        modalOpenRef.current = true;
+        setModalText(text);
+        setModalOpen(true);
+    };
 
     useEffect(() => {
         currentRef.current = current;
@@ -213,8 +215,7 @@ const Page: FC = () => {
                     text = `Ничья! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating}`;
                 }
             }
-            setModalText(text);
-            setModalOpen(true);
+            openModal(text);
         } else if (data.type === 'error') {
             messageApi.error({
                 message: "Ошибка",
