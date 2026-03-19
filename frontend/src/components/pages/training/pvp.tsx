@@ -130,6 +130,7 @@ const Page: FC = () => {
     const [playerCorrect, setPlayerCorrect] = useState<number>(0);
     const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
+    const [waitingForEnemy, setWaitingForEnemy] = useState<boolean>(false);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
@@ -197,7 +198,11 @@ const Page: FC = () => {
                     setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
                 }
             }
-        } else if (data.type === 'finish_round') {
+            if (data.current_task !== undefined) {
+                setCurrent(data.current_task);
+                setWaitingForEnemy(false);
+            }
+        } else if (data.type === 'ws_finish_round') {
             let text = "Раунд завершён!";
             if (data.my_delta !== undefined) {
                 if (data.my_delta > 0) {
@@ -222,10 +227,7 @@ const Page: FC = () => {
     const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () => {
-            if (currentRef.current >= totalTasksRef.current && !modalOpenRef.current) {
-                setModalText("Раунд завершён!");
-                setModalOpen(true);
-            } else if (!modalOpenRef.current) {
+            if (!modalOpenRef.current) {
                 messageApi.error({
                     message: "Соединение разорвано!",
                     description: <PrimaryButton onClick={() => webSocket.open()}>Переподключиться</PrimaryButton>,
@@ -250,7 +252,7 @@ const Page: FC = () => {
         }));
 
         setAnswer("");
-        setCurrent(prev => prev + 1);
+        setWaitingForEnemy(true);
     }
 
     if (!isIdValid) {
@@ -286,6 +288,10 @@ const Page: FC = () => {
             {allAnswered ? (
                 <WaitingText>
                     Вы ответили на все задачи. Ожидание завершения раунда...
+                </WaitingText>
+            ) : waitingForEnemy ? (
+                <WaitingText>
+                    Ответ принят. Ожидание ответа противника...
                 </WaitingText>
             ) : (
                 <Task
