@@ -99,8 +99,8 @@ class PvpConsumer(AsyncWebsocketConsumer):
                 {
                 "type": "stats",
                 "completion_percentage": completion_pct,
-                "correct_percentage": user_correct_pct,
-                "enemy_correct_percentage": enemy_correct_pct,
+                "correct_percentage": user_correct_pct if user_id == self.user.id else enemy_correct_pct,
+                "enemy_correct_percentage": enemy_correct_pct if user_id == self.user.id else user_correct_pct,
                 "current_task": user_answered,
             })
 
