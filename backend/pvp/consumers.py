@@ -70,7 +70,8 @@ class PvpConsumer(AsyncWebsocketConsumer):
         )
 
         if both_answered:
-            await self.handle_stats()
+            uid, eid = sorted([self.user.id, self.enemy.id])
+            await self.handle_stats(uid, eid)
 
         if await statistics_cache.is_finish_solving(
             self.round_id, self.user.id
@@ -79,26 +80,45 @@ class PvpConsumer(AsyncWebsocketConsumer):
             await self.save_total_time(self.enemy.id)
             await self.finish_round()
 
-    async def handle_stats(self):
+    async def handle_stats(self, user_id: int, enemy_id: int):
         stats = await statistics_cache.get_round_stats(
-            self.round_id, self.user.id, self.enemy.id
+            self.round_id, user_id, enemy_id  # фиксированный порядок
         )
 
         total_tasks = stats["total_tasks"]
         user_correct = stats["user_correct"]
         enemy_correct = stats["enemy_correct"]
         user_answered = stats["user_answered"]
+        enemy_answered = stats["enemy_answered"]
 
-        completion_pct = round(user_answered / total_tasks * 100) if total_tasks else 0
-        user_correct_pct = round(user_correct / total_tasks * 100) if total_tasks else 0
-        enemy_correct_pct = round(enemy_correct / total_tasks * 100) if total_tasks else 0
+        def build_payload(my_correct, my_answered, opp_correct):
+            completion_pct = round(my_answered / total_tasks * 100) if total_tasks else 0
+            my_correct_pct = round(my_correct / total_tasks * 100) if total_tasks else 0
+            opp_correct_pct = round(opp_correct / total_tasks * 100) if total_tasks else 0
+            return {
+                "type": "ws_stats",
+                "completion_percentage": completion_pct,
+                "correct_percentage": my_correct_pct,
+                "enemy_correct_percentage": opp_correct_pct,
+                "current_task": my_answered,
+            }
 
+        await self.channel_layer.group_send(
+            f"user_{user_id}",
+            build_payload(user_correct, user_answered, enemy_correct),
+        )
+        await self.channel_layer.group_send(
+            f"user_{enemy_id}",
+            build_payload(enemy_correct, enemy_answered, user_correct),
+        )
+
+    async def ws_stats(self, event):
         await self.send(text_data=json.dumps({
             "type": "stats",
-            "completion_percentage": completion_pct,
-            "correct_percentage": user_correct_pct,
-            "enemy_correct_percentage": enemy_correct_pct,
-            "current_task": user_answered,
+            "completion_percentage": event["completion_percentage"],
+            "correct_percentage": event["correct_percentage"],
+            "enemy_correct_percentage": event["enemy_correct_percentage"],
+            "current_task": event["current_task"],
         }))
 
     async def register_answer(self, task_index: int, answer: str) -> None:
@@ -167,6 +187,17 @@ class PvpConsumer(AsyncWebsocketConsumer):
             self.round_id, self.user.id, self.enemy.id
         )
 
+    async def ws_finish_round(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "finish_round",
+            "my_delta": event["my_delta"],
+            "my_old_rating": event["my_old_rating"],
+            "my_new_rating": event["my_new_rating"],
+            "enemy_delta": event["enemy_delta"],
+            "enemy_old_rating": event["enemy_old_rating"],
+            "enemy_new_rating": event["enemy_new_rating"],
+        }))
+
     async def save_total_time(self, user_id: int) -> None:
         round_obj = await Round.objects.aget(id=self.round_id)
         total_time = (timezone.now() - round_obj.started_at).total_seconds()
@@ -222,8 +253,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
         return True
 
     async def add_to_groups(self):
-        for user in (self.user, self.enemy):
-            await self.channel_layer.group_add(f"user_{user.id}", self.channel_name)
+        await self.channel_layer.group_add(f"user_{self.user.id}", self.channel_name)
 
     async def send_error(self, message: str):
         await self.send(text_data=json.dumps({"type": "error", "errors": message}))
