@@ -2,7 +2,7 @@ import './App.css'
 import {BrowserRouter, Route, Routes} from "react-router"
 import {AuthProvider} from "./hooks/auth/authContextProvider"
 import {App as AntApp, ConfigProvider, theme} from "antd"
-import {type FC} from "react"
+import {Suspense, type FC, lazy} from "react"
 import NavWrapperComponent from "./components/navigation/navWrapper"
 import SignInPage from "./components/pages/signIn"
 import SignUpPage from "./components/pages/signUp"
@@ -15,6 +15,10 @@ import {SubjectThemesProvider} from "./hooks/subjectThemes/subjectThemesContextP
 import SinglePage from "./components/pages/training/single"
 import NFPage from "./components/pages/notFound"
 import AdminPanel from "./components/pages/adminPanel"
+import EditorOverlay from "./components/public/editor/overlay"
+import { EditorStateProvider } from "./hooks/editorState/editorStateProvider"
+
+const Overlay = lazy(() => import('./components/public/overlay.tsx').then(m => ({ default: m.Overlay })))
 
 const App: FC = () => {
     return (
@@ -36,23 +40,31 @@ const App: FC = () => {
                 <AntApp style={{width: "100%"}}>
                     <BrowserRouter>
                         <AuthProvider>
-                            <Routes>
-                                <Route path="/admin" element={<AdminPanel />}/>
-                                <Route path="/signin" element={<SignInPage />}/>
-                                <Route path="/signup" element={<SignUpPage />}/>
-                                <Route path="/*" element={
-                                    <NavWrapperComponent>
-                                        <Routes>
-                                            <Route path="/main/*" element={<MainPage></MainPage>}/>
-                                            <Route path="/bank/*" element={<BankPage/>}/>
-                                            <Route path="/training/*" element={<TrainingPage/>}/>
-                                            <Route path="/profile/*" element={<ProfilePage/>}/>
-                                            <Route path="/pvp/*" element={<PVPPage/>}/>
-                                            <Route path="/single/*" element={<SinglePage/>}/>
-                                            <Route path="*" element={<NFPage/>}/>
-                                        </Routes>
-                                    </NavWrapperComponent>}/>
-                            </Routes>
+                            <EditorStateProvider>
+                                <Suspense fallback={null}>
+                                    <Overlay>
+                                        <EditorOverlay>
+                                            <Routes>
+                                                <Route path="/admin" element={<AdminPanel />}/>
+                                                <Route path="/signin" element={<SignInPage />}/>
+                                                <Route path="/signup" element={<SignUpPage />}/>
+                                                <Route path="/*" element={
+                                                    <NavWrapperComponent>
+                                                        <Routes>
+                                                            <Route path="/main/*" element={<MainPage></MainPage>}/>
+                                                            <Route path="/bank/*" element={<BankPage/>}/>
+                                                            <Route path="/training/*" element={<TrainingPage/>}/>
+                                                            <Route path="/profile/*" element={<ProfilePage/>}/>
+                                                            <Route path="/pvp/*" element={<PVPPage/>}/>
+                                                            <Route path="/single/*" element={<SinglePage/>}/>
+                                                            <Route path="*" element={<NFPage/>}/>
+                                                        </Routes>
+                                                    </NavWrapperComponent>}/>
+                                            </Routes>
+                                        </EditorOverlay>
+                                    </Overlay>
+                                </Suspense>
+                            </EditorStateProvider>
                         </AuthProvider>
                     </BrowserRouter>
                 </AntApp>
