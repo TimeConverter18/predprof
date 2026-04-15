@@ -176,3 +176,67 @@ class ImportTasksView(APIView):
                 errors.append({"row": i + 1, "error": str(e)})
 
         return created, errors
+
+
+
+class TaskExportView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        export_format = request.query_params.get('export_format', 'json')
+        theme_id = request.query_params.get('theme_id')
+        subject_id = request.query_params.get('subject_id')
+
+        tasks = Task.objects.select_related('subject', 'theme').all()
+
+        if theme_id:
+            tasks = tasks.filter(theme_id=theme_id)
+        if subject_id:
+            tasks = tasks.filter(subject_id=subject_id)
+
+        data = [
+            {
+                'id': t.id,
+                'question': t.question,
+                'correct_answer': t.correct_answer,
+                'difficulty': t.difficulty,
+                'subject': t.subject.name,
+                'theme': t.theme.name if t.theme else None,
+            }
+            for t in tasks
+        ]
+
+        if format == 'csv':
+            return self._csv_response(data)
+        return JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
+
+    def _csv_response(self, data):
+        if not data:
+            return HttpResponse('No data', content_type='text/plain')
+
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
+        response.write('\ufeff')
+
+        writer = csv.DictWriter(response, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+
+        return response
+
+
+
+
+class AdminTaskView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        queryset = Task.objects.select_related('subject', 'theme').only(
+            'id', 'question', 'correct_answer', 'difficulty',
+            'subject__name', 'theme__name'
+        )
+
+        serializer = AdminTaskSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+
