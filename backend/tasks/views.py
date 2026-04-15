@@ -215,7 +215,6 @@ class TaskExportView(APIView):
             {
                 'id': t.id,
                 'question': t.question,
-                'solution': t.solution,
                 'correct_answer': t.correct_answer,
                 'difficulty': t.difficulty,
                 'subject': t.subject.name,
