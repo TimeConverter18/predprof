@@ -176,12 +176,14 @@ class StatisticsCache:
         total_tasks = len(user_tasks)
         user_answered = sum(1 for t in user_tasks.values() if t["is_correct"] is not None)
         user_correct = sum(1 for t in user_tasks.values() if t["is_correct"] is True)
+        enemy_answered = sum(1 for t in enemy_tasks.values() if t["is_correct"] is not None)
         enemy_correct = sum(1 for t in enemy_tasks.values() if t["is_correct"] is True)
 
         return {
             "total_tasks": total_tasks,
             "user_answered": user_answered,
             "user_correct": user_correct,
+            "enemy_answered": enemy_answered,
             "enemy_correct": enemy_correct,
         }
 
