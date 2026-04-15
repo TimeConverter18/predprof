@@ -51,7 +51,7 @@ const App: FC = () => {
                                                 <Route path="/*" element={
                                                     <NavWrapperComponent>
                                                         <Routes>
-                                                            <Route path="/main/*" element={<MainPage></MainPage>}/>
+                                                            <Route path="/main/*" element={<MainPage/>}/>
                                                             <Route path="/bank/*" element={<BankPage/>}/>
                                                             <Route path="/training/*" element={<TrainingPage/>}/>
                                                             <Route path="/profile/*" element={<ProfilePage/>}/>
