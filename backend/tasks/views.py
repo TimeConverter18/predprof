@@ -3,7 +3,6 @@ import io
 import json
 
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponse
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,15 +11,14 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import MultiPartParser
 
 from tasks.models import Subject, Task, SubjectTheme, TaskDifficulty
-from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer, AdminTaskSerializer
-from users.models import UserTask
+from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer
 
 
 class ReturnTaskAPIView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request, pk: int):
-        task = get_object_or_404(Task, id=pk)
+    def get(self, request, subject_id: int):
+        task = get_object_or_404(Task, id=subject_id)
         serializer = CurrentTaskSerializer(task, context={'request': request})
         return Response(serializer.data)
 
@@ -60,25 +58,10 @@ class TasksListAPIView(APIView):
         paginator = Paginator(queryset, page_size)
         page_obj = paginator.get_page(page)
 
-        task_ids = [task.id for task in page_obj.object_list]
-
-        user_tasks = {}
-        if request.user.is_authenticated:
-            user_tasks = {
-                ut.task_id: ut.is_correct
-                for ut in UserTask.objects.filter(
-                    user=request.user,
-                    task_id__in=task_ids,
-                )
-            }
-
         serializer = BaseTaskSerializer(
             page_obj.object_list,
             many=True,
-            context={
-                'request': request,
-                'user_tasks': user_tasks,
-            }
+            context={'request': request}
         )
 
         return Response({
