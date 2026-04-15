@@ -31,8 +31,8 @@ class UserStatsSerializer(serializers.ModelSerializer):
 
         train_total = train_stats['total'] / 10 or 0
         train_correct = train_stats['correct'] / 10or 0
-        pvp_total = pvp_stats['total'] / 3 or 0
-        pvp_correct = pvp_stats['correct'] / 3 or 0
+        pvp_total = pvp_stats['total'] / 10 or 0
+        pvp_correct = pvp_stats['correct'] / 10 or 0
         total = train_total + pvp_total
 
         return {

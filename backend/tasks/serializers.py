@@ -39,11 +39,10 @@ class CurrentTaskSerializer(serializers.ModelSerializer):
 class BaseTaskSerializer(serializers.ModelSerializer):
     task_id = serializers.IntegerField(source='id')
     is_correct = serializers.SerializerMethodField()
-    subject_name = serializers.CharField(source='subject.name')
 
     class Meta:
         model = Task
-        fields = ['task_id', 'question', 'is_correct', 'subject_name']
+        fields = ['task_id', 'question', 'is_correct']
 
     def get_is_correct(self, obj):
         request = self.context.get('request')
@@ -53,6 +52,7 @@ class BaseTaskSerializer(serializers.ModelSerializer):
         user_task = UserTask.objects.filter(
             user=request.user,
             task=obj,
+            is_correct=True
         ).first()
 
         return user_task.is_correct if user_task else None
@@ -62,16 +62,3 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = "__all__"
-
-
-
-class AdminTaskSerializer(serializers.ModelSerializer):
-    subject_name = serializers.CharField(source='subject.name')
-    theme_name = serializers.CharField(source='theme.name', default=None)
-
-    class Meta:
-        model = Task
-        fields = ['id', 'question', 'correct_answer', 'difficulty', 'subject_name', 'theme_name']
-
-
-

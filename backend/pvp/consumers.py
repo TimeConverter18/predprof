@@ -93,31 +93,23 @@ class PvpConsumer(AsyncWebsocketConsumer):
         user_correct_pct = round(user_correct / total_tasks * 100) if total_tasks else 0
         enemy_correct_pct = round(enemy_correct / total_tasks * 100) if total_tasks else 0
 
+
         for user_id in (self.user.id, self.enemy.id):
             await self.channel_layer.group_send(
                 f"user_{user_id}",
-                {
+        {
                 "type": "stats",
                 "completion_percentage": completion_pct,
-                "correct_percentage": user_correct_pct if user_id == self.user.id else enemy_correct_pct,
-                "enemy_correct_percentage": enemy_correct_pct if user_id == self.user.id else user_correct_pct,
+                "correct_percentage": user_correct_pct,
+                "enemy_correct_percentage": enemy_correct_pct,
                 "current_task": user_answered,
-            })
-
-    async def stats(self, event):
-        await self.send(text_data=json.dumps({
-            "type": "stats",
-            "completion_percentage": event["completion_percentage"],
-            "correct_percentage": event["correct_percentage"],
-            "enemy_correct_percentage": event["enemy_correct_percentage"],
-            "current_task": event["current_task"],
-        }))
+                },
+            )
 
     async def register_answer(self, task_index: int, answer: str) -> None:
         correct_answer, round_task_id = await self.get_answer_to_task(
             task_index, self.round_id
         )
-
         is_correct = answer == correct_answer
         await statistics_cache.register_attempt(
             self.round_id,
@@ -179,17 +171,6 @@ class PvpConsumer(AsyncWebsocketConsumer):
         await statistics_cache.delete_all_about_round(
             self.round_id, self.user.id, self.enemy.id
         )
-
-    async def ws_finish_round(self, event):
-        await self.send(text_data=json.dumps({
-            "type": "finish_round",
-            "my_delta": event["my_delta"],
-            "my_old_rating": event["my_old_rating"],
-            "my_new_rating": event["my_new_rating"],
-            "enemy_delta": event["enemy_delta"],
-            "enemy_old_rating": event["enemy_old_rating"],
-            "enemy_new_rating": event["enemy_new_rating"],
-        }))
 
     async def save_total_time(self, user_id: int) -> None:
         round_obj = await Round.objects.aget(id=self.round_id)
