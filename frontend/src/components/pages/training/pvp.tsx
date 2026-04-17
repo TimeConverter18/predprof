@@ -1,5 +1,5 @@
 import {type FC, useEffect, useState, useRef} from "react";
-import {Flex, Modal, notification, Progress, Spin, Typography} from "antd";
+import {Flex, Modal, notification, Progress, Spin} from "antd";
 import styled from "@emotion/styled";
 import Task from "../../public/task";
 import {useWebSocket} from "@siberiacancode/reactuse";
@@ -13,15 +13,6 @@ type PvpTaskData = {
     question: string;
     user_is_correct: boolean | null;
     enemy_is_correct: boolean | null;
-}
-
-type FinishData = {
-    my_delta: number;
-    my_old_rating: number;
-    my_new_rating: number;
-    enemy_delta: number;
-    enemy_old_rating: number;
-    enemy_new_rating: number;
 }
 
 type StatsProps = {
@@ -139,10 +130,9 @@ const Page: FC = () => {
     const [playerCorrect, setPlayerCorrect] = useState<number>(0);
     const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
-    const [waitingForEnemy, setWaitingForEnemy] = useState<boolean>(false);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [finishData, setFinishData] = useState<FinishData | null>(null);
+    const [modalText, setModalText] = useState<string>("");
     const [answer, setAnswer] = useState<string>("");
 
     const sentAnswers = useRef<Set<number>>(new Set());
@@ -156,11 +146,9 @@ const Page: FC = () => {
         totalTasksRef.current = totalTasks;
     }, [totalTasks]);
 
-    const openFinishModal = (data: FinishData) => {
-        modalOpenRef.current = true;
-        setFinishData(data);
-        setModalOpen(true);
-    };
+    useEffect(() => {
+        modalOpenRef.current = modalOpen;
+    }, [modalOpen]);
 
     useEffect(() => {
         currentRef.current = current;
@@ -209,19 +197,19 @@ const Page: FC = () => {
                     setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
                 }
             }
-            if (data.current_task !== undefined) {
-                setCurrent(data.current_task);
-                setWaitingForEnemy(false);
-            }
         } else if (data.type === 'finish_round') {
-            openFinishModal({
-                my_delta: data.my_delta,
-                my_old_rating: data.my_old_rating,
-                my_new_rating: data.my_new_rating,
-                enemy_delta: data.enemy_delta,
-                enemy_old_rating: data.enemy_old_rating,
-                enemy_new_rating: data.enemy_new_rating,
-            });
+            let text = "Раунд завершён!";
+            if (data.my_delta !== undefined) {
+                if (data.my_delta > 0) {
+                    text = `Вы победили! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (+${data.my_delta})`;
+                } else if (data.my_delta < 0) {
+                    text = `Вы проиграли. Рейтинг: ${data.my_old_rating} → ${data.my_new_rating} (${data.my_delta})`;
+                } else {
+                    text = `Ничья! Рейтинг: ${data.my_old_rating} → ${data.my_new_rating}`;
+                }
+            }
+            setModalText(text);
+            setModalOpen(true);
         } else if (data.type === 'error') {
             messageApi.error({
                 message: "Ошибка",
@@ -234,7 +222,10 @@ const Page: FC = () => {
     const webSocket = useWebSocket(`${wsProtocol}//${window.location.host}/api/ws/pvp/${id ? id + '/' : ''}`, {
         onMessage: handleWebsocketMessage,
         onDisconnected: () => {
-            if (!modalOpenRef.current) {
+            if (currentRef.current >= totalTasksRef.current && !modalOpenRef.current) {
+                setModalText("Раунд завершён!");
+                setModalOpen(true);
+            } else if (!modalOpenRef.current) {
                 messageApi.error({
                     message: "Соединение разорвано!",
                     description: <PrimaryButton onClick={() => webSocket.open()}>Переподключиться</PrimaryButton>,
@@ -259,7 +250,7 @@ const Page: FC = () => {
         }));
 
         setAnswer("");
-        setWaitingForEnemy(true);
+        setCurrent(prev => prev + 1);
     }
 
     if (!isIdValid) {
@@ -296,10 +287,6 @@ const Page: FC = () => {
                 <WaitingText>
                     Вы ответили на все задачи. Ожидание завершения раунда...
                 </WaitingText>
-            ) : waitingForEnemy ? (
-                <WaitingText>
-                    Ответ принят. Ожидание ответа противника...
-                </WaitingText>
             ) : (
                 <Task
                     task_id={current + 1}
@@ -311,52 +298,13 @@ const Page: FC = () => {
                 />
             )}
             <Modal
-                title={
-                    finishData
-                        ? finishData.my_delta > 0
-                            ? "🏆 Победа!"
-                            : finishData.my_delta < 0
-                                ? "💀 Поражение"
-                                : "🤝 Ничья"
-                        : "PvP окончено"
-                }
+                title="PvP окончено"
                 open={modalOpen}
                 width={{xs: '90%', sm: '80%', md: '70%', lg: '60%', xl: '50%', xxl: '40%'}}
                 closable={false}
                 centered
                 footer={<PrimaryButton danger onClick={handleExit}>Выйти</PrimaryButton>}>
-                {finishData && (
-                    <Flex vertical gap="middle" style={{padding: "8px 0"}}>
-                        <Flex vertical gap={4}>
-                            <Typography.Text strong style={{fontSize: 16}}>Ваш рейтинг</Typography.Text>
-                            <Typography.Text style={{fontSize: 22}}>
-                                {finishData.my_old_rating} → {finishData.my_new_rating}{" "}
-                                <Typography.Text
-                                    strong
-                                    style={{
-                                        color: finishData.my_delta > 0 ? "#52c41a" : finishData.my_delta < 0 ? "#ff4d4f" : "#faad14",
-                                        fontSize: 20,
-                                    }}
-                                >
-                                    ({finishData.my_delta > 0 ? "+" : ""}{finishData.my_delta})
-                                </Typography.Text>
-                            </Typography.Text>
-                        </Flex>
-                        <Flex vertical gap={4}>
-                            <Typography.Text type="secondary" style={{fontSize: 14}}>Рейтинг противника</Typography.Text>
-                            <Typography.Text style={{fontSize: 16}}>
-                                {finishData.enemy_old_rating} → {finishData.enemy_new_rating}{" "}
-                                <Typography.Text
-                                    style={{
-                                        color: finishData.enemy_delta > 0 ? "#52c41a" : finishData.enemy_delta < 0 ? "#ff4d4f" : "#faad14",
-                                    }}
-                                >
-                                    ({finishData.enemy_delta > 0 ? "+" : ""}{finishData.enemy_delta})
-                                </Typography.Text>
-                            </Typography.Text>
-                        </Flex>
-                    </Flex>
-                )}
+                {modalText}
             </Modal>
         </PageWrapper>
     );
