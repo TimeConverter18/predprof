@@ -1,5 +1,6 @@
 import axios, {AxiosError, type AxiosResponse} from "axios";
 import {message} from "antd";
+import domain from "./domain";
 
 const apiURL = "/api"
 
@@ -15,21 +16,20 @@ api.interceptors.response.use(
     },
     async function (error: AxiosError) {
         const status = error.response?.status;
-
         if (!status) {
             message.error("Нет подключения к серверу", 1);
             return Promise.resolve(null);
         }
-
         switch (status) {
             case 400:
                 message.error("400 Некорректные данные", 1);
                 break;
             case 401:
-                if (!error.request?.responseURL?.includes("/users/me/")) {
-                    message.error("401 Ошибка авторизации", 1);
+                if (error.request.responseURL === `${domain}${apiURL}/users/me/`) {
+                    return Promise.reject(error);
                 }
-                return Promise.reject(error);
+                message.error("401 Ошибка авторизации", 1);
+                break;
             case 403:
                 message.error("403 Нехватка полномочий", 1);
                 break;
@@ -37,11 +37,25 @@ api.interceptors.response.use(
                 message.error("404 Не найдено", 1);
                 break;
             case 498:
-                message.error("Неизвестная ошибка", 1);
-                break;
+                { const originalRequest = error.config;
+
+                const res = await api.post("/auth/token/refresh/")
+
+                if (res.request.status === 401) {
+                    api.post("/auth/token/refresh/").then(() => {
+                        window.location.reload();
+                    })
+                } else {
+                    if (!originalRequest) {
+                        return Promise.reject(error);
+                    }
+                    return api(originalRequest);
+                }
+                break; }
             case 499:
+                {
                 message.error("Неизвестная ошибка", 1);
-                break;
+                break}
             default:
                 message.error(`Неопознанная ошибка ${error.status}`, 1);
 
