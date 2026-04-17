@@ -243,18 +243,23 @@ export default function EditorComponent() {
     )
     const editorRef = useRef<MonacoEditor | null>(null)
     const ruffRef = useRef<boolean>(false)
-    const triggerLintRef = useRef<() => void>(() => {})
+    const triggerLintRef = useRef<() => void>(() => {
+    })
     const codeRef = useRef(defaultCode)
     const decorationsCollRef = useRef<ReturnType<MonacoEditor["createDecorationsCollection"]> | null>(null)
     const pasteRangesRef = useRef<PasteRange[]>([])
     const snapshotsRef = useRef<Map<number, PasteRange[]>>(new Map())
 
-    useEffect(() => {
-        init(ruffWasmUrl).then(() => {
+    const initializeRuff = async () => {
+        if (ruffRef.current) return
+        try {
+            await init(ruffWasmUrl)
             ruffRef.current = true
             triggerLintRef.current()
-        }).catch(console.error)
-    }, [])
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     useEffect(() => {
         const worker = new Worker('/py-worker.js?v=' + Date.now())
@@ -364,8 +369,12 @@ export default function EditorComponent() {
             lintTimer = setTimeout(runLint, 300)
         })
 
-        const runLint = () => {
-            if (!ruffRef.current || !model) return
+        const runLint = async () => {
+            if (!model) return
+            if (!ruffRef.current) {
+                await initializeRuff()
+                if (!ruffRef.current) return
+            }
             try {
                 const workspace = new Workspace({
                     "line-length": 88, "indent-width": 4,
@@ -383,7 +392,8 @@ export default function EditorComponent() {
                     endLineNumber: d.end_location.row,
                     endColumn: Math.max(1, d.end_location.column),
                 })))
-            } catch { /* ignore */ }
+            } catch { /* ignore */
+            }
         }
         triggerLintRef.current = runLint
         if (ruffRef.current) runLint()
@@ -484,7 +494,12 @@ export default function EditorComponent() {
         setPromptText("")
     }
 
-    const handleFormat = () => editorRef.current?.getAction('editor.action.formatDocument')?.run()
+    const handleFormat = async () => {
+        if (!ruffRef.current) {
+            await initializeRuff()
+        }
+        editorRef.current?.getAction('editor.action.formatDocument')?.run()
+    }
 
     const handleInputSubmit = (value: string) => {
         if (!sabRef.current) return
@@ -519,7 +534,7 @@ export default function EditorComponent() {
             <div className="rounded-xl overflow-hidden border bg-card">
                 <Editor
                     height={300}
-                    theme={`vs-dark`}
+                    theme="vs-dark"
                     defaultLanguage="python"
                     defaultValue={defaultCode}
                     onMount={handleEditorMount}
