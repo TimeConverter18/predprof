@@ -49,7 +49,6 @@ class SearchEnemyConsumer(AsyncWebsocketConsumer):
                 subject=subject,
                 user_id=self.user_id,
             ):
-                print(f'players_in_search {self.user_id}')
                 return
 
             rating = await self.get_user_rating()
@@ -57,7 +56,6 @@ class SearchEnemyConsumer(AsyncWebsocketConsumer):
             self.enemy = await matchmaking_service.find_enemy(
                 subject=subject, rating=rating, user_id=self.user_id
             )
-            print(self.enemy)
 
             if not self.enemy:
                 return
@@ -71,7 +69,7 @@ class SearchEnemyConsumer(AsyncWebsocketConsumer):
         return User.objects.get(pk=self.user_id).rating
 
     async def start_round(self):
-        return await round_service.start_round(self.user_id, self.enemy)
+        return await round_service.start_round(self.user_id, self.enemy, self.subject)
 
     async def room_id_message(self, event):
         room_id = event['message']

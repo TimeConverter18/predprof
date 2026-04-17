@@ -14,9 +14,9 @@ from user_statistics.models import RoundStatistics
 
 
 class RoundService:
-    async def start_round(self, user_id: int, enemy_id: int):
+    async def start_round(self, user_id: int, enemy_id: int, subject_id: int):
         round_id, round_tasks = await database_sync_to_async(self.create_round_tables)(
-            user_id, enemy_id
+            user_id, enemy_id, subject_id
         )
         await self.create_statistics_tables(round_tasks, round_id, user_id, enemy_id)
         return round_id
@@ -33,9 +33,9 @@ class RoundService:
                     task_index,
                 )
 
-    def create_round_tables(self, user_id: int, enemy_id: int) -> tuple[int, list[RoundTask]]:
+    def create_round_tables(self, user_id: int, enemy_id: int, subject_id: int) -> tuple[int, list[RoundTask]]:
         with transaction.atomic():
-            tasks = list(Task.objects.order_by("id")[:5])
+            tasks = list(Task.objects.filter(subject_id=subject_id).order_by("id")[:5])
             if len(tasks) < 5:
                 raise ValueError("Нет задач для раунда")
 

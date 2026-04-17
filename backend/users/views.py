@@ -34,4 +34,4 @@ class UsersForAdminsApiView(ListAPIView):
     pagination_class = UserListPagination
 
     def get_queryset(self):
-        return User.objects.only('username', 'email', 'rating').order_by('-rating')
+        return User.objects.only('id', 'username', 'email', 'rating').order_by('-rating')
