@@ -10,5 +10,6 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path("users/", include('users.urls')),
     path('trainings/', include('trainings.urls')),
+    path('users_statistics/', include('user_statistics.urls')),
     path('tasks/', include('tasks.urls')),
 ] + debug_toolbar_urls()

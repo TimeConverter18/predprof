@@ -3,6 +3,7 @@ import io
 import json
 
 from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,7 +12,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import MultiPartParser
 
 from tasks.models import Subject, Task, SubjectTheme, TaskDifficulty
-from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer
+from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer, \
+    AdminTaskSerializer
 
 
 class ReturnTaskAPIView(APIView):
