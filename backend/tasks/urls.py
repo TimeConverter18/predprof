@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import SubjectsListAPIView, ReturnTaskAPIView, TasksListAPIView, TaskViewSet, CheckTaskView, ImportTasksView
+from .views import SubjectsListAPIView, ReturnTaskAPIView, TasksListAPIView, TaskViewSet, CheckTaskView, ImportTasksView, AdminTaskView, TaskExportView
 
 urlpatterns = [
     path('', TasksListAPIView.as_view()),

@@ -35,8 +35,8 @@ class RoundService:
 
     def create_round_tables(self, user_id: int, enemy_id: int) -> tuple[int, list[RoundTask]]:
         with transaction.atomic():
-            tasks = list(Task.objects.order_by("id")[:3])
-            if len(tasks) < 3:
+            tasks = list(Task.objects.order_by("id")[:5])
+            if len(tasks) < 5:
                 raise ValueError("Нет задач для раунда")
 
             users = User.objects.in_bulk([user_id, enemy_id])

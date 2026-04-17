@@ -19,9 +19,8 @@ class PvpConsumer(AsyncWebsocketConsumer):
         self.enemy = None
         self.round = None
 
-
     async def connect(self):
-        self.round_id =     self.scope["url_route"]["kwargs"]["room_id"]
+        self.round_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.user = self.scope["user"]
 
         if not await self.check_user_enemy_round():
@@ -35,12 +34,6 @@ class PvpConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_discard(
                 f"user_{self.user.id}", self.channel_name
             )
-            await statistics_cache.technical_finish_add(self.round_id)
-            await round_service.technical_finish_round(
-                self.round_id,
-                self.user.id,
-                self.enemy.id if self.enemy else None,
-            )
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -48,8 +41,14 @@ class PvpConsumer(AsyncWebsocketConsumer):
 
         if message_type == "answer":
             await self.handle_answer(data)
-            return
-        await self.send_error("Неизвестный тип сообщения")
+        elif message_type == "surrender":
+            await self.handle_surrender()
+        else:
+            await self.send_error("Неизвестный тип сообщения")
+
+    # ------------------------------------------------------------------ #
+    #  Ответ на задачу                                                     #
+    # ------------------------------------------------------------------ #
 
     async def handle_answer(self, data):
         task_index = data.get("task_index")
@@ -65,24 +64,45 @@ class PvpConsumer(AsyncWebsocketConsumer):
             await self.send_error("Задача не найдена")
             return
 
-        both_answered = await statistics_cache.both_answered(
-            self.round_id, self.user.id, self.enemy.id, task_index
+        # Отправляем актуальную статистику обоим игрокам после каждого ответа.
+        # Порядок uid/eid фиксирован, чтобы избежать гонок в Redis.
+        uid, eid = sorted([self.user.id, self.enemy.id])
+        await self.handle_stats(uid, eid)
+
+        # Проверяем, завершили ли оба игрока все задания.
+        user_done = await statistics_cache.is_finish_solving(
+            self.round_id, self.user.id
+        )
+        enemy_done = await statistics_cache.is_finish_solving(
+            self.round_id, self.enemy.id
         )
 
-        if both_answered:
-            uid, eid = sorted([self.user.id, self.enemy.id])
-            await self.handle_stats(uid, eid)
-
-        if await statistics_cache.is_finish_solving(
-            self.round_id, self.user.id
-        ) and await statistics_cache.is_finish_solving(self.round_id, self.enemy.id):
+        if user_done and enemy_done:
             await self.save_total_time(self.user.id)
             await self.save_total_time(self.enemy.id)
-            await self.finish_round()
+            await self.finish_round(surrendered_id=None)
+
+    # ------------------------------------------------------------------ #
+    #  Сдача                                                               #
+    # ------------------------------------------------------------------ #
+
+    async def handle_surrender(self):
+        """Игрок явно сдаётся — раунд завершается немедленно."""
+        # Сохраняем время только для тех, кто ещё не закончил.
+        if not await statistics_cache.is_finish_solving(self.round_id, self.user.id):
+            await self.save_total_time(self.user.id)
+        if not await statistics_cache.is_finish_solving(self.round_id, self.enemy.id):
+            await self.save_total_time(self.enemy.id)
+
+        await self.finish_round(surrendered_id=self.user.id)
+
+    # ------------------------------------------------------------------ #
+    #  Статистика                                                          #
+    # ------------------------------------------------------------------ #
 
     async def handle_stats(self, user_id: int, enemy_id: int):
         stats = await statistics_cache.get_round_stats(
-            self.round_id, user_id, enemy_id  # фиксированный порядок
+            self.round_id, user_id, enemy_id
         )
 
         total_tasks = stats["total_tasks"]
@@ -121,7 +141,16 @@ class PvpConsumer(AsyncWebsocketConsumer):
             "current_task": event["current_task"],
         }))
 
+    # ------------------------------------------------------------------ #
+    #  Регистрация ответа                                                  #
+    # ------------------------------------------------------------------ #
+
     async def register_answer(self, task_index: int, answer: str) -> None:
+        """
+        Задачи можно решать в любом порядке.
+        task_index — 0-based индекс задачи (как в тренировке).
+        В БД order хранится 1-based, поэтому передаём task_index + 1.
+        """
         correct_answer, round_task_id = await self.get_answer_to_task(
             task_index, self.round_id
         )
@@ -134,10 +163,21 @@ class PvpConsumer(AsyncWebsocketConsumer):
             is_correct,
         )
 
-    async def finish_round(self):
-        winner_id = await matchmaking_service.determine_winner(
-            self.round_id, self.user.id, self.enemy.id, statistics_cache
-        )
+    # ------------------------------------------------------------------ #
+    #  Завершение раунда                                                   #
+    # ------------------------------------------------------------------ #
+
+    async def finish_round(self, *, surrendered_id: int | None):
+        """
+        surrendered_id — id игрока, который сдался (проигрывает автоматически).
+        None — оба закончили, победитель определяется по статистике.
+        """
+        if surrendered_id is not None:
+            winner_id = self.enemy.id if surrendered_id == self.user.id else self.user.id
+        else:
+            winner_id = await matchmaking_service.determine_winner(
+                self.round_id, self.user.id, self.enemy.id, statistics_cache
+            )
 
         user_old_rating, enemy_old_rating = await self.get_ratings(
             self.user.id, self.enemy.id
@@ -198,6 +238,10 @@ class PvpConsumer(AsyncWebsocketConsumer):
             "enemy_new_rating": event["enemy_new_rating"],
         }))
 
+    # ------------------------------------------------------------------ #
+    #  Вспомогательные методы                                              #
+    # ------------------------------------------------------------------ #
+
     async def save_total_time(self, user_id: int) -> None:
         round_obj = await Round.objects.aget(id=self.round_id)
         total_time = (timezone.now() - round_obj.started_at).total_seconds()
@@ -220,6 +264,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_answer_to_task(self, task_index: int, round_id: int):
+        """task_index — 0-based; в БД order хранится 1-based."""
         try:
             round_task = RoundTask.objects.select_related("task").get(
                 round=round_id, order=task_index + 1
@@ -239,7 +284,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
             return False
         try:
             self.round = await Round.objects.aget(pk=self.round_id)
-        except RoundNotFound:
+        except Round.DoesNotExist:
             await self.close(code=4004)
             return False
         if not await self.is_player_in_round():
