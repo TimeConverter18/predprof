@@ -3,8 +3,8 @@ import {useEffect, useRef, useState} from "react"
 import {Controls} from "./controls.tsx"
 import {Terminal} from "./terminal.tsx"
 import type {ConsoleLine} from "./types.ts"
-import init, {PositionEncoding, Workspace} from "@astral-sh/ruff-wasm-web"
-import ruffWasmUrl from "@astral-sh/ruff-wasm-web/ruff_wasm_bg.wasm?url"
+// import init, {PositionEncoding, Workspace} from "@astral-sh/ruff-wasm-web"
+// import ruffWasmUrl from "@astral-sh/ruff-wasm-web/ruff_wasm_bg.wasm?url"
 
 type Monaco = typeof import("monaco-editor")
 type MonacoEditor = import("monaco-editor").editor.IStandaloneCodeEditor
@@ -18,12 +18,12 @@ interface JediCompletion {
     insertText: string
 }
 
-interface RuffDiagnostic {
-    code: string
-    message: string
-    start_location: { row: number; column: number }
-    end_location: { row: number; column: number }
-}
+// interface RuffDiagnostic {
+//     code: string
+//     message: string
+//     start_location: { row: number; column: number }
+//     end_location: { row: number; column: number }
+// }
 
 interface PasteEvent {
     range: {
@@ -242,24 +242,24 @@ export default function EditorComponent() {
         isSabSupported ? new SharedArrayBuffer(4) : null
     )
     const editorRef = useRef<MonacoEditor | null>(null)
-    const ruffRef = useRef<boolean>(false)
-    const triggerLintRef = useRef<() => void>(() => {
-    })
+    // const ruffRef = useRef<boolean>(false)
+    // const triggerLintRef = useRef<() => void>(() => {
+    // })
     const codeRef = useRef(defaultCode)
     const decorationsCollRef = useRef<ReturnType<MonacoEditor["createDecorationsCollection"]> | null>(null)
     const pasteRangesRef = useRef<PasteRange[]>([])
     const snapshotsRef = useRef<Map<number, PasteRange[]>>(new Map())
 
-    const initializeRuff = async () => {
-        if (ruffRef.current) return
-        try {
-            await init(ruffWasmUrl)
-            ruffRef.current = true
-            triggerLintRef.current()
-        } catch (e) {
-            console.error(e)
-        }
-    }
+    // const initializeRuff = async () => {
+    //     if (ruffRef.current) return
+    //     try {
+    //         await init(ruffWasmUrl)
+    //         ruffRef.current = true
+    //         triggerLintRef.current()
+    //     } catch (e) {
+    //         console.error(e)
+    //     }
+    // }
 
     useEffect(() => {
         const worker = new Worker('/py-worker.js?v=' + Date.now())
@@ -342,7 +342,7 @@ export default function EditorComponent() {
             }
         })
 
-        let lintTimer: ReturnType<typeof setTimeout> | null = null
+        // let lintTimer: ReturnType<typeof setTimeout> | null = null
 
         editor.onDidChangeModelContent((e: ContentChangeEvent) => {
             codeRef.current = model.getValue()
@@ -365,38 +365,38 @@ export default function EditorComponent() {
             }
 
             flushDecorations()
-            if (lintTimer) clearTimeout(lintTimer)
-            lintTimer = setTimeout(runLint, 300)
+            // if (lintTimer) clearTimeout(lintTimer)
+            // lintTimer = setTimeout(runLint, 300)
         })
 
-        const runLint = async () => {
-            if (!model) return
-            if (!ruffRef.current) {
-                await initializeRuff()
-                if (!ruffRef.current) return
-            }
-            try {
-                const workspace = new Workspace({
-                    "line-length": 88, "indent-width": 4,
-                    "lint": {
-                        "select": ["E", "F", "W", "PL"],
-                        "ignore": ["E501", "W191", "E101", "W291", "W292", "W293", "W391", "E303", "F401", "F403", "F405"],
-                    },
-                }, PositionEncoding.Utf16)
-                monaco.editor.setModelMarkers(model, "ruff", workspace.check(model.getValue()).map((d: RuffDiagnostic) => ({
-                    severity: (d.code.startsWith("E") || d.code.startsWith("F"))
-                        ? monaco.MarkerSeverity.Error : monaco.MarkerSeverity.Warning,
-                    message: `${d.code}: ${d.message}`,
-                    startLineNumber: d.start_location.row,
-                    startColumn: Math.max(1, d.start_location.column),
-                    endLineNumber: d.end_location.row,
-                    endColumn: Math.max(1, d.end_location.column),
-                })))
-            } catch { /* ignore */
-            }
-        }
-        triggerLintRef.current = runLint
-        if (ruffRef.current) runLint()
+        // const runLint = async () => {
+        //     if (!model) return
+        //     if (!ruffRef.current) {
+        //         await initializeRuff()
+        //         if (!ruffRef.current) return
+        //     }
+        //     try {
+        //         const workspace = new Workspace({
+        //             "line-length": 88, "indent-width": 4,
+        //             "lint": {
+        //                 "select": ["E", "F", "W", "PL"],
+        //                 "ignore": ["E501", "W191", "E101", "W291", "W292", "W293", "W391", "E303", "F401", "F403", "F405"],
+        //             },
+        //         }, PositionEncoding.Utf16)
+        //         monaco.editor.setModelMarkers(model, "ruff", workspace.check(model.getValue()).map((d: RuffDiagnostic) => ({
+        //             severity: (d.code.startsWith("E") || d.code.startsWith("F"))
+        //                 ? monaco.MarkerSeverity.Error : monaco.MarkerSeverity.Warning,
+        //             message: `${d.code}: ${d.message}`,
+        //             startLineNumber: d.start_location.row,
+        //             startColumn: Math.max(1, d.start_location.column),
+        //             endLineNumber: d.end_location.row,
+        //             endColumn: Math.max(1, d.end_location.column),
+        //         })))
+        //     } catch { /* ignore */
+        //     }
+        // }
+        // triggerLintRef.current = runLint
+        // if (ruffRef.current) runLint()
 
         monaco.languages.registerCompletionItemProvider("python", {
             triggerCharacters: [".", "(", ","],
@@ -452,17 +452,17 @@ export default function EditorComponent() {
             },
         })
 
-        monaco.languages.registerDocumentFormattingEditProvider("python", {
-            provideDocumentFormattingEdits: (m: MonacoModel) => {
-                if (!ruffRef.current) return []
-                try {
-                    const workspace = new Workspace({"line-length": 88, "indent-width": 4}, PositionEncoding.Utf16)
-                    return [{range: m.getFullModelRange(), text: workspace.format(m.getValue())}]
-                } catch {
-                    return []
-                }
-            },
-        })
+        // monaco.languages.registerDocumentFormattingEditProvider("python", {
+        //     provideDocumentFormattingEdits: (m: MonacoModel) => {
+        //         if (!ruffRef.current) return []
+        //         try {
+        //             const workspace = new Workspace({"line-length": 88, "indent-width": 4}, PositionEncoding.Utf16)
+        //             return [{range: m.getFullModelRange(), text: workspace.format(m.getValue())}]
+        //         } catch {
+        //             return []
+        //         }
+        //     },
+        // })
     }
 
     const handleRun = () => {
@@ -494,12 +494,12 @@ export default function EditorComponent() {
         setPromptText("")
     }
 
-    const handleFormat = async () => {
-        if (!ruffRef.current) {
-            await initializeRuff()
-        }
-        editorRef.current?.getAction('editor.action.formatDocument')?.run()
-    }
+    // const handleFormat = async () => {
+    //     if (!ruffRef.current) {
+    //         await initializeRuff()
+    //     }
+    //     editorRef.current?.getAction('editor.action.formatDocument')?.run()
+    // }
 
     const handleInputSubmit = (value: string) => {
         if (!sabRef.current) return
@@ -530,7 +530,7 @@ export default function EditorComponent() {
                 }
             `}</style>
             <Controls isRunning={isRunning} isLoading={isLoading} isSabSupported={isSabSupported} onRun={handleRun}
-                      onStop={handleStop} onFormat={handleFormat}/>
+                      onStop={handleStop} onFormat={() => {}}/>
             <div className="rounded-xl overflow-hidden border bg-card">
                 <Editor
                     height={300}
