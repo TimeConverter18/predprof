@@ -31,6 +31,6 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    exclude: ['@astral-sh/ruff-wasm'],
+    exclude: ['@astral-sh/ruff-wasm-web'],
   },
 });
