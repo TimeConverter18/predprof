@@ -25,7 +25,7 @@ class UserStatsSerializer(serializers.ModelSerializer):
 
         train_total = train_stats['total'] / 10 or 0
         train_correct = train_stats['correct'] or 0
-        pvp_total = pvp_stats['total'] / 10 or 0
+        pvp_total = pvp_stats['total'] / 5 or 0
         pvp_correct = pvp_stats['correct'] or 0
         total = train_total + pvp_total
 
@@ -42,3 +42,9 @@ class UserStatsSerializer(serializers.ModelSerializer):
                 ((train_stats['avg_speed'] or 0) * train_total + (pvp_stats['avg_speed'] or 0) * pvp_total) / total, 2
             ) if total else 0,
         }
+
+
+class UsersListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'rating']
