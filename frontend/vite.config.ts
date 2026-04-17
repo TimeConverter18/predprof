@@ -29,5 +29,8 @@ export default defineConfig({
     rollupOptions: {
       external: [/\.wasm$/]
     }
-  }
+  },
+  optimizeDeps: {
+    exclude: ['@astral-sh/ruff-wasm'],
+  },
 });
