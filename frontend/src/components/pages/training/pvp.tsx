@@ -1,5 +1,5 @@
 import {type FC, useEffect, useState, useRef} from "react";
-import {Flex, Modal, notification, Progress, Spin, Typography} from "antd";
+import {Flex, Modal, notification, Progress, Spin, Typography, Button} from "antd";
 import styled from "@emotion/styled";
 import Task from "../../public/task";
 import {useWebSocket} from "@siberiacancode/reactuse";
@@ -27,7 +27,6 @@ type FinishData = {
 type StatsProps = {
     playerProgress: number;
     enemyProgress: number;
-    seconds: number;
     currentTask: number;
     totalTasks: number;
 }
@@ -54,13 +53,6 @@ const PageWrapper = styled.div`
     padding: 10px 0;
     box-sizing: border-box;
     max-width: 1280px;
-`
-
-const WaitingText = styled.div`
-    color: #83868e;
-    font-size: 16px;
-    text-align: center;
-    padding: 20px;
 `
 
 const BarContainer = styled.div`
@@ -94,26 +86,18 @@ const TimeRoundContainerDesktop = styled.div`
     gap: 20px;
 `
 
-const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, seconds, currentTask, totalTasks}) => {
-    const formatTime = (totalSeconds: number) => {
-        const mins = Math.floor(totalSeconds / 60);
-        const secs = totalSeconds % 60;
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    };
-
+const StatsContainer: FC<StatsProps> = ({playerProgress, enemyProgress, currentTask, totalTasks}) => {
     return (
         <StatsWrapper>
             <Flex gap="large" align="center" style={{ width: "100%", justifyContent: "space-between" }}>
                 <Mobile>
                     <TimeRoundContainerMobile>
                         <TimerText>Задача {currentTask} / {totalTasks}</TimerText>
-                        <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerMobile>
                 </Mobile>
                 <Desktop>
                     <TimeRoundContainerDesktop>
                         <TimerText>Задача {currentTask} / {totalTasks}</TimerText>
-                        <TimerText>{formatTime(seconds)}</TimerText>
                     </TimeRoundContainerDesktop>
                 </Desktop>
                 <Flex gap="small" vertical align="end">
@@ -138,12 +122,10 @@ const Page: FC = () => {
     const [current, setCurrent] = useState<number>(0);
     const [playerCorrect, setPlayerCorrect] = useState<number>(0);
     const [enemyCorrect, setEnemyCorrect] = useState<number>(0);
-    const [seconds, setSeconds] = useState<number>(0);
-    const [waitingForEnemy, setWaitingForEnemy] = useState<boolean>(false);
+    const [answers, setAnswers] = useState<string[]>([]);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [finishData, setFinishData] = useState<FinishData | null>(null);
-    const [answer, setAnswer] = useState<string>("");
 
     const sentAnswers = useRef<Set<number>>(new Set());
 
@@ -173,10 +155,11 @@ const Page: FC = () => {
             if (res && res.data && res.data.tasks) {
                 const fetchedTasks: PvpTaskData[] = res.data.tasks;
                 setTasks(fetchedTasks);
+                setAnswers(new Array(fetchedTasks.length).fill(""));
                 setPlayerCorrect(res.data.user_solved_count || 0);
                 setEnemyCorrect(res.data.enemy_solved_count || 0);
                 const firstUnsolved = fetchedTasks.findIndex(t => t.user_is_correct === null);
-                const startIdx = firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length;
+                const startIdx = firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length - 1;
                 setCurrent(startIdx);
                 fetchedTasks.forEach((t, i) => {
                     if (t.user_is_correct !== null) sentAnswers.current.add(i);
@@ -184,14 +167,6 @@ const Page: FC = () => {
             }
         }).finally(() => setLoading(false));
     }, [id, isIdValid]);
-
-    useEffect(() => {
-        if (!isIdValid) return;
-        const interval = setInterval(() => {
-            setSeconds(prev => prev + 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [isIdValid]);
 
     const handleExit = () => {
         navigate("/training/pvp");
@@ -208,10 +183,6 @@ const Page: FC = () => {
                 if (data.enemy_correct_percentage !== undefined) {
                     setEnemyCorrect(Math.round((data.enemy_correct_percentage / 100) * total));
                 }
-            }
-            if (data.current_task !== undefined) {
-                setCurrent(data.current_task);
-                setWaitingForEnemy(false);
             }
         } else if (data.type === 'finish_round') {
             openFinishModal({
@@ -245,7 +216,7 @@ const Page: FC = () => {
         onError: (event) => {console.log(event)}
     })
 
-    const handleSendAnswer = () => {
+    const handleSendAnswer = (answer: string) => {
         if (!answer.trim()) return;
         if (current >= totalTasks) return;
         if (sentAnswers.current.has(current)) return;
@@ -257,9 +228,20 @@ const Page: FC = () => {
             task_index: current,
             answer: answer.trim()
         }));
+    }
 
-        setAnswer("");
-        setWaitingForEnemy(true);
+    const handleSurrender = () => {
+        webSocket.send(JSON.stringify({
+            type: "surrender"
+        }));
+    }
+
+    const handlePrevTask = () => {
+        setCurrent(Math.max(0, current - 1));
+    }
+
+    const handleNextTask = () => {
+        setCurrent(Math.min(totalTasks - 1, current + 1));
     }
 
     if (!isIdValid) {
@@ -280,7 +262,6 @@ const Page: FC = () => {
 
     const playerPct = totalTasks > 0 ? Math.round((playerCorrect / totalTasks) * 100) : 0;
     const enemyPct = totalTasks > 0 ? Math.round((enemyCorrect / totalTasks) * 100) : 0;
-    const allAnswered = current >= totalTasks;
 
     return (
         <PageWrapper>
@@ -288,28 +269,26 @@ const Page: FC = () => {
             <StatsContainer
                 playerProgress={playerPct}
                 enemyProgress={enemyPct}
-                seconds={seconds}
-                currentTask={Math.min(current + 1, totalTasks)}
+                currentTask={current + 1}
                 totalTasks={totalTasks}
             />
-            {allAnswered ? (
-                <WaitingText>
-                    Вы ответили на все задачи. Ожидание завершения раунда...
-                </WaitingText>
-            ) : waitingForEnemy ? (
-                <WaitingText>
-                    Ответ принят. Ожидание ответа противника...
-                </WaitingText>
-            ) : (
-                <Task
-                    task_id={current + 1}
-                    question={tasks[current]?.question ?? "Загрузка..."}
-                    value={answer}
-                    onChange={setAnswer}
-                    onCheck={handleSendAnswer}
-                    is_correct={null}
-                />
-            )}
+            <Task
+                task_id={current + 1}
+                question={tasks[current]?.question ?? "Загрузка..."}
+                value={answers[current] || ""}
+                onChange={(val) => {
+                    const newAns = [...answers];
+                    newAns[current] = val;
+                    setAnswers(newAns);
+                }}
+                onCheck={() => handleSendAnswer(answers[current] || "")}
+                is_correct={tasks[current]?.user_is_correct}
+            />
+            <Flex gap="small" justify="center">
+                <Button onClick={handlePrevTask} disabled={current === 0}>Предыдущая</Button>
+                <Button onClick={handleNextTask} disabled={current === totalTasks - 1}>Следующая</Button>
+                <PrimaryButton danger onClick={handleSurrender}>Сдаться</PrimaryButton>
+            </Flex>
             <Modal
                 title={
                     finishData
