@@ -229,6 +229,7 @@ class TaskExportView(APIView):
 
 
 
+
 class AdminTaskView(APIView):
     permission_classes = [IsAdminUser]
 
@@ -241,4 +242,3 @@ class AdminTaskView(APIView):
         serializer = AdminTaskSerializer(queryset, many=True)
 
         return Response(serializer.data)
-

@@ -64,29 +64,10 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class SubjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subject
-        fields = ['id', 'name']
-
-
-class SubjectThemeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubjectTheme
-        fields = ['id', 'name']
-
-
 class AdminTaskSerializer(serializers.ModelSerializer):
-    subject = SubjectSerializer(read_only=True)
-    theme = SubjectThemeSerializer(read_only=True)
+    subject_name = serializers.CharField(source='subject.name')
+    theme_name = serializers.CharField(source='theme.name', default=None)
 
     class Meta:
         model = Task
-        fields = [
-            'id',
-            'question',
-            'correct_answer',
-            'difficulty',
-            'subject',
-            'theme',
-        ]
+        fields = ['id', 'question', 'correct_answer', 'difficulty', 'subject_name', 'theme_name']
