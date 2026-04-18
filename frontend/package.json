@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@astral-sh/ruff-wasm-bundler": "^0.15.9",
+    "@astral-sh/ruff-wasm-web": "^0.15.9",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource-variable/geist": "^5.2.8",
