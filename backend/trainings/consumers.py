@@ -109,8 +109,6 @@ class TrainingConsumer(AsyncWebsocketConsumer):
         correct_answer, round_task_id = await self.get_answer_to_task(
             task_index, self.training_id
         )
-        await sync_to_async(print)(answer)
-        await sync_to_async(print)(correct_answer)
 
         is_correct = answer == correct_answer
 

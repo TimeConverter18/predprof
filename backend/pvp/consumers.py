@@ -59,10 +59,17 @@ class PvpConsumer(AsyncWebsocketConsumer):
             return
 
         try:
-            await self.register_answer(task_index, answer)
+            is_correct = await self.register_answer(task_index, answer)
         except RoundTaskNotFound:
             await self.send_error("Задача не найдена")
             return
+
+        # Отправляем игроку результат проверки ответа (как в тренировке).
+        await self.send(text_data=json.dumps({
+            "type": "result",
+            "task_index": task_index,
+            "is_correct": is_correct,
+        }))
 
         # Отправляем актуальную статистику обоим игрокам после каждого ответа.
         # Порядок uid/eid фиксирован, чтобы избежать гонок в Redis.
@@ -145,7 +152,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
     #  Регистрация ответа                                                  #
     # ------------------------------------------------------------------ #
 
-    async def register_answer(self, task_index: int, answer: str) -> None:
+    async def register_answer(self, task_index: int, answer: str) -> bool:
         """
         Задачи можно решать в любом порядке.
         task_index — 0-based индекс задачи (как в тренировке).
@@ -162,6 +169,7 @@ class PvpConsumer(AsyncWebsocketConsumer):
             answer,
             is_correct,
         )
+        return is_correct
 
     # ------------------------------------------------------------------ #
     #  Завершение раунда                                                   #
