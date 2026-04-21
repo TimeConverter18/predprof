@@ -127,8 +127,6 @@ const Page: FC = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [finishData, setFinishData] = useState<FinishData | null>(null);
 
-    const sentAnswers = useRef<Set<number>>(new Set());
-
     const totalTasks = tasks.length;
     const totalTasksRef = useRef(0);
     const modalOpenRef = useRef(false);
@@ -161,9 +159,6 @@ const Page: FC = () => {
                 const firstUnsolved = fetchedTasks.findIndex(t => t.user_is_correct === null);
                 const startIdx = firstUnsolved >= 0 ? firstUnsolved : fetchedTasks.length - 1;
                 setCurrent(startIdx);
-                fetchedTasks.forEach((t, i) => {
-                    if (t.user_is_correct !== null) sentAnswers.current.add(i);
-                });
             }
         }).finally(() => setLoading(false));
     }, [id, isIdValid]);
@@ -174,7 +169,20 @@ const Page: FC = () => {
 
     const handleWebsocketMessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
-        if (data.type === 'stats') {
+        if (data.type === 'result') {
+            const taskIndex = data.task_index;
+            const isCorrect = data.is_correct;
+            setTasks((prevTasks) => {
+                const updatedTasks = [...prevTasks];
+                if (updatedTasks[taskIndex]) {
+                    updatedTasks[taskIndex] = {
+                        ...updatedTasks[taskIndex],
+                        user_is_correct: isCorrect
+                    };
+                }
+                return updatedTasks;
+            });
+        } else if (data.type === 'stats') {
             const total = totalTasksRef.current;
             if (total > 0) {
                 if (data.correct_percentage !== undefined) {
@@ -219,9 +227,6 @@ const Page: FC = () => {
     const handleSendAnswer = (answer: string) => {
         if (!answer.trim()) return;
         if (current >= totalTasks) return;
-        if (sentAnswers.current.has(current)) return;
-
-        sentAnswers.current.add(current);
 
         webSocket.send(JSON.stringify({
             type: "answer",
@@ -287,7 +292,7 @@ const Page: FC = () => {
             <Flex gap="small" justify="center">
                 <Button onClick={handlePrevTask} disabled={current === 0}>Предыдущая</Button>
                 <Button onClick={handleNextTask} disabled={current === totalTasks - 1}>Следующая</Button>
-                <PrimaryButton danger onClick={handleSurrender}>Сдаться</PrimaryButton>
+                <Button danger type="primary" onClick={handleSurrender}>Сдаться</Button>
             </Flex>
             <Modal
                 title={
@@ -303,7 +308,7 @@ const Page: FC = () => {
                 width={{xs: '90%', sm: '80%', md: '70%', lg: '60%', xl: '50%', xxl: '40%'}}
                 closable={false}
                 centered
-                footer={<PrimaryButton danger onClick={handleExit}>Выйти</PrimaryButton>}>
+                footer={<Button danger type="primary" onClick={handleExit}>Выйти</Button>}>
                 {finishData && (
                     <Flex vertical gap="middle" style={{padding: "8px 0"}}>
                         <Flex vertical gap={4}>
