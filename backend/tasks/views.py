@@ -14,13 +14,14 @@ from rest_framework.parsers import MultiPartParser
 from tasks.models import Subject, Task, SubjectTheme, TaskDifficulty
 from tasks.serializers import SubjectsListSerializer, CurrentTaskSerializer, BaseTaskSerializer, TaskSerializer, \
     AdminTaskSerializer
+from users.models import UserTask
 
 
 class ReturnTaskAPIView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request, subject_id: int):
-        task = get_object_or_404(Task, id=subject_id)
+    def get(self, request, task_id: int):
+        task = get_object_or_404(Task, id=task_id)
         serializer = CurrentTaskSerializer(task, context={'request': request})
         return Response(serializer.data)
 
@@ -95,6 +96,7 @@ class CheckTaskView(APIView):
             return Response({"error": "Поле answer обязательно"}, status=400)
 
         is_correct = user_answer.strip().lower() == task.correct_answer.strip().lower()
+        UserTask.objects.update_or_create(user_id=request.user.id, task_id=task.id, is_correct=is_correct)
 
         return Response({"is_correct": is_correct})
 

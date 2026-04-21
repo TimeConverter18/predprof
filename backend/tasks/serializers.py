@@ -51,8 +51,7 @@ class BaseTaskSerializer(serializers.ModelSerializer):
 
         user_task = UserTask.objects.filter(
             user=request.user,
-            task=obj,
-            is_correct=True
+            task=obj
         ).first()
 
         return user_task.is_correct if user_task else None

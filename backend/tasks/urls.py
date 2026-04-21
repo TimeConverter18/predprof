@@ -4,7 +4,7 @@ from .views import SubjectsListAPIView, ReturnTaskAPIView, TasksListAPIView, Tas
 
 urlpatterns = [
     path('', TasksListAPIView.as_view()),
-    path('<int:pk>/', ReturnTaskAPIView.as_view()),
+    path('<int:task_id>/', ReturnTaskAPIView.as_view()),
     path('<int:pk>/check/', CheckTaskView.as_view()),
     path('import/', ImportTasksView.as_view()),
     path('subjects/', SubjectsListAPIView.as_view()),
