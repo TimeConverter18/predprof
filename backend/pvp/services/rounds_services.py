@@ -73,14 +73,21 @@ class RoundService:
         round_tasks = await self.get_roundtasks(round_id)
 
         for player_id in (user_id, enemy_id):
+            all_stats = await statistics_cache.get_all_tasks(round_id, player_id)
+            total_tasks = len(all_stats)
+
             for round_task in round_tasks:
                 stats = await statistics_cache.get(round_id, player_id, round_task.id)
+                total_time = stats["total_time"]
+                avg_time = (total_time / total_tasks) if total_tasks and total_time else None
+
                 await RoundStatistics.objects.acreate(
                     user_id=player_id,
                     round_task_id=round_task.id,
                     number_of_attempts=stats["attempts"],
                     user_answer=stats["last_answer"],
                     is_correct=stats["is_correct"],
+                    time_to_solve=avg_time,
                 )
 
         await self.change_rating(user_id, enemy_id, winner_id)
