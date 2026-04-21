@@ -1,10 +1,9 @@
 import {type FC, Fragment, useEffect} from "react";
 import styled from "@emotion/styled";
-import {Avatar, Space} from "antd";
+import {Avatar} from "antd";
 import {useAuth} from "../../hooks/auth/hook";
-import PrimaryButton from "../public/primaryButton";
-import {useNavigate} from "react-router";
 import {userIconPath} from "../../static";
+import AuthNull from "@/components/pages/authNull.tsx";
 
 const ProfileContainer = styled.div`
     width: 100%;
@@ -117,24 +116,13 @@ const StatSuffix = styled.span`
 
 const Page: FC = () => {
     const { user, reload } = useAuth();
-    const navigate = useNavigate();
-
     useEffect(() => {
         reload()
     }, [reload]);
 
     if (!user) {
         return (
-            <ProfileContainer>
-                <Card style={{alignItems: 'center', marginTop: '50px', textAlign: 'center'}}>
-                    <CardTitle>Вы не авторизованы</CardTitle>
-                    <p style={{color: '#fff'}}>Чтобы просмотреть профиль, пожалуйста, войдите в аккаунт или зарегистрируйтесь.</p>
-                    <Space size="middle">
-                        <PrimaryButton size="large" onClick={() => navigate('/signin')}>Войти</PrimaryButton>
-                        <PrimaryButton size="large" onClick={() => navigate('/signup')}>Регистрация</PrimaryButton>
-                    </Space>
-                </Card>
-            </ProfileContainer>
+            <AuthNull/>
         );
     }
 

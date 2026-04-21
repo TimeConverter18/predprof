@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import {useNavigate, useLocation, Routes, Route} from "react-router";
 import PvpPage from "./pvp"
 import SinglePage from "./single"
+import AuthNull from "@/components/pages/authNull.tsx";
+import {useAuth} from "@/hooks/auth/hook.ts";
 
 const SliderWrapper = styled.div`
     position: relative;
@@ -75,6 +77,14 @@ const Page: FC = () => {
             navigate("/training/pvp");
         }
     }, [pathname, navigate]);
+
+    const {user} = useAuth()
+
+    if (!user) {
+        return (
+            <AuthNull/>
+        );
+    }
 
     return (
         <Fragment>

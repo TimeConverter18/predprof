@@ -7,6 +7,8 @@ import TasksContainer from "../public/taskContainer";
 import {useSubjectThemes} from "../../hooks/subjectThemes/hook";
 import StyledTitle from "../components/textComponents/StyledTitle";
 import api from "../../api/api";
+import {useAuth} from "@/hooks/auth/hook.ts";
+import AuthNull from "@/components/pages/authNull.tsx";
 
 const difficultyOptions = [
     { label: 'Лёгкая', value: 'easy' },
@@ -118,6 +120,14 @@ const Page: FC = () => {
             }
         });
     };
+
+    const {user} = useAuth()
+
+    if (!user) {
+        return (
+            <AuthNull/>
+        );
+    }
 
     return (
         <PageShell>
