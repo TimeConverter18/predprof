@@ -96,7 +96,7 @@ class CheckTaskView(APIView):
             return Response({"error": "Поле answer обязательно"}, status=400)
 
         is_correct = user_answer.strip().lower() == task.correct_answer.strip().lower()
-        UserTask.objects.update_or_create(user_id=request.user.id, task_id=task.id, is_correct=is_correct)
+        UserTask.objects.update_or_create(user_id=request.user.id, task_id=task.id, defaults={'is_correct': is_correct})
 
         return Response({"is_correct": is_correct})
 
